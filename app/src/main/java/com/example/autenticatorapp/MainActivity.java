@@ -10,13 +10,21 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
+    FirebaseAuth fAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        fAuth = FirebaseAuth.getInstance();
+        if(fAuth.getCurrentUser() == null){
+            startActivity(new Intent(getApplicationContext(), Register.class));
+            finish();
+        }
+
     }
     public void logout (View view){
-        FirebaseAuth.getInstance().signOut();
+        FirebaseAuth.getInstance().signOut(); //logout
         startActivity(new Intent(getApplicationContext(),Login.class));
         finish();
     }

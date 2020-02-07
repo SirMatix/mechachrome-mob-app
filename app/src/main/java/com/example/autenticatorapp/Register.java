@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +24,7 @@ public class Register extends AppCompatActivity {
     Button mRegisterBtn;
     TextView mLoginBtn;
     FirebaseAuth fAuth;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,13 +34,14 @@ public class Register extends AppCompatActivity {
         mStudentID = findViewById(R.id.studentID);
         mFirstName = findViewById(R.id.firstName);
         mSurname = findViewById(R.id.surname);
-        mEmail = findViewById(R.id.Email);
+        mEmail = findViewById(R.id.reg_email);
         mPassword = findViewById(R.id.password);
         mCnfPassword = findViewById(R.id.cnfpassword);
         mRegisterBtn = findViewById(R.id.registerBtn);
         mLoginBtn = findViewById(R.id.loginBtn);
 
         fAuth = FirebaseAuth.getInstance();
+        progressBar = findViewById(R.id.progressBar);
 
         if(fAuth.getCurrentUser() != null){
             startActivity(new Intent(getApplicationContext(),MainActivity.class));
@@ -72,6 +75,8 @@ public class Register extends AppCompatActivity {
                     mPassword.setError("The password must contains minimum 6 characters.");
                     return;
                 }
+
+                progressBar.setVisibility(View.VISIBLE);
                   //know we can register the user in firebase
 
                 fAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -83,6 +88,7 @@ public class Register extends AppCompatActivity {
                             startActivity(new Intent(getApplicationContext(),MainActivity.class));
                         }else {
                             Toast.makeText(Register.this, "Error !" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.GONE);
                         }
                     }
                 });
@@ -90,5 +96,14 @@ public class Register extends AppCompatActivity {
             }
         });
 
+        mLoginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),Login.class));
+            }
+        });
+
     }
 }
+
+
