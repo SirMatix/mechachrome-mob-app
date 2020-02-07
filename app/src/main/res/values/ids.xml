@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="studentID" type="id" />
+    <item name="firstName" type="id" />
+    <item name="surname" type="id" />
+    <item name="Email" type="id" />
+    <item name="password" type="id" />
+    <item name="cnfpassword" type="id" />
+</resources>
