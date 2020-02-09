@@ -8,35 +8,133 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
+        android:id="@+id/roehampton"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Welcome!"
-        android:textColor="#F9FDFD"
-        android:textSize="36sp"
+        android:background="#B3FDD835"
+        android:fontFamily="@font/roboto_slab"
+        android:lineSpacingExtra="8sp"
+        android:text="@string/roehampton_university_student_portal"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="#000000"
+        android:textSize="26sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.72" />
+        app:layout_constraintVertical_bias="0.020" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/timetables"
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:background="#B3FDD835"
+        android:fontFamily="@font/roboto_slab"
+        android:text="@string/timetables"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/library"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/roehampton" />
+
+    <Button
+        android:id="@+id/library"
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:background="#B3FDD835"
+        android:fontFamily="@font/roboto_slab"
+        android:text="@string/library"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/moodle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timetables" />
+
+    <Button
+        android:id="@+id/moodle"
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:background="#B3FDD835"
+        android:fontFamily="@font/roboto_slab"
+        android:text="@string/moodle"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/floor_plan"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/library" />
+
+    <Button
+        android:id="@+id/floor_plan"
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:background="#B3FDD835"
+        android:fontFamily="@font/roboto_slab"
+        android:text="@string/floor_plan"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/moreBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/moodle" />
+
+    <Button
+        android:id="@+id/moreBtn"
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:background="#B3FDD835"
+        android:fontFamily="@font/roboto_slab"
+        android:text="@string/more"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/logout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/floor_plan" />
+
+    <Button
+        android:id="@+id/logout"
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:background="#B3FDD835"
+        android:fontFamily="@font/roboto_slab"
+        android:text="@string/logout"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/progressBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/moreBtn" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="180dp"
-        android:onClick="logout"
-        android:text="Logout"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
-        app:layout_constraintVertical_bias="0.24000001"
-        tools:ignore="OnClick" />
+        app:layout_constraintTop_toBottomOf="@+id/logout"
+        app:layout_constraintVertical_bias="0.26"
+        tools:ignore="UnknownId" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,4 +13,10 @@
     <string name="already_registered_login_here">Already Registered? Login Here</string>
     <string name="dont_have_account_register_here">New here? Register your account.</string>
     <string name="login">Login</string>
+    <string name="timetables">Timetables</string>
+    <string name="library">Library</string>
+    <string name="moodle">Moodle</string>
+    <string name="more">More...</string>
+    <string name="floor_plan">Floor plan</string>
+    <string name="logout">Logout</string>
 </resources>
