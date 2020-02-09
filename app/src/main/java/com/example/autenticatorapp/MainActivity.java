@@ -64,13 +64,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
-
-
-
-
-
     }
     public void logout (View view){
         FirebaseAuth.getInstance().signOut(); //logout
