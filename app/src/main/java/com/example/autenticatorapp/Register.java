@@ -32,7 +32,7 @@ public class Register extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         mStudentID = findViewById(R.id.studentID);
-        mFirstName = findViewById(R.id.firstName);
+        mFirstName = findViewById(R.id.studentID);
         mSurname = findViewById(R.id.surname);
         mEmail = findViewById(R.id.reg_email);
         mPassword = findViewById(R.id.password);
@@ -66,7 +66,7 @@ public class Register extends AppCompatActivity {
                     return;
                 }
 
-                if(TextUtils.isEmpty(cnf_pwd)){
+                if(TextUtils.equals(password, cnf_pwd) == false) {
                     mCnfPassword.setError("Please repeat your password.");
                     return;
                 }

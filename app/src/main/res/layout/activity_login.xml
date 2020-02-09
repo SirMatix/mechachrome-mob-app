@@ -8,16 +8,16 @@
     tools:context=".Login">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/roehampton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/aclonica"
+        android:fontFamily="@font/roboto_slab"
         android:lineSpacingExtra="8sp"
-        android:text="Roehampton University Student Portal"
+        android:text="@string/roehampton_university_student_portal"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="@color/colorPrimary"
-        android:textSize="24sp"
+        android:textSize="26sp"
         android:textStyle="bold"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -25,96 +25,92 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.028" />
-
+        app:layout_constraintVertical_bias="0.020" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="32dp"
         android:fontFamily="serif"
-        android:text="Login Page"
+        android:text="@string/login_page"
         android:textAlignment="center"
         android:textColor="#000000"
-        android:textSize="18sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/studentID"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.453"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.45999998" />
+        app:layout_constraintTop_toBottomOf="@+id/roehampton" />
 
     <EditText
-        android:id="@+id/firstName"
+        android:id="@+id/studentID"
         android:layout_width="360dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginTop="5dp"
         android:ems="10"
-        android:hint="Email Address:"
+        android:fontFamily="@font/roboto_slab"
+        android:hint="@string/student_id"
         android:inputType="textPersonName"
         android:padding="10sp"
         android:textColor="#000000"
-        android:textColorHint="#943131"
+        android:textColorHint="#80943131"
+        android:textSize="16sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/message" />
 
     <EditText
-        android:id="@+id/surname"
+        android:id="@+id/password"
         android:layout_width="360dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="5dp"
         android:ems="10"
-        android:hint="Password:"
+        android:fontFamily="@font/roboto_slab"
+        android:hint="@string/password"
+        android:inputType="textPassword"
         android:padding="10sp"
         android:textColor="#000000"
-        android:textColorHint="#943131"
+        android:textColorHint="#80943131"
+        android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/loginBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.431" />
+        app:layout_constraintTop_toBottomOf="@+id/studentID" />
 
     <Button
         android:id="@+id/loginBtn"
         android:layout_width="360dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="156dp"
-        android:layout_marginBottom="52dp"
+        android:layout_marginTop="8dp"
         android:background="#000000"
-        android:text="LOGIN"
+        android:fontFamily="@font/roboto_slab"
+        android:text="@string/login"
         android:textColor="@color/colorAccent"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/createAccount"
+        app:layout_constraintBottom_toTopOf="@+id/registerBtn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintHorizontal_bias="0.509"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/surname"
-        tools:ignore="InvalidId" />
+        app:layout_constraintTop_toBottomOf="@+id/password" />
 
     <TextView
-        android:id="@+id/createAccount"
+        android:id="@+id/registerBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
-        android:text="Not Registered yet? Create Account"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/roboto_slab"
+        android:text="@string/dont_have_account_register_here"
         android:textColor="#066B5D"
         android:textStyle="italic"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/progressBar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerBtn"
-        app:layout_constraintVertical_bias="0.369" />
+        app:layout_constraintTop_toBottomOf="@+id/loginBtn" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -124,12 +120,11 @@
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/createText"
-        app:layout_constraintVertical_bias="0.25"
+        app:layout_constraintTop_toBottomOf="@+id/registerBtn"
+        app:layout_constraintVertical_bias="0.26"
         tools:ignore="UnknownId" />
 
+
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-

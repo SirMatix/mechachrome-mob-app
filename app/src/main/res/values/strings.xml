@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">AutenticatorApp</string>
+    <string name="roehampton_university_student_portal">Roehampton University Student Portal</string>
+    <string name="create_new_account">Create New Account</string>
+    <string name="login_page">Login Page</string>
+    <string name="first_name">First Name:</string>
+    <string name="email_address">Email Address:</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="student_id">Student ID:</string>
+    <string name="surname">Surname:</string>
+    <string name="register">REGISTER</string>
+    <string name="already_registered_login_here">Already Registered? Login Here</string>
+    <string name="dont_have_account_register_here">New here? Register your account.</string>
+    <string name="login">Login</string>
 </resources>
