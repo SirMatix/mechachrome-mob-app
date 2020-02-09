@@ -11,7 +11,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button timetables, library, moodle, floor_plan, moreBtn;
+    Button timetables, library, moodle, floor_plan, moreBtn, logoutBtn;
     FirebaseAuth fAuth;
 
     @Override
@@ -63,6 +63,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(),More.class));
             }
         });
+
+
+
+
 
 
 

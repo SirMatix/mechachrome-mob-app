@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AutenticatorApp</string>
+    <string name="app_name">AutenthicatorApp</string>
     <string name="roehampton_university_student_portal">Roehampton University Student Portal</string>
     <string name="create_new_account">Create New Account</string>
     <string name="login_page">Login Page</string>
