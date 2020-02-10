@@ -11,7 +11,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button timetables, library, moodle, floor_plan, moreBtn, logoutBtn;
+    Button timetables, library, moodle, floor_plan, moreBtn;
     FirebaseAuth fAuth;
 
     @Override
