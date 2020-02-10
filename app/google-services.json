@@ -1,42 +1,42 @@
 {
   "project_info": {
-    "project_number": "778089724954",
-    "firebase_url": "https://autenticatorapp-6638b.firebaseio.com",
-    "project_id": "autenticatorapp-6638b",
-    "storage_bucket": "autenticatorapp-6638b.appspot.com"
+    "project_number": "2494827897",
+    "firebase_url": "https://mechachromemobileapp-963dc.firebaseio.com",
+    "project_id": "mechachromemobileapp-963dc",
+    "storage_bucket": "mechachromemobileapp-963dc.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:778089724954:android:2b9fef928c4d3aa380e5a3",
+        "mobilesdk_app_id": "1:2494827897:android:a0046812c9917e5b66b3a8",
         "android_client_info": {
-          "package_name": "com.example.autenticatorapp"
+          "package_name": "com.example.mechachromemobileapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "778089724954-holvtaq6mqp8cga1uiav750p9ss69a07.apps.googleusercontent.com",
+          "client_id": "2494827897-lopc143rlt95iublan63023l7mj2kp41.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.autenticatorapp",
-            "certificate_hash": "745d5f8904a9705c312c697e0d30876e036ab672"
+            "package_name": "com.example.mechachromemobileapp",
+            "certificate_hash": "b8d8683aa653cd514100471682f126176279b9f7"
           }
         },
         {
-          "client_id": "778089724954-2apanbh3g4ma5l618rogdkncklk1iju9.apps.googleusercontent.com",
+          "client_id": "2494827897-qkeagh3q2ptcrj0auqu9omh42su2e3fh.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDT3Y7_a8qeBljB8VcTHzKjaTF6FUa1wpg"
+          "current_key": "AIzaSyADZRkLKGL88WYWefdTyoD8KlgoALf4mQA"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "778089724954-2apanbh3g4ma5l618rogdkncklk1iju9.apps.googleusercontent.com",
+              "client_id": "2494827897-qkeagh3q2ptcrj0auqu9omh42su2e3fh.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
