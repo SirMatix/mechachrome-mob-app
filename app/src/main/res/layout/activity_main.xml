@@ -112,7 +112,6 @@
         android:layout_height="wrap_content"
         android:background="#B3FDD835"
         android:fontFamily="@font/roboto_slab"
-        android:onClick="logout"
         android:text="@string/logout"
         android:textColor="#000000"
         android:textSize="20sp"
