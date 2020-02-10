@@ -105,7 +105,7 @@ public class Register extends AppCompatActivity {
                             userID = fAuth.getCurrentUser().getUid();
                             DocumentReference documentReference = fStore.collection("users").document(userID);
                             Map<String,Object> user = new HashMap<>();
-                            user.put("fName",studentID);
+                            user.put("studentID",studentID);
                             user.put("email",email);
                             user.put("fname",fname);
                             user.put("lname",lname);
@@ -115,8 +115,6 @@ public class Register extends AppCompatActivity {
                                     Log.d(TAG,"onSuccess: user Profile is created for " + userID);
                                 }
                             });
-
-
                             startActivity(new Intent(getApplicationContext(),MainActivity.class));
                         }else {
                             Toast.makeText(Register.this, "Error !" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();

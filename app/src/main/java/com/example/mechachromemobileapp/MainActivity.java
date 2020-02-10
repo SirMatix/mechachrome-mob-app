@@ -3,6 +3,7 @@ package com.example.mechachromemobileapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     Button timetables, library, moodle, floor_plan, moreBtn;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
+    String url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +51,9 @@ public class MainActivity extends AppCompatActivity {
         moodle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // pass
+                url = "https://partnerships.moodle.roehampton.ac.uk/login/index.php";
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                startActivity(browserIntent);
             }
         });
 
