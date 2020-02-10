@@ -2,10 +2,10 @@
 <ol>
   <li>Register
     <ul>
-        <li>Student id,</li>
-        <li>First name,</li>
+        <li>Student id</li>
+        <li>First name</li>
         <li>Surname,</li>
-        <li>Email,</li>
+        <li>Email</li>
         <li>Password</li>
     </ul>
   </li>
@@ -51,6 +51,7 @@
   <li>Forum</li>
   <li>Database connectivity - Firebase</li>
 </ol>
+<br />
 <h3>Deliverables:</h3>
   <ol>
   <li>Design documentation:
@@ -78,7 +79,7 @@
     </ul>
   </li>
   </ol>
-  
+<br/>
 <h3>Marking Criteria:</h3>
   <ol>
   <li>Design documentation - 10 Marks</li>
