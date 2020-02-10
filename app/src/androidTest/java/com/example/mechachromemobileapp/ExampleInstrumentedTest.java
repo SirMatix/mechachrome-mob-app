@@ -1,4 +1,4 @@
-package com.example.autenticatorapp;
+package com.example.mechachromemobileapp;
 
 import android.content.Context;
 

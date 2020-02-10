@@ -1,4 +1,4 @@
-package com.example.autenticatorapp;
+package com.example.mechachromemobileapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
