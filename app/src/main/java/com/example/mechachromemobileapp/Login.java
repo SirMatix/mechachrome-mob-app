@@ -20,7 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class Login extends AppCompatActivity {
 
-    EditText mEmail,mPassword;
+    EditText mStudentID,mPassword;
     Button mLoginBtn;
     TextView mCreateBtn;
     FirebaseAuth fAuth;
@@ -32,7 +32,7 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        mEmail = findViewById(R.id.reg_email);
+        mStudentID = findViewById(R.id.studentID);
         mPassword = findViewById(R.id.password);
         mLoginBtn = findViewById(R.id.loginBtn);
         fAuth = FirebaseAuth.getInstance();
@@ -43,11 +43,11 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String email = mEmail.getText().toString().trim();
+                String email = mStudentID.getText().toString().trim();
                 String password = mPassword.getText().toString().trim();
 
                 if(TextUtils.isEmpty(email)){
-                    mEmail.setError("Email is Required.");
+                    mStudentID.setError("studentID is Required.");
                     return;
                 }
 
