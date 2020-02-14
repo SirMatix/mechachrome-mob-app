@@ -3,6 +3,8 @@ package com.example.mechachromemobileapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -19,11 +21,18 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.io.BufferedWriter;
+import java.io.Console;
+import java.io.FileNotFoundException;
+import java.io.File;
+import java.io.FileWriter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class Register extends AppCompatActivity {
 
@@ -34,6 +43,7 @@ public class Register extends AppCompatActivity {
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     ProgressBar progressBar;
+    FirebaseDatabase db;
     String userID;
 
     @Override
@@ -41,91 +51,35 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        // Data variables
         mStudentID = findViewById(R.id.studentID);
         mFirstName = findViewById(R.id.firstName);
         mSurname = findViewById(R.id.surname);
         mEmail = findViewById(R.id.reg_email);
         mPassword = findViewById(R.id.password);
         mCnfPassword = findViewById(R.id.cnfpassword);
+
+        // Button variables
         mRegisterBtn = findViewById(R.id.registerBtn);
         mLoginBtn = findViewById(R.id.loginBtn);
 
+        // Firebase initializations
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
+        db = FirebaseDatabase.getInstance();
+
+        // Progress bar
         progressBar = findViewById(R.id.progressBar);
 
-        if(fAuth.getCurrentUser() != null){
-            startActivity(new Intent(getApplicationContext(),MainActivity.class));
-            finish();
-        }
-
+        // When you click Register
         mRegisterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                final String studentID = mStudentID.getText().toString();
-                final String fname = mFirstName.getText().toString();
-                final String lname = mSurname.getText().toString();
-                final String email = mEmail.getText().toString().trim();
-                String password = mPassword.getText().toString().trim();
-                String cnf_pwd = mCnfPassword.getText().toString().trim();
-
-                if(TextUtils.isEmpty(email)){
-                    mStudentID.setError("Email is Required.");
-                    return;
-                }
-
-                if(TextUtils.isEmpty(password)){
-                    mPassword.setError("Please enter a password.");
-                    return;
-                }
-
-                if(TextUtils.equals(password, cnf_pwd) == false) {
-                    mCnfPassword.setError("Please repeat your password.");
-                    return;
-                }
-
-                if(password.length() < 6){
-                    mPassword.setError("The password must contains minimum 6 characters.");
-                    return;
-                }
-
-                progressBar.setVisibility(View.VISIBLE);
-                  //know we can register the user in firebase
-
-                fAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-
-                        if(task.isSuccessful()){
-                            Toast.makeText(Register.this, "Account created", Toast.LENGTH_SHORT).show();
-
-                            // putting user data to the database
-
-                            userID = fAuth.getCurrentUser().getUid();
-                            DocumentReference documentReference = fStore.collection("users").document(userID);
-                            Map<String,Object> user = new HashMap<>();
-                            user.put("studentID",studentID);
-                            user.put("email",email);
-                            user.put("fname",fname);
-                            user.put("lname",lname);
-                            documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    Log.d(TAG,"onSuccess: user Profile is created for " + userID);
-                                }
-                            });
-                            startActivity(new Intent(getApplicationContext(),MainActivity.class));
-                        }else {
-                            Toast.makeText(Register.this, "Error !" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                            progressBar.setVisibility(View.GONE);
-                        }
-                    }
-                });
-
+                registerUser();
             }
         });
 
+        // When you click Login text
         mLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,6 +88,98 @@ public class Register extends AppCompatActivity {
         });
 
     }
-}
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if (fAuth.getCurrentUser() != null) {
+            startActivity(new Intent(getApplicationContext(),MainActivity.class));
+            finish();
+        }
+    }
+
+    public void registerUser(){
+        final String studentID = mStudentID.getText().toString();
+        final String fname = mFirstName.getText().toString();
+        final String lname = mSurname.getText().toString();
+        final String email = mEmail.getText().toString().trim();
+        String password = mPassword.getText().toString().trim();
+        String cnf_pwd = mCnfPassword.getText().toString().trim();
+        // checks email field
+        if(TextUtils.isEmpty(email)){
+            mStudentID.setError("Email is Required.");
+            return;
+        }
+        // checks password field
+        if(TextUtils.isEmpty(password)){
+            mPassword.setError("Please enter a password.");
+            return;
+        }
+        // compares password and confirm password field
+        if(!TextUtils.equals(password, cnf_pwd)) {
+            mCnfPassword.setError("Please repeat your password.");
+            return;
+        }
+        // check password length
+        if(password.length() < 6){
+            mPassword.setError("The password must contains minimum 6 characters.");
+            return;
+        }
+        // sets progressbar visibility
+        progressBar.setVisibility(View.VISIBLE);
+        //know we can register the user in Firebase
+        fAuth.createUserWithEmailAndPassword(email,password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
+                    Toast.makeText(Register.this, "Account created", Toast.LENGTH_SHORT).show();
+                    userID = fAuth.getCurrentUser().getUid();
+                    DocumentReference docRef = fStore.collection("users").document(userID);
+                    User user = new User(studentID,fname,lname,email);
+                    docRef.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d(TAG,"onSuccess: user Profile is created for " + userID);
+                        }
+                    });
+                    DocumentReference docIds = fStore.collection("ids").document(studentID);
+                    Map<String,Object> ids = new HashMap<>();
+                    ids.put("email",email);
+                    docIds.set(ids).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d(TAG,"Ids document created");
+                        }
+                    });
+                    startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                }else {
+                    Toast.makeText(Register.this, "Error !" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
+                }
+            }
+        });
+
+    }
+
+    private void writeToXmlFile(User user) {
+        String studentID = user.getStudentID();
+        String email = user.getEmail();
+        File fileName =  new File("\\app\\data\\studentID.txt");
+
+        try {
+            fileName.createNewFile();
+            BufferedWriter out = new BufferedWriter(new FileWriter(fileName));
+            out.append(studentID);
+            out.append(email);
+            out.newLine();
+        }
+        catch (Exception e) {
+            Log.e("Exception", "File write failed: " + e.toString());
+        }
+    }
+
+    }
 
 
