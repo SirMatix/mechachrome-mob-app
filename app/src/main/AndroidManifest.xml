@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".FloorPlan"></activity>
+        <activity android:name=".Forum"></activity>
+        <activity android:name=".FloorPlan" />
         <activity android:name=".More" />
         <activity android:name=".Library" />
         <activity android:name=".Timetables" />

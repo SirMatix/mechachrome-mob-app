@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         moreBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),More.class));
+                startActivity(new Intent(getApplicationContext(),Forum.class));
             }
         });
 
