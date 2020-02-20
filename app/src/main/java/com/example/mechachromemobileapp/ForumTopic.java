@@ -1,8 +1,8 @@
 package com.example.mechachromemobileapp;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Forum extends Activity {
+public class ForumTopic extends AppCompatActivity {
 
     public static final String TAG = "TAG";
     FirebaseFirestore db;
@@ -31,52 +31,41 @@ public class Forum extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_forum);
+        setContentView(R.layout.activity_forum_topic);
 
+        String topicFeed = "Topic1";
         db = FirebaseFirestore.getInstance();
         //progressBar.findViewById(R.layout.custom_forum_list);
 
 
-        final ArrayList<Map> forumTopics = new ArrayList<>();
+        final ArrayList<Map> forumPosts = new ArrayList<>();
 
-        final ListAdapter forumAdapter = new ForumAdapter(this, forumTopics);
+        final ListAdapter postAdapter = new PostAdapter(this, forumPosts);
         ListView forumListView =  findViewById(R.id.ForumTopicListView);
-        forumListView.setAdapter(forumAdapter);
+        forumListView.setAdapter(postAdapter);
 
         //progressBar.setVisibility(View.VISIBLE);
-        db.collection("forum_topics")
+        db.collection("forum_posts")
+                .whereEqualTo("topic", topicFeed)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Map<String,Object> topicData = new HashMap<>();
-                                topicData.put("topic_name",document.getString("topic_name"));
-                                topicData.put("author",document.getString("author"));
-                                topicData.put("date_published",document.get("date_published").toString());
-                                forumTopics.add(topicData);
+                                Map<String,Object> postData = new HashMap<>();
+                                postData.put("content",document.getString("content"));
+                                postData.put("author",document.getString("author"));
+                                postData.put("date_published",document.get("date_published").toString());
+                                forumPosts.add(postData);
                                 Log.d(TAG, "Got the topic with name: " + document.get("topic_name"));
                             }
-                            ((ArrayAdapter) forumAdapter).notifyDataSetChanged();
+                            ((ArrayAdapter) postAdapter).notifyDataSetChanged();
                             //progressBar.setVisibility(View.GONE);
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
                 });
-
-        forumListView.setOnItemClickListener(
-                new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Map topicData = (Map) parent.getItemAtPosition(position);
-                        String topic = (String) topicData.get("topic_name");
-                        Toast.makeText(Forum.this, topic, Toast.LENGTH_LONG).show();
-                    }
-                }
-        );
-
-
     }
 }
