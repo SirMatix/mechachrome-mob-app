@@ -1,1 +1,4 @@
-<resources></resources>
+<resources>
+    <string name="created_by">created by:</string>
+    <string name="last_post_by">last post by:</string>
+</resources>

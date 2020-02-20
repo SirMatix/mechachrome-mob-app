@@ -33,7 +33,7 @@ public class Forum extends Activity {
         db = FirebaseFirestore.getInstance();
         final ArrayList<String> forumTopics = new ArrayList<>();
 
-        final ListAdapter forumAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, forumTopics);
+        final ListAdapter forumAdapter = new ForumAdapter(this, forumTopics);
         ListView forumListView =  findViewById(R.id.ForumListView);
         forumListView.setAdapter(forumAdapter);
 
