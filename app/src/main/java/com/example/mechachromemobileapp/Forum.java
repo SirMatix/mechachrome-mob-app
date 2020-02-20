@@ -1,16 +1,17 @@
 package com.example.mechachromemobileapp;
 
-import androidx.annotation.NonNull;
-
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -26,21 +27,23 @@ public class Forum extends Activity {
 
     public static final String TAG = "TAG";
     FirebaseFirestore db;
+    Button addTopic;
     //ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forum);
-
+        addTopic = findViewById(R.id.addNewTopicBtn);
         db = FirebaseFirestore.getInstance();
+
         //progressBar.findViewById(R.layout.custom_forum_list);
 
 
         final ArrayList<Map> forumTopics = new ArrayList<>();
 
         final ListAdapter forumAdapter = new ForumAdapter(this, forumTopics);
-        ListView forumListView =  findViewById(R.id.ForumTopicListView);
+        ListView forumListView =  findViewById(R.id.ForumListView);
         forumListView.setAdapter(forumAdapter);
 
         //progressBar.setVisibility(View.VISIBLE);
@@ -72,10 +75,20 @@ public class Forum extends Activity {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Map topicData = (Map) parent.getItemAtPosition(position);
                         String topic = (String) topicData.get("topic_name");
-                        Toast.makeText(Forum.this, topic, Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(Forum.this, ForumTopic.class);
+                        intent.putExtra("topic", topic);
                     }
                 }
         );
+
+        addTopic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Forum.this,ForumPostTopic.class));
+            }
+        });
+
+
 
 
     }

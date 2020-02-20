@@ -7,5 +7,7 @@
     <string name="write_post_topic_here">write post topic here...</string>
     <string name="add_topic">Add topic</string>
     <string name="discard_topic">Discard topic</string>
+    <string name="discard">Discard</string>
     <string name="reply">Reply</string>
+    <string name="new_topic">New Topic</string>
 </resources>

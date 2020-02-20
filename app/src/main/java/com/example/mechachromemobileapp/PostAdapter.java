@@ -33,14 +33,14 @@ class PostAdapter extends ArrayAdapter<Map> {
         String date_published = (String) postData.get("date_published");
 
         // getting data from the layout
-        TextView topicText = forumView.findViewById(R.id.forumTopicView);
-        TextView topicAuthor = forumView.findViewById(R.id.topicUserText);
-        TextView topicPublished = forumView.findViewById(R.id.topicPublishedText);
+        TextView postContent = forumView.findViewById(R.id.forumTopicView);
+        TextView postAuthor = forumView.findViewById(R.id.topicUserText);
+        TextView postPublished = forumView.findViewById(R.id.topicPublishedText);
 
         // setting layout data to appropriate values
-        topicText.setText(post_content);
-        topicAuthor.setText(author);
-        topicPublished.setText(date_published);
+        postContent.setText(post_content);
+        postAuthor.setText("author: " + author);
+        postPublished.setText("date published: " + date_published);
 
         return forumView;
     }

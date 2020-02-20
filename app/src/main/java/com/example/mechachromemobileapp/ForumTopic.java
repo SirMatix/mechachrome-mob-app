@@ -1,16 +1,16 @@
 package com.example.mechachromemobileapp;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -22,10 +22,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ForumTopic extends AppCompatActivity {
+public class ForumTopic extends Activity {
 
     public static final String TAG = "TAG";
     FirebaseFirestore db;
+    String topicFeed;
+    TextView topic;
+    Button reply;
     //ProgressBar progressBar;
 
     @Override
@@ -33,16 +36,27 @@ public class ForumTopic extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forum_topic);
 
-        String topicFeed = "Topic1";
+        // getting button view
+        reply = findViewById(R.id.replyButton);
+
+        // getting intent from Forum activity and getting extra string
+        Intent intent = getIntent();
+        topicFeed = intent.getStringExtra("topic");
+
+        // getting and setting the topic name on top of our layout to topic name
+        topic = findViewById(R.id.topic);
+        topic.setText(topicFeed);
+
+        // getting firebase instance
         db = FirebaseFirestore.getInstance();
+
         //progressBar.findViewById(R.layout.custom_forum_list);
-
-
+        // setting ArrayList which will contain Map objects for handling Post data
         final ArrayList<Map> forumPosts = new ArrayList<>();
 
         final ListAdapter postAdapter = new PostAdapter(this, forumPosts);
-        ListView forumListView =  findViewById(R.id.ForumTopicListView);
-        forumListView.setAdapter(postAdapter);
+        ListView forumTopicListView =  findViewById(R.id.ForumTopicListView);
+        forumTopicListView.setAdapter(postAdapter);
 
         //progressBar.setVisibility(View.VISIBLE);
         db.collection("forum_posts")
