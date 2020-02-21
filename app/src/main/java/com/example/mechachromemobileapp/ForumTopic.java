@@ -1,16 +1,17 @@
 package com.example.mechachromemobileapp;
 
-import androidx.annotation.NonNull;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -41,7 +42,7 @@ public class ForumTopic extends Activity {
 
         // getting intent from Forum activity and getting extra string
         Intent intent = getIntent();
-        topicFeed = intent.getStringExtra("topic");
+        topicFeed = intent.getStringExtra("topic_name");
 
         // getting and setting the topic name on top of our layout to topic name
         topic = findViewById(R.id.topic);
@@ -60,7 +61,7 @@ public class ForumTopic extends Activity {
 
         //progressBar.setVisibility(View.VISIBLE);
         db.collection("forum_posts")
-                .whereEqualTo("topic", topicFeed)
+                .whereEqualTo("topic_name", topicFeed)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -81,5 +82,13 @@ public class ForumTopic extends Activity {
                         }
                     }
                 });
+
+        reply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ForumTopic.this, ForumPostReply.class);
+                intent.putExtra("topic_name", topicFeed);
+            }
+        });
     }
 }

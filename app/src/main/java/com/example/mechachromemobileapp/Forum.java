@@ -26,7 +26,7 @@ import java.util.Map;
 public class Forum extends Activity {
 
     public static final String TAG = "TAG";
-    FirebaseFirestore db;
+    FirebaseFirestore fStore;
     Button addTopic;
     //ProgressBar progressBar;
 
@@ -35,7 +35,7 @@ public class Forum extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forum);
         addTopic = findViewById(R.id.addNewTopicBtn);
-        db = FirebaseFirestore.getInstance();
+        fStore = FirebaseFirestore.getInstance();
 
         //progressBar.findViewById(R.layout.custom_forum_list);
 
@@ -47,7 +47,7 @@ public class Forum extends Activity {
         forumListView.setAdapter(forumAdapter);
 
         //progressBar.setVisibility(View.VISIBLE);
-        db.collection("forum_topics")
+        fStore.collection("forum_topics")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -56,7 +56,11 @@ public class Forum extends Activity {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Map<String,Object> topicData = new HashMap<>();
                                 topicData.put("topic_name",document.getString("topic_name"));
-                                topicData.put("author",document.getString("author"));
+                                if(document.getString("author") == null){
+                                    topicData.put("author", "no author");
+                                } else                                {
+                                    topicData.put("author",document.getString("author"));
+                                }
                                 topicData.put("date_published",document.get("date_published").toString());
                                 forumTopics.add(topicData);
                                 Log.d(TAG, "Got the topic with name: " + document.get("topic_name"));
@@ -76,7 +80,7 @@ public class Forum extends Activity {
                         Map topicData = (Map) parent.getItemAtPosition(position);
                         String topic = (String) topicData.get("topic_name");
                         Intent intent = new Intent(Forum.this, ForumTopic.class);
-                        intent.putExtra("topic", topic);
+                        intent.putExtra("topic_name", topic);
                     }
                 }
         );
@@ -87,9 +91,6 @@ public class Forum extends Activity {
                 startActivity(new Intent(Forum.this,ForumPostTopic.class));
             }
         });
-
-
-
 
     }
 }

@@ -1,12 +1,14 @@
 package com.example.mechachromemobileapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
@@ -24,6 +26,8 @@ public class ForumPostReply extends AppCompatActivity {
     FirebaseFirestore fStore;
     SimpleDateFormat date;
     Long date_published;
+    String topicFeed;
+    TextView topic;
 
 
     @Override
@@ -36,6 +40,14 @@ public class ForumPostReply extends AppCompatActivity {
         fStore = FirebaseFirestore.getInstance();
         date_published = System.currentTimeMillis()/1000;
         //String ts = date_published.toString();
+
+        // getting intent from Forum activity and getting extra string
+        Intent intent = getIntent();
+        topicFeed = intent.getStringExtra("topic");
+
+        // getting and setting the topic name on top of our layout to topic name
+        topic = findViewById(R.id.topic);
+        topic.setText(topicFeed);
 
 
         addTopicBtn.setOnClickListener(new View.OnClickListener() {
