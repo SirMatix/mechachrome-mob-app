@@ -17,6 +17,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -47,8 +48,7 @@ public class ForumPostTopic extends AppCompatActivity {
         fStore = FirebaseFirestore.getInstance();
 
         date_published = Calendar.getInstance().getTime();
-        //date_published = System.currentTimeMillis()/1000;
-        //String ts = date_published.toString();
+
 
 
         addTopicBtn.setOnClickListener(new View.OnClickListener() {
@@ -56,18 +56,26 @@ public class ForumPostTopic extends AppCompatActivity {
             public void onClick(View v) {
                 String topic = editTopic.getText().toString().trim();
                 String content = editContent.getText().toString().trim();
-                final String[] author = new String[1];
+                final ArrayList<String> author = new ArrayList<>();
 
                 DocumentReference userRef = fStore.collection("users").document(userID);
                 userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        DocumentSnapshot user = task.getResult();
                         if(task.isSuccessful()) {
-                            DocumentSnapshot user = task.getResult();
-                            author[0] = user.get("fname").toString() + " " + user.get("lname").toString();
-                            ;
+                            if (user.exists()) {
+                                Log.d(TAG,"Got the user");
+                                String author_temp = user.get("fname").toString() + " " + user.get("lname").toString();
+                                author.add(author_temp);
+                            } else {
+                                Log.d(TAG,"No such user");
+                            }
                         }
-                    }
+                        else {
+                            Log.d(TAG, "get failed with ", task.getException());
+                            }
+                        }
                 });
 
                 DocumentReference topicRef = fStore.collection("forum_topics").document();
@@ -82,7 +90,6 @@ public class ForumPostTopic extends AppCompatActivity {
                     }
                 });
 
-
                 DocumentReference postRef = fStore.collection("forum_posts").document();
                 Map<String, Object> addPost = new HashMap<>();
                 addPost.put("topic_name", topic);
@@ -95,9 +102,6 @@ public class ForumPostTopic extends AppCompatActivity {
                         Log.d(TAG,"New Post document created");
                     }
                 });
-
-
-
             }
         });
 
