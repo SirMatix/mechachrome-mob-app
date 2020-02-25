@@ -17,13 +17,14 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class ForumPostReply extends AppCompatActivity {
 
@@ -86,7 +87,7 @@ public class ForumPostReply extends AppCompatActivity {
 
                             // setting the post
                             DocumentReference postRef = fStore.collection("forum_posts").document();
-                            Map<String, Object> addPost = new HashMap<>();
+                            Map<String, Object> addPost = new TreeMap<>();
                             addPost.put("topic_name", topicFeed);
                             addPost.put("date_published", date_published);
                             addPost.put("author", author.get(0));
@@ -95,20 +96,21 @@ public class ForumPostReply extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     Log.d(TAG, "New Post document created");
+
                                 }
                             });
 
                             // updating topic post number value
-                            // DocumentReference topicRef = fStore.collection("forum_posts").document(topicFeed);
-                            // topicRef.update("post_num", FieldValue.increment());
-
-                            finish();
+                            DocumentReference topicRef = fStore.collection("forum_topics").document(topicFeed);
+                            topicRef.update("post_num", FieldValue.increment(1));
 
                         } else {
                             Log.d(TAG, "get failed with ", task.getException());
                         }
                     }
                 });
+
+
 
 
 
