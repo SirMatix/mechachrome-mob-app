@@ -3,6 +3,7 @@ package com.example.mechachromemobileapp;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -20,16 +21,19 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ForumTopic extends Activity {
 
     public static final String TAG = "TAG";
-    FirebaseFirestore db;
+    FirebaseFirestore fStore;
     String topicFeed;
     TextView topic;
     Button reply;
+    Calendar cal;
     //ProgressBar progressBar;
 
     @Override
@@ -49,7 +53,10 @@ public class ForumTopic extends Activity {
         topic.setText(topicFeed);
 
         // getting firebase instance
-        db = FirebaseFirestore.getInstance();
+        fStore = FirebaseFirestore.getInstance();
+
+        // getting calendar instance
+        cal = Calendar.getInstance();
 
         //progressBar.findViewById(R.layout.custom_forum_list);
         // setting ArrayList which will contain Map objects for handling Post data
@@ -60,7 +67,7 @@ public class ForumTopic extends Activity {
         forumTopicListView.setAdapter(postAdapter);
 
         //progressBar.setVisibility(View.VISIBLE);
-        db.collection("forum_posts")
+        fStore.collection("forum_posts")
                 .whereEqualTo("topic_name", topicFeed)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -71,7 +78,10 @@ public class ForumTopic extends Activity {
                                 Map<String,Object> postData = new HashMap<>();
                                 postData.put("content",document.getString("content"));
                                 postData.put("author",document.getString("author"));
-                                postData.put("date_published",document.get("date_published").toString());
+
+                                Date date_published = document.getTimestamp("date_published").toDate();
+                                postData.put("date_published", DateFormat.format("dd-MM-yyyy hh:mm:ss",date_published).toString());
+
                                 forumPosts.add(postData);
                                 Log.d(TAG, "Got the topic with name: " + document.get("topic_name"));
                             }
@@ -88,6 +98,7 @@ public class ForumTopic extends Activity {
             public void onClick(View v) {
                 Intent intent = new Intent(ForumTopic.this, ForumPostReply.class);
                 intent.putExtra("topic_name", topicFeed);
+                startActivity(intent);
             }
         });
     }

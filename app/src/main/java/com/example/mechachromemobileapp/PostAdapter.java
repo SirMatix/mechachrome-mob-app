@@ -15,7 +15,7 @@ import java.util.Map;
 
 class PostAdapter extends ArrayAdapter<Map> {
     public PostAdapter(@NonNull Context context, ArrayList<Map> forumPosts) {
-        super(context, R.layout.custom_forum_list, forumPosts);
+        super(context, R.layout.custom_post_list, forumPosts);
     }
 
     @NonNull
@@ -33,9 +33,9 @@ class PostAdapter extends ArrayAdapter<Map> {
         String date_published = (String) postData.get("date_published");
 
         // getting data from the layout
-        TextView postContent = forumView.findViewById(R.id.forumTopicView);
-        TextView postAuthor = forumView.findViewById(R.id.topicUserText);
-        TextView postPublished = forumView.findViewById(R.id.topicPublishedText);
+        TextView postContent = forumView.findViewById(R.id.content);
+        TextView postAuthor = forumView.findViewById(R.id.author);
+        TextView postPublished = forumView.findViewById(R.id.date_published);
 
         // setting layout data to appropriate values
         postContent.setText(post_content);

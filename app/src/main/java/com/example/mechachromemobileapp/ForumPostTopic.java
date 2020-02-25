@@ -49,13 +49,11 @@ public class ForumPostTopic extends AppCompatActivity {
 
         date_published = Calendar.getInstance().getTime();
 
-
-
         addTopicBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String topic = editTopic.getText().toString().trim();
-                String content = editContent.getText().toString().trim();
+                final String topic = editTopic.getText().toString().trim();
+                final String content = editContent.getText().toString().trim();
                 final ArrayList<String> author = new ArrayList<>();
 
 
@@ -65,54 +63,51 @@ public class ForumPostTopic extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         DocumentSnapshot user = task.getResult();
-                        if(task.isSuccessful()) {
+                        if (task.isSuccessful()) {
                             if (user.exists()) {
-                                Log.d(TAG,"Got the user " + userID);
+                                Log.d(TAG, "Got the user " + userID);
                                 String author_temp = user.get("fname").toString() + " " + user.get("lname").toString();
-                                author.add(0,author_temp);
+                                author.add(0, author_temp);
                             } else {
-                                Log.d(TAG,"No such user");
+                                Log.d(TAG, "No such user");
                             }
-                            notifyAll();
-                        }
 
-                        else {
+                            // setting the topic
+                            DocumentReference topicRef = fStore.collection("forum_topics").document(topic);
+                            Map<String, Object> addTopic = new HashMap<>();
+                            addTopic.put("date_published", date_published);
+                            addTopic.put("author", author.get(0));
+                            addTopic.put("post_num", 1);
+                            topicRef.set(addTopic).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d(TAG, "New Topic document created");
+                                }
+                            });
+
+                            // setting the post
+                            DocumentReference postRef = fStore.collection("forum_posts").document();
+                            Map<String, Object> addPost = new HashMap<>();
+                            addPost.put("topic_name", topic);
+                            addPost.put("date_published", date_published);
+                            addPost.put("author", author.get(0));
+                            addPost.put("content", content);
+                            postRef.set(addPost).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d(TAG, "New Post document created");
+                                }
+                            });
+
+
+                        } else {
                             Log.d(TAG, "get failed with ", task.getException());
                         }
                     }
                 });
 
 
-                // setting the topic
-                DocumentReference topicRef = fStore.collection("forum_topics").document();
-                Map<String, Object> addTopic = new HashMap<>();
-                addTopic.put("topic_name", topic);
-                addTopic.put("date_published", date_published);
-                addTopic.put("author", author.get(0));
-                topicRef.set(addTopic).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG,"New Topic document created");
-                    }
-                });
-
-                // setting the post
-                DocumentReference postRef = fStore.collection("forum_posts").document();
-                Map<String, Object> addPost = new HashMap<>();
-                addPost.put("topic_name", topic);
-                addPost.put("date_published", date_published);
-                addPost.put("author", author.get(0));
-                addPost.put("content", content);
-                postRef.set(addPost).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG,"New Post document created");
-                    }
-                });
             }
         });
-
-
-
     }
 }

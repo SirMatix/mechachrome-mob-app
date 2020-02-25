@@ -8,69 +8,111 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ForumPostReply extends AppCompatActivity {
 
     public static final String TAG = "TAG";
-    EditText editTopic, editContent;
-    Button addTopicBtn, discardTopicBtn;
+    EditText editContent;
+    TextView topic, viewTopic;
+    Button replyPostBtn;
     FirebaseFirestore fStore;
-    SimpleDateFormat date;
-    Long date_published;
-    String topicFeed;
-    TextView topic;
-
+    FirebaseAuth fAuth;
+    Date date_published;
+    String userID, topicFeed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_forum_post_topic);
+        setContentView(R.layout.activity_forum_post_reply);
 
-        editTopic = findViewById(R.id.editTopic);
+        viewTopic = findViewById(R.id.viewTopic);
         editContent = findViewById(R.id.editContent);
+        replyPostBtn = findViewById(R.id.addReplyBtn);
+        date_published = Calendar.getInstance().getTime();
+
+        // getting Auth and userID
+        fAuth = FirebaseAuth.getInstance();
+        userID = fAuth.getCurrentUser().getUid();
+
+        // getting fStore instance
         fStore = FirebaseFirestore.getInstance();
-        date_published = System.currentTimeMillis()/1000;
-        //String ts = date_published.toString();
 
         // getting intent from Forum activity and getting extra string
         Intent intent = getIntent();
-        topicFeed = intent.getStringExtra("topic");
+        topicFeed = intent.getStringExtra("topic_name");
 
         // getting and setting the topic name on top of our layout to topic name
         topic = findViewById(R.id.topic);
-        topic.setText(topicFeed);
+        viewTopic.setText(topicFeed);
 
 
-        addTopicBtn.setOnClickListener(new View.OnClickListener() {
+        replyPostBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String topic = editTopic.getText().toString().trim();
-                String content = editContent.getText().toString().trim();
+                final String content = editContent.getText().toString().trim();
+                final ArrayList<String> author = new ArrayList<>();
 
-                DocumentReference postRef = fStore.collection("forum_topics").document();
-                Map<String, Object> addTopic = new HashMap<>();
-                addTopic.put("topic",topic);
-                addTopic.put("content",content);
-                addTopic.put("date published", date_published);
 
-                postRef.set(addTopic).addOnSuccessListener(new OnSuccessListener<Void>() {
+                // getting the user
+                DocumentReference userRef = fStore.collection("users").document(userID);
+                userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG,"Ids document created");
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        DocumentSnapshot user = task.getResult();
+                        if (task.isSuccessful()) {
+                            if (user.exists()) {
+                                Log.d(TAG, "Got the user " + userID);
+                                String author_temp = user.get("fname").toString() + " " + user.get("lname").toString();
+                                author.add(0, author_temp);
+                            } else {
+                                Log.d(TAG, "No such user");
+                            }
+
+                            // setting the post
+                            DocumentReference postRef = fStore.collection("forum_posts").document();
+                            Map<String, Object> addPost = new HashMap<>();
+                            addPost.put("topic_name", topicFeed);
+                            addPost.put("date_published", date_published);
+                            addPost.put("author", author.get(0));
+                            addPost.put("content", content);
+                            postRef.set(addPost).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d(TAG, "New Post document created");
+                                }
+                            });
+
+                            // updating topic post number value
+                            // DocumentReference topicRef = fStore.collection("forum_posts").document(topicFeed);
+                            // topicRef.update("post_num", FieldValue.increment());
+
+                            finish();
+
+                        } else {
+                            Log.d(TAG, "get failed with ", task.getException());
+                        }
                     }
                 });
 
+
+
             }
         });
-
     }
 }

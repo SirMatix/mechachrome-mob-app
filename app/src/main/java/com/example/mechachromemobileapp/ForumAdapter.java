@@ -31,16 +31,19 @@ class ForumAdapter extends ArrayAdapter<Map> {
         String forumTopic = (String) topicData.get("topic_name");
         String author = (String) topicData.get("author");
         String date_published = (String) topicData.get("date_published");
+        String post_num = (String) topicData.get("post_num");
 
         // getting data from the layout
         TextView topicText = forumView.findViewById(R.id.forumTopicView);
         TextView topicAuthor = forumView.findViewById(R.id.topicUserText);
         TextView topicPublished = forumView.findViewById(R.id.topicPublishedText);
+        TextView numReplies = forumView.findViewById(R.id.numReplies);
 
         // setting layout data to appropriate values
         topicText.setText(forumTopic);
         topicAuthor.setText(author);
         topicPublished.setText(date_published);
+        numReplies.setText(post_num);
 
         return forumView;
     }
