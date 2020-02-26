@@ -1,5 +1,6 @@
 package com.example.mechachromemobileapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -27,7 +28,7 @@ public class ForumPostTopic extends AppCompatActivity {
 
     public static final String TAG = "TAG";
     EditText editTopic, editContent;
-    Button addTopicBtn;
+    Button addTopicBtn, discardTopicBtn;
     FirebaseFirestore fStore;
     FirebaseAuth fAuth;
     Date date_published;
@@ -41,6 +42,7 @@ public class ForumPostTopic extends AppCompatActivity {
         editTopic = findViewById(R.id.editTopic);
         editContent = findViewById(R.id.editContent);
         addTopicBtn = findViewById(R.id.addTopicBtn);
+        discardTopicBtn = findViewById(R.id.discardTopicBtn);
 
         fAuth = FirebaseAuth.getInstance();
         userID = fAuth.getCurrentUser().getUid();
@@ -100,6 +102,12 @@ public class ForumPostTopic extends AppCompatActivity {
                             });
 
 
+                            // Finishing the activity and starting new
+                            Intent intent = new Intent(ForumPostTopic.this, Forum.class);
+                            startActivity(intent);
+                            finish();
+
+
                         } else {
                             Log.d(TAG, "get failed with ", task.getException());
                         }
@@ -109,5 +117,16 @@ public class ForumPostTopic extends AppCompatActivity {
 
             }
         });
+
+        discardTopicBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Finishing the activity and starting previous one
+                Intent intent = new Intent(ForumPostTopic.this, Forum.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
+
 }

@@ -42,8 +42,6 @@ public class Forum extends Activity {
         fStore = FirebaseFirestore.getInstance();
         empty = findViewById(R.id.empty);
 
-        //progressBar.findViewById(R.layout.custom_forum_list);
-
 
         final ArrayList<Map> forumTopics = new ArrayList<>();
 
@@ -52,7 +50,7 @@ public class Forum extends Activity {
         forumListView.setEmptyView(empty);
         forumListView.setAdapter(forumAdapter);
 
-        //progressBar.setVisibility(View.VISIBLE);
+
         fStore.collection("forum_topics")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -72,7 +70,6 @@ public class Forum extends Activity {
                                 Log.d(TAG, "Got the topic with name: " + document.get("topic_name"));
                             }
                             ((ArrayAdapter) forumAdapter).notifyDataSetChanged();
-                            //progressBar.setVisibility(View.GONE);
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
@@ -88,6 +85,7 @@ public class Forum extends Activity {
                         Intent intent = new Intent(Forum.this, ForumTopic.class);
                         intent.putExtra("topic_name", topic);
                         startActivity(intent);
+                        finish();
                     }
                 }
         );

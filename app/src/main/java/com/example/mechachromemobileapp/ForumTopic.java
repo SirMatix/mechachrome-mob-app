@@ -75,6 +75,7 @@ public class ForumTopic extends Activity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
+
                                 Map<String,Object> postData = new HashMap<>();
                                 postData.put("content",document.getString("content"));
                                 postData.put("author",document.getString("author"));
@@ -99,7 +100,17 @@ public class ForumTopic extends Activity {
                 Intent intent = new Intent(ForumTopic.this, ForumPostReply.class);
                 intent.putExtra("topic_name", topicFeed);
                 startActivity(intent);
+                finish();
             }
         });
+
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(ForumTopic.this, Forum.class);
+        startActivity(intent);
+        finish();
     }
 }

@@ -31,7 +31,7 @@ public class ForumPostReply extends AppCompatActivity {
     public static final String TAG = "TAG";
     EditText editContent;
     TextView topic, viewTopic;
-    Button replyPostBtn;
+    Button replyPostBtn, discardPostBtn;
     FirebaseFirestore fStore;
     FirebaseAuth fAuth;
     Date date_published;
@@ -45,6 +45,8 @@ public class ForumPostReply extends AppCompatActivity {
         viewTopic = findViewById(R.id.viewTopic);
         editContent = findViewById(R.id.editContent);
         replyPostBtn = findViewById(R.id.addReplyBtn);
+        discardPostBtn = findViewById(R.id.discardPostBtn);
+
         date_published = Calendar.getInstance().getTime();
 
         // getting Auth and userID
@@ -96,7 +98,6 @@ public class ForumPostReply extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     Log.d(TAG, "New Post document created");
-
                                 }
                             });
 
@@ -104,17 +105,32 @@ public class ForumPostReply extends AppCompatActivity {
                             DocumentReference topicRef = fStore.collection("forum_topics").document(topicFeed);
                             topicRef.update("post_num", FieldValue.increment(1));
 
+                            // Finishing the activity and starting new
+                            Intent intent = new Intent(ForumPostReply.this, ForumTopic.class);
+                            intent.putExtra("topic_name", topicFeed);
+                            startActivity(intent);
+                            finish();
+
                         } else {
                             Log.d(TAG, "get failed with ", task.getException());
                         }
                     }
                 });
-
-
-
-
-
             }
         });
+
+        discardPostBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Finishing the activity and starting previous one
+                Intent intent = new Intent(ForumPostReply.this, ForumTopic.class);
+                intent.putExtra("topic_name", topicFeed);
+                startActivity(intent);
+                finish();
+            }
+        });
+
     }
+
+
 }
