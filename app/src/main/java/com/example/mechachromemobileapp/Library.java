@@ -1,12 +1,12 @@
 package com.example.mechachromemobileapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,7 @@ public class Library extends AppCompatActivity {
     private RecyclerView rvBooks;
     private BooksAdapter booksAdapter;
     private List<Books> mdata;
-    private Button btnAddBook;
+    private Button btnAddBook, btnRemBook;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +44,7 @@ public class Library extends AppCompatActivity {
 
     private void initViews() {
         btnAddBook = findViewById(R.id.btn_add);
+        btnRemBook = findViewById(R.id.btn_remove);
         rvBooks = findViewById(R.id.rv_books);
         rvBooks.setLayoutManager(new LinearLayoutManager(this));
         rvBooks.setHasFixedSize(true);
