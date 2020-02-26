@@ -17,6 +17,7 @@ public class Library extends AppCompatActivity {
     private BooksAdapter booksAdapter;
     private List<Books> mdata;
     private Button btnAddBook, btnRemBook;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +62,18 @@ public class Library extends AppCompatActivity {
                 Books book = new Books(R.drawable.book1);
                 mdata.add(1,book);
                 booksAdapter.notifyItemInserted(1);
+            }
+        });
 
+        btnRemBook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                removeBook();
+            }
+
+            private void removeBook() {
+                mdata.remove(1);
+                booksAdapter.notifyItemRemoved(1);
             }
         });
     }
