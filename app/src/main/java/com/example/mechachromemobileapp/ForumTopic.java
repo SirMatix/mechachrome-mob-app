@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -69,11 +70,13 @@ public class ForumTopic extends Activity {
         //progressBar.setVisibility(View.VISIBLE);
         fStore.collection("forum_posts")
                 .whereEqualTo("topic_name", topicFeed)
+                .orderBy("date_published", Query.Direction.ASCENDING)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
+                            //int count = 0;
                             for (QueryDocumentSnapshot document : task.getResult()) {
 
                                 Map<String,Object> postData = new HashMap<>();

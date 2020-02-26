@@ -58,7 +58,6 @@ public class ForumPostTopic extends AppCompatActivity {
                 final String content = editContent.getText().toString().trim();
                 final ArrayList<String> author = new ArrayList<>();
 
-
                 // getting the user
                 DocumentReference userRef = fStore.collection("users").document(userID);
                 userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
