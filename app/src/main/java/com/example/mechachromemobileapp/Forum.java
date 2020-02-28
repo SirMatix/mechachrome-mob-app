@@ -48,7 +48,7 @@ public class Forum extends Activity {
         final ArrayList<Map> forumTopics = new ArrayList<>();
 
         final ListAdapter forumAdapter = new ForumAdapter(this, forumTopics);
-        ListView forumListView =  findViewById(R.id.ForumListView);
+        ListView forumListView = findViewById(R.id.ForumListView);
         forumListView.setEmptyView(empty);
         forumListView.setAdapter(forumAdapter);
 
@@ -61,17 +61,33 @@ public class Forum extends Activity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Map<String,Object> topicData = new HashMap<>();
-                                topicData.put("topic_name",document.getId());
-                                topicData.put("author",document.getString("author"));
+                                final Map<String, Object> topicData = new HashMap<>();
 
+                                // getting topic name and putting it to the topicData HashMap
+                                topicData.put("topic_name", document.getId());
+                                // getting topic author and putting it to the topicData HashMap
+                                topicData.put("author", document.getString("author"));
+                                // getting the date_published timestamp
                                 Date date_published = document.getTimestamp("date_published").toDate();
-                                topicData.put("date_published",DateFormat.format("dd-MM-yyyy hh:mm:ss",date_published).toString());
+                                // formatting the date to the desired 24hr format and putting it into the HashMap
+                                topicData.put("date_published", DateFormat.format("dd-MM-yyyy hh:mm:ss", date_published).toString());
+                                // getting the post_num and putting it to the topicData HashMap
+                                topicData.put("post_num", document.get("post_num").toString());
 
-                                topicData.put("post_num",document.get("post_num").toString());
+                                // This one has a problem
+                                // getting the last author and last post published
+                                Map<String,Object> lastAuthor = lastAuthotPublished(document.getId());
+                                // putting the last author and last_post_data to the topicData HashMap
+                                topicData.put("last_author", lastAuthor.get("author"));
+                                topicData.put("last_post_author", lastAuthor.get("ast_post_author"));
+
+
+                                Log.d(TAG, "Got the topic with name: " + document.getId());
+
                                 forumTopics.add(topicData);
-                                Log.d(TAG, "Got the topic with name: " + document.get("topic_name"));
+
                             }
+                            // notifying the forumAdapter with data change
                             ((ArrayAdapter) forumAdapter).notifyDataSetChanged();
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
@@ -96,9 +112,38 @@ public class Forum extends Activity {
         addTopic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Forum.this,ForumPostTopic.class));
+                startActivity(new Intent(Forum.this, ForumPostTopic.class));
             }
         });
+
+    }
+
+    private Map<String, Object> lastAuthotPublished(String topic) {
+        final Map<String,Object> lastAuthor = new HashMap<>();
+
+        fStore.collection("forum_posts")
+                .whereEqualTo("topic_name", topic)
+                .orderBy("date_published", Query.Direction.DESCENDING)
+                .limit(1)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot post : task.getResult()) {
+                                Log.d(TAG, "got the last author " + post.getString("author"));
+                                lastAuthor.put("last_post_author", post.getString("author"));
+                                Date date_published = post.getTimestamp("date_published").toDate();
+                                String last_date_published = DateFormat.format("dd-MM-yyyy hh:mm:ss", date_published).toString();
+                                lastAuthor.put("last_post_published", last_date_published);
+                                Log.d(TAG, "got the last post " + last_date_published);
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+        return lastAuthor;
 
     }
 }

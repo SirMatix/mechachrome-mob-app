@@ -72,7 +72,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
         android:text="@string/reply"
-        app:layout_constraintEnd_toStartOf="@+id/discardTopicBtn"
+        app:layout_constraintEnd_toStartOf="@+id/discardPostBtn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editContent" />
 
