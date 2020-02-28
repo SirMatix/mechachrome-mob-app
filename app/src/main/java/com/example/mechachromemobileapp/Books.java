@@ -2,9 +2,8 @@ package com.example.mechachromemobileapp;
 
 public class Books {
     private String title, description, author, imgUrl;
-    private int pages, review;
+    private int pages, review, drawableResources;
     private float rating;
-    private int drawableResources;
 
     public Books() {
     }
