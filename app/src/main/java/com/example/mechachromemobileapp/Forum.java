@@ -62,7 +62,6 @@ public class Forum extends Activity {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 final Map<String, Object> topicData = new HashMap<>();
-
                                 // getting topic name and putting it to the topicData HashMap
                                 topicData.put("topic_name", document.getId());
                                 // getting topic author and putting it to the topicData HashMap
@@ -73,19 +72,32 @@ public class Forum extends Activity {
                                 topicData.put("date_published", DateFormat.format("dd-MM-yyyy hh:mm:ss", date_published).toString());
                                 // getting the post_num and putting it to the topicData HashMap
                                 topicData.put("post_num", document.get("post_num").toString());
-
-                                // This one has a problem
-                                // getting the last author and last post published
-                                Map<String,Object> lastAuthor = lastAuthotPublished(document.getId());
-                                // putting the last author and last_post_data to the topicData HashMap
-                                topicData.put("last_author", lastAuthor.get("author"));
-                                topicData.put("last_post_author", lastAuthor.get("ast_post_author"));
-
-
                                 Log.d(TAG, "Got the topic with name: " + document.getId());
 
-                                forumTopics.add(topicData);
+                                fStore.collection("forum_posts")
+                                        .whereEqualTo("topic_name", document.getId())
+                                        .orderBy("date_published", Query.Direction.DESCENDING)
+                                        .limit(1)
+                                        .get()
+                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                if (task.isSuccessful()) {
+                                                    for (QueryDocumentSnapshot post : task.getResult()) {
+                                                        Log.d(TAG, "got the last author " + post.getString("author"));
+                                                        topicData.put("last_post_author", post.getString("author"));
+                                                        Date date_published = post.getTimestamp("date_published").toDate();
+                                                        String last_date_published = DateFormat.format("dd-MM-yyyy hh:mm:ss", date_published).toString();
+                                                        topicData.put("last_post_published", last_date_published);
+                                                        Log.d(TAG, "got the last post " + last_date_published);
+                                                    }
+                                                } else {
+                                                    Log.d(TAG, "Error getting documents: ", task.getException());
+                                                }
+                                            }
+                                        });
 
+                                forumTopics.add(topicData);
                             }
                             // notifying the forumAdapter with data change
                             ((ArrayAdapter) forumAdapter).notifyDataSetChanged();
@@ -118,7 +130,8 @@ public class Forum extends Activity {
 
     }
 
-    private Map<String, Object> lastAuthotPublished(String topic) {
+
+    private Map<String, Object> lastAuthorPublished(String topic) {
         final Map<String,Object> lastAuthor = new HashMap<>();
 
         fStore.collection("forum_posts")
