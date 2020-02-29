@@ -2,6 +2,7 @@ package com.example.mechachromemobileapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -70,6 +71,12 @@ public class ForumPostReply extends AppCompatActivity {
             public void onClick(View v) {
                 final String content = editContent.getText().toString().trim();
                 final ArrayList<String> author = new ArrayList<>();
+
+                if(TextUtils.isEmpty(content)){
+                    editContent.setError("Please add content");
+                    return;
+                }
+
 
                 // getting the user
                 DocumentReference userRef = fStore.collection("users").document(userID);

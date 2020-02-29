@@ -30,7 +30,7 @@ import java.util.Map;
 public class Forum extends Activity {
 
     public static final String TAG = "TAG";
-    FirebaseFirestore fStore;
+    FirebaseFirestore fStore, fStore2;
     Button addTopic;
     TextView empty;
     //ProgressBar progressBar;
@@ -94,18 +94,24 @@ public class Forum extends Activity {
                                                 } else {
                                                     Log.d(TAG, "Error getting documents: ", task.getException());
                                                 }
+                                                // notifying the forumAdapter with data change
+                                                ((ArrayAdapter) forumAdapter).notifyDataSetChanged();
                                             }
                                         });
 
                                 forumTopics.add(topicData);
                             }
-                            // notifying the forumAdapter with data change
+
                             ((ArrayAdapter) forumAdapter).notifyDataSetChanged();
+
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
+
                     }
+
                 });
+
 
         forumListView.setOnItemClickListener(
                 new AdapterView.OnItemClickListener() {
@@ -125,38 +131,10 @@ public class Forum extends Activity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Forum.this, ForumPostTopic.class));
+                finish();
             }
         });
 
     }
 
-
-    private Map<String, Object> lastAuthorPublished(String topic) {
-        final Map<String,Object> lastAuthor = new HashMap<>();
-
-        fStore.collection("forum_posts")
-                .whereEqualTo("topic_name", topic)
-                .orderBy("date_published", Query.Direction.DESCENDING)
-                .limit(1)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot post : task.getResult()) {
-                                Log.d(TAG, "got the last author " + post.getString("author"));
-                                lastAuthor.put("last_post_author", post.getString("author"));
-                                Date date_published = post.getTimestamp("date_published").toDate();
-                                String last_date_published = DateFormat.format("dd-MM-yyyy hh:mm:ss", date_published).toString();
-                                lastAuthor.put("last_post_published", last_date_published);
-                                Log.d(TAG, "got the last post " + last_date_published);
-                            }
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
-                        }
-                    }
-                });
-        return lastAuthor;
-
-    }
 }
