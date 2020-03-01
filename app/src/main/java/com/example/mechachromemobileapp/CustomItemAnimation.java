@@ -1,6 +1,5 @@
 package com.example.mechachromemobileapp;
 
-import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -20,7 +19,7 @@ public class CustomItemAnimation extends DefaultItemAnimator {
 
         return super.animateRemove(holder);
     }
-    //this metod will be called when a new item will be added to the list
+    //this method will be called when a new item will be added to the list
     // we will handle to add animation to the item here
     // first le`s create a custom animation
     //no let`s apply the animation to the viewholder

@@ -1,4 +1,10 @@
 <resources>
     <string name="add_book">Add book</string>
     <string name="remove_book">Remove book</string>
+    <string name="add_new_book">Add new book</string>
+    <string name="book_description">Book description</string>
+    <string name="book_title">Book title</string>
+    <string name="book_author">Book author</string>
+    <string name="number_of_pages">Number of pages</string>
+    <string name="add_book_image">Add book image</string>
 </resources>
