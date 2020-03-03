@@ -14,24 +14,28 @@ public class BookPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_page);
+        fStore = FirebaseFirestore.getInstance();
 
     }
 
     public void loadBookData() {
-        fStore = FirebaseFirestore.getInstance();
+
 
 
     }
 
     public void loadReviews() {
 
+
     }
 
     public void reserveBook() {
 
+
     }
 
     public void writeReview() {
+
 
     }
 }
