@@ -17,7 +17,7 @@
         <activity android:name=".Forum" />
         <activity android:name=".FloorPlan" />
         <activity android:name=".More" />
-        <activity android:name=".Library" />
+        <activity android:name=".LibraryAdmin" />
         <activity android:name=".Timetables" />
         <activity android:name=".Login" />
         <activity android:name=".Register" />

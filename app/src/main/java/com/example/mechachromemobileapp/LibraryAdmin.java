@@ -13,8 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -22,7 +20,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Library extends AppCompatActivity {
+public class LibraryAdmin extends AppCompatActivity {
 
     private final String TAG = "TAG";
     private RecyclerView rvBooks;
@@ -36,31 +34,8 @@ public class Library extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        fAuth = FirebaseAuth.getInstance();
-        userID = fAuth.getCurrentUser().getUid();
-
-        DocumentReference userRef = fStore.collection("users").document(userID);
-        userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                DocumentSnapshot user = task.getResult();
-                if (task.isSuccessful()) {
-                    if (user.exists()) {
-                        Log.d(TAG, "Got the user " + userID);
-                        String permission = user.get("permission").toString();
-                        if (permission == "admin") {
-                            setContentView(R.layout.activity_library_admin);
-                        } else {
-                            setContentView(R.layout.activity_library);
-                        }
-                    } else {
-                        Log.d(TAG, "No such user");
-                    }
-                }
-            }
-        });
-
+        setContentView(R.layout.activity_library_admin);
+        fStore = FirebaseFirestore.getInstance();
         initViews();
         initbooksData();
         setupBooksAdapter();
@@ -73,7 +48,6 @@ public class Library extends AppCompatActivity {
     }
 
     private void initbooksData() {
-        fStore = FirebaseFirestore.getInstance();
         booksData = new ArrayList<>();
 
         booksData.add(new Books(R.drawable.book1));
