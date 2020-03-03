@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -28,8 +27,6 @@ public class LibraryAdmin extends AppCompatActivity {
     private List<Books> booksData;
     private Button btnAddBook, btnRemBook;
     FirebaseFirestore fStore;
-    FirebaseAuth fAuth;
-    private String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -3,6 +3,7 @@ package com.example.mechachromemobileapp;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -49,40 +50,18 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(),Timetables.class));
             }
         });
+
         library.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                userID = fAuth.getCurrentUser().getUid();
-                DocumentReference userRef = fStore.collection("users").document(userID);
-                userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        DocumentSnapshot user = task.getResult();
-                        if (task.isSuccessful()) {
-                            if (user.exists()) {
-                                Log.d(TAG, "Got the user " + userID);
-                                String permission = user.get("permission").toString();
-                                if (permission == "admin") {
-                                    startActivity(new Intent(getApplicationContext(), LibraryAdmin.class));
-                                } else {
-                                    startActivity(new Intent(getApplicationContext(), LibraryUser.class));
-                                }
-                            } else {
-                                Log.d(TAG, "No such user");
-                            }
-                        }
-                    }
-                });
-
+                getUserPermission();
             }
         });
 
         moodle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                url = "https://partnerships.moodle.roehampton.ac.uk/login/index.php";
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                startActivity(browserIntent);
+                openMoodle();
             }
         });
 
@@ -101,9 +80,41 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
     public void logout (View view){
         FirebaseAuth.getInstance().signOut(); //logout
         startActivity(new Intent(getApplicationContext(),Login.class));
         finish();
+    }
+
+    public void getUserPermission() {
+        fStore = FirebaseFirestore.getInstance();
+        userID = fAuth.getCurrentUser().getUid();
+        DocumentReference userRef = fStore.collection("users").document(userID);
+        userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                DocumentSnapshot user = task.getResult();
+                if (task.isSuccessful()) {
+                    if (user.exists()) {
+                        Log.d(TAG, "Got the user " + userID);
+                        String permission = user.get("permission").toString().toLowerCase();
+                        if (TextUtils.equals("admin",permission)) {
+                            startActivity(new Intent(getApplicationContext(), LibraryAdmin.class));
+                        } else {
+                            startActivity(new Intent(getApplicationContext(), LibraryUser.class));
+                        }
+                    } else {
+                        Log.d(TAG, "No such user");
+                    }
+                }
+            }
+        });
+    }
+
+    public void openMoodle() {
+        url = "https://partnerships.moodle.roehampton.ac.uk/login/index.php";
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        startActivity(browserIntent);
     }
 }
