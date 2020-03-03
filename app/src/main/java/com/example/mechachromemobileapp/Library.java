@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -29,13 +31,35 @@ public class Library extends AppCompatActivity {
     private Button btnAddBook, btnRemBook;
     FirebaseFirestore fStore;
     FirebaseAuth fAuth;
+    private String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        fAuth = FirebaseAuth.getInstance();
 
-        setContentView(R.layout.activity_library);
+        fAuth = FirebaseAuth.getInstance();
+        userID = fAuth.getCurrentUser().getUid();
+
+        DocumentReference userRef = fStore.collection("users").document(userID);
+        userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                DocumentSnapshot user = task.getResult();
+                if (task.isSuccessful()) {
+                    if (user.exists()) {
+                        Log.d(TAG, "Got the user " + userID);
+                        String permission = user.get("permission").toString();
+                        if (permission == "admin") {
+                            setContentView(R.layout.activity_library_admin);
+                        } else {
+                            setContentView(R.layout.activity_library);
+                        }
+                    } else {
+                        Log.d(TAG, "No such user");
+                    }
+                }
+            }
+        });
 
         initViews();
         initbooksData();
