@@ -47,11 +47,10 @@ public class LibraryAdmin extends AppCompatActivity {
     private void initbooksData() {
         booksData = new ArrayList<>();
 
-        booksData.add(new Books(R.drawable.book1));
-        booksData.add(new Books(R.drawable.book2));
-        booksData.add(new Books(R.drawable.book3));
-        booksData.add(new Books(R.drawable.book4));
-        booksData.add(new Books(R.drawable.book5));
+        booksData.add(new Books("The oceans of pleasure", "John Dick", 238, 23, 4, R.drawable.book2));
+        booksData.add(new Books("Fifty shades of Grey", "E. L. James", 514, 69, 1, R.drawable.book3));
+        booksData.add(new Books("Computer Programming", "Alexander Bell", 1000, 123, 5, R.drawable.book4));
+        booksData.add(new Books("Coding for life", "Hacker Dude", 310, 32, 4, R.drawable.book5));
 
 
         fStore.collection("books")

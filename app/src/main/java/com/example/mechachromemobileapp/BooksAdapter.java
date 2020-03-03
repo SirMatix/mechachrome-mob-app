@@ -19,10 +19,10 @@ import java.util.List;
 
 public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.booksviewholder> {
 
-    List<Books> mdata;
+    private List<Books> booksData;
 
-    public BooksAdapter(List<Books> mdata) {
-        this.mdata = mdata;
+    public BooksAdapter(List<Books> booksData) {
+        this.booksData = booksData;
     }
 
     @NonNull
@@ -39,18 +39,22 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.booksviewhol
     @Override
     public void onBindViewHolder(@NonNull booksviewholder holder, int position) {
 
+        Books book = booksData.get(position);
 
         Glide.with(holder.itemView.getContext())
-                .load(mdata.get(position).getDrawableResources()) //set the img book url
+                .load(book.getDrawableResources()) //set the img book url
                 .transforms(new CenterCrop() , new RoundedCorners(16))
                 .into(holder.imgBook); //destination path
 
-        holder.ratingBar.setRating((float) 4.5);
+        holder.title.setText(book.getTitle());
+        holder.author.setText("By " + book.getAuthor());
+        holder.pages.setText(book.getPages() + " Pages | " + book.getReview() + " reviews");
+        holder.ratingBar.setRating(book.getRating());
     }
 
     @Override
     public int getItemCount() {
-        return mdata.size();
+        return booksData.size();
     }
 
 
@@ -65,15 +69,13 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.booksviewhol
         public booksviewholder(@NonNull View itemView) {
             super(itemView);
 
+            // getting the data from the layout
             imgBook = itemView.findViewById(R.id.item_book_img);
             title = itemView.findViewById(R.id.item_book_title);
             author = itemView.findViewById(R.id.item_book_author);
             pages = itemView.findViewById(R.id.item_book_pagesrev);
             rate = itemView.findViewById(R.id.item_book_score);
             ratingBar = itemView.findViewById(R.id.item_book_ratingBar);
-
-
-
         }
     }
 }

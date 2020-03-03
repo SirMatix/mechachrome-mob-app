@@ -2,7 +2,7 @@ package com.example.mechachromemobileapp;
 
 public class Books {
     private String title, description, author, imgUrl;
-    private int pages, review, drawableResources;
+    private int pages, numReviews, drawableResources;
     private float rating;
 
     public Books() {
@@ -12,16 +12,34 @@ public class Books {
         this.drawableResources = drawableResources;
     }
 
-    public Books(String title, String description, String author, String imgUrl, int pages, int review, float rating, int drawableResources) {
+    public Books(String title, String description, String author, String imgUrl, int pages, int numReviews, float rating, int drawableResources) {
         this.title = title;
         this.description = description;
         this.author = author;
         this.imgUrl = imgUrl;
         this.pages = pages;
-        this.review = review;
+        this.numReviews = numReviews;
         this.rating = rating;
         this.drawableResources = drawableResources;
+    }
 
+    public Books(String title, String author, String imgUrl, int pages, int numReviews, float rating, int drawableResources) {
+        this.title = title;
+        this.author = author;
+        this.imgUrl = imgUrl;
+        this.pages = pages;
+        this.numReviews = numReviews;
+        this.rating = rating;
+        this.drawableResources = drawableResources;
+    }
+
+    public Books(String title, String author, int pages, int numReviews, float rating, int drawableResources) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.numReviews = numReviews;
+        this.rating = rating;
+        this.drawableResources = drawableResources;
     }
 
     public String getTitle() {
@@ -76,12 +94,12 @@ public class Books {
 
     public int getReview() {
 
-        return review;
+        return numReviews;
     }
 
     public void setReview(int review) {
 
-        this.review = review;
+        this.numReviews = numReviews;
     }
 
     public float getRating() {
@@ -95,8 +113,7 @@ public class Books {
     }
 
     public int getDrawableResources() {
-        return
-                drawableResources;
+        return drawableResources;
     }
 
     public void setDrawableResources(int drawableResources) {
