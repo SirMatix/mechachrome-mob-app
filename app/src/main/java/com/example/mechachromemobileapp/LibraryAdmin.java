@@ -1,5 +1,6 @@
 package com.example.mechachromemobileapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -109,9 +110,7 @@ public class LibraryAdmin extends AppCompatActivity {
                 after successful operation admin will go back to previous activity and get a toast
                 about succesful adding of a book (this is admin only functionality)
                  */
-                Books book = new Books(R.drawable.book1);
-                booksData.add(1,book);
-                booksAdapter.notifyItemInserted(1);
+                startActivity(new Intent(getApplicationContext(), AddBook.class));
             }
         });
 
@@ -133,10 +132,4 @@ public class LibraryAdmin extends AppCompatActivity {
             }
         });
     }
-
-
-    /*
-    in this place is going to be a method enabling users to reserve a book, it will work on a assumptiom
-     */
-
 }
