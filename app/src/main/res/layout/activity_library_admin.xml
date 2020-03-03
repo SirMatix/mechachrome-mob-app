@@ -7,7 +7,7 @@
     tools:context=".LibraryAdmin">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_books"
+        android:id="@+id/libraryAdminRecyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="5dp"
@@ -17,29 +17,29 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_add" />
+        app:layout_constraintTop_toBottomOf="@+id/addBookBtn" />
 
     <Button
-        android:id="@+id/btn_add"
+        android:id="@+id/addBookBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
         android:text="@string/add_book"
-        app:layout_constraintEnd_toStartOf="@+id/btn_remove"
+        app:layout_constraintEnd_toStartOf="@+id/removeBookBtn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btn_remove"
+        android:id="@+id/removeBookBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
         android:text="@string/remove_book"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btn_add"
+        app:layout_constraintStart_toEndOf="@+id/addBookBtn"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -17,9 +17,50 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 
 import java.util.List;
 
-public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.booksviewholder> {
+public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BooksViewHolder> {
 
     private List<Books> booksData;
+    private OnItemClickListener booksListner;
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        booksListner = listener;
+    }
+
+    public class BooksViewHolder extends RecyclerView.ViewHolder{
+
+        ImageView bookImage;
+        TextView title, author, pages, score;
+        RatingBar ratingBar;
+
+        public BooksViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
+            super(itemView);
+
+            // getting the data from the layout
+            bookImage = itemView.findViewById(R.id.item_book_img);
+            title = itemView.findViewById(R.id.item_book_title);
+            author = itemView.findViewById(R.id.item_book_author);
+            pages = itemView.findViewById(R.id.item_book_pagesrev);
+            score = itemView.findViewById(R.id.item_book_score);
+            ratingBar = itemView.findViewById(R.id.item_book_ratingBar);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onItemClick(position);
+                        }
+                    }
+
+                }
+            });
+        }
+    }
 
     public BooksAdapter(List<Books> booksData) {
         this.booksData = booksData;
@@ -27,24 +68,20 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.booksviewhol
 
     @NonNull
     @Override
-    public booksviewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_book, parent, false);
-
-        return new booksviewholder(view);
-
+    public BooksViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_book, parent, false);
+        return new BooksViewHolder(view, booksListner);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull booksviewholder holder, int position) {
+    public void onBindViewHolder(@NonNull BooksViewHolder holder, int position) {
 
         Books book = booksData.get(position);
 
         Glide.with(holder.itemView.getContext())
                 .load(book.getDrawableResources()) //set the img book url
                 .transforms(new CenterCrop() , new RoundedCorners(16))
-                .into(holder.imgBook); //destination path
+                .into(holder.bookImage); //destination path
 
         holder.title.setText(book.getTitle());
         holder.author.setText("By " + book.getAuthor());
@@ -59,23 +96,4 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.booksviewhol
 
 
 
-
-    public class booksviewholder extends RecyclerView.ViewHolder{
-
-        ImageView imgBook, imgFav;
-        TextView title, author, pages, rate;
-        RatingBar ratingBar;
-
-        public booksviewholder(@NonNull View itemView) {
-            super(itemView);
-
-            // getting the data from the layout
-            imgBook = itemView.findViewById(R.id.item_book_img);
-            title = itemView.findViewById(R.id.item_book_title);
-            author = itemView.findViewById(R.id.item_book_author);
-            pages = itemView.findViewById(R.id.item_book_pagesrev);
-            rate = itemView.findViewById(R.id.item_book_score);
-            ratingBar = itemView.findViewById(R.id.item_book_ratingBar);
-        }
-    }
 }

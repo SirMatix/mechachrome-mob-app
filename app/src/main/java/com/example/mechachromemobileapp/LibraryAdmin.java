@@ -23,29 +23,41 @@ import java.util.List;
 public class LibraryAdmin extends AppCompatActivity {
 
     private final String TAG = "TAG";
-    private RecyclerView rvBooks;
+    private RecyclerView booksRecyclerView;
     private BooksAdapter booksAdapter;
     private List<Books> booksData;
-    private Button btnAddBook, btnRemBook;
+    private Button addBookButton, removeBookButton;
     FirebaseFirestore fStore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_library_admin);
-        fStore = FirebaseFirestore.getInstance();
+
+
         initViews();
-        initbooksData();
+        initBooksData();
         setupBooksAdapter();
     }
 
     private void setupBooksAdapter() {
 
         booksAdapter = new BooksAdapter(booksData);
-        rvBooks.setAdapter(booksAdapter);
+        booksRecyclerView.setAdapter(booksAdapter);
+
+        booksAdapter.setOnItemClickListener(new BooksAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Books book = booksData.get(position);
+                Intent intent = new Intent(LibraryAdmin.this, BookPage.class);
+                intent.putExtra("book_title", book.getTitle());
+                startActivity(intent);
+            }
+        });
     }
 
-    private void initbooksData() {
+    private void initBooksData() {
+        fStore = FirebaseFirestore.getInstance();
         booksData = new ArrayList<>();
 
         booksData.add(new Books("The oceans of pleasure", "John Dick", 238, 23, 4, R.drawable.book2));
@@ -89,15 +101,15 @@ public class LibraryAdmin extends AppCompatActivity {
     }
 
     private void initViews() {
-        btnAddBook = findViewById(R.id.btn_add);
-        btnRemBook = findViewById(R.id.btn_remove);
-        rvBooks = findViewById(R.id.rv_books);
-        rvBooks.setLayoutManager(new LinearLayoutManager(this));
-        rvBooks.setHasFixedSize(true);
+        addBookButton = findViewById(R.id.addBookBtn);
+        removeBookButton = findViewById(R.id.removeBookBtn);
+        booksRecyclerView = findViewById(R.id.libraryAdminRecyclerView);
+        booksRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        booksRecyclerView.setHasFixedSize(true);
 
-        rvBooks.setItemAnimator(new CustomItemAnimation());
+        booksRecyclerView.setItemAnimator(new CustomItemAnimation());
 
-        btnAddBook.setOnClickListener(new View.OnClickListener() {
+        addBookButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 addBook();
@@ -114,7 +126,7 @@ public class LibraryAdmin extends AppCompatActivity {
             }
         });
 
-        btnRemBook.setOnClickListener(new View.OnClickListener() {
+        removeBookButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 removeBook();

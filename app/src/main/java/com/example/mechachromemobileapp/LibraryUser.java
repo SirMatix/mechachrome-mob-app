@@ -1,5 +1,6 @@
 package com.example.mechachromemobileapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -20,7 +21,7 @@ import java.util.List;
 public class LibraryUser extends AppCompatActivity {
 
     private final String TAG = "TAG";
-    private RecyclerView rvBooks;
+    private RecyclerView bookRecyclerView;
     private BooksAdapter booksAdapter;
     private List<Books> booksData;
     FirebaseFirestore fStore;
@@ -30,24 +31,30 @@ public class LibraryUser extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_library_user);
 
-        fStore = FirebaseFirestore.getInstance();
-
         initViews();
-        initbooksData();
+        initBooksData();
         setupBooksAdapter();
     }
 
     private void setupBooksAdapter() {
-
         booksAdapter = new BooksAdapter(booksData);
-        rvBooks.setAdapter(booksAdapter);
+        bookRecyclerView.setAdapter(booksAdapter);
+
+        booksAdapter.setOnItemClickListener(new BooksAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Books book = booksData.get(position);
+                Intent intent = new Intent(LibraryUser.this, BookPage.class);
+                intent.putExtra("book_title", book.getTitle());
+                startActivity(intent);
+            }
+        });
     }
 
-    private void initbooksData() {
+    private void initBooksData() {
         fStore = FirebaseFirestore.getInstance();
         booksData = new ArrayList<>();
 
-        booksData.add(new Books(R.drawable.book1));
         booksData.add(new Books("The oceans of pleasure", "John Dick", 238, 23, 4, R.drawable.book2));
         booksData.add(new Books("Fifty shades of Grey", "E. L. James", 514, 69, 1, R.drawable.book3));
         booksData.add(new Books("Computer Programming", "Alexander Bell", 1000, 123, 5, R.drawable.book4));
@@ -88,16 +95,10 @@ public class LibraryUser extends AppCompatActivity {
     }
 
     private void initViews() {
-        rvBooks = findViewById(R.id.rv_books);
-        rvBooks.setLayoutManager(new LinearLayoutManager(this));
-        rvBooks.setHasFixedSize(true);
-        rvBooks.setItemAnimator(new CustomItemAnimation());
-
+        bookRecyclerView = findViewById(R.id.libraryUserRecyclerView);
+        bookRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        bookRecyclerView.setHasFixedSize(true);
+        bookRecyclerView.setItemAnimator(new CustomItemAnimation());
     }
-
-
-    /*
-    in this place is going to be a method enabling users to reserve a book, it will work on a assumptiom
-     */
 
 }

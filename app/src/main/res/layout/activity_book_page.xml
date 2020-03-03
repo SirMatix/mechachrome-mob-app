@@ -109,13 +109,13 @@
         android:layout_marginEnd="2dp"
         android:layout_marginBottom="5dp"
         android:text="@string/available_books"
-        app:layout_constraintBottom_toTopOf="@+id/ReservedBooks"
-        app:layout_constraintEnd_toStartOf="@+id/reservedTextView"
+        app:layout_constraintBottom_toTopOf="@+id/reservedTextView"
+        app:layout_constraintEnd_toStartOf="@+id/numAvailable"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView1" />
 
     <TextView
-        android:id="@+id/reservedTextView"
+        android:id="@+id/numAvailable"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
@@ -123,13 +123,13 @@
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="5dp"
         android:textAlignment="viewStart"
-        app:layout_constraintBottom_toTopOf="@+id/ReservedBooks"
+        app:layout_constraintBottom_toTopOf="@+id/reservedTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/availableTextView"
         app:layout_constraintTop_toBottomOf="@+id/imageView1" />
 
     <TextView
-        android:id="@+id/ReservedBooks"
+        android:id="@+id/reservedTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
@@ -150,8 +150,8 @@
         android:layout_marginBottom="5dp"
         app:layout_constraintBottom_toTopOf="@+id/descriptionTextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ReservedBooks"
-        app:layout_constraintTop_toBottomOf="@+id/reservedTextView" />
+        app:layout_constraintStart_toEndOf="@+id/reservedTextView"
+        app:layout_constraintTop_toBottomOf="@+id/numAvailable" />
 
     <TextView
         android:id="@+id/descriptionTextView"
@@ -224,8 +224,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/reserveBookBtn" />
 
-    <ListView
-        android:id="@+id/BookPageListView"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/bookPageRecyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="5dp"
