@@ -1,1 +1,13 @@
-<resources></resources>
+<resources>
+    <string name="created_by">created by:</string>
+    <string name="last_post_by">last post by:</string>
+    <string name="topic">Topic:</string>
+    <string name="content">Content:</string>
+    <string name="write_post_content_here">write post content here...</string>
+    <string name="write_post_topic_here">write post topic here...</string>
+    <string name="add_topic">Add topic</string>
+    <string name="discard_topic">Discard topic</string>
+    <string name="discard">Discard</string>
+    <string name="reply">Reply</string>
+    <string name="new_topic">New Topic</string>
+</resources>

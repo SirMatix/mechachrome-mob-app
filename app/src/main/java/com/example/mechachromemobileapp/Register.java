@@ -25,14 +25,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.io.BufferedWriter;
-import java.io.Console;
-import java.io.FileNotFoundException;
-import java.io.File;
-import java.io.FileWriter;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
 public class Register extends AppCompatActivity {
 
@@ -161,23 +155,6 @@ public class Register extends AppCompatActivity {
             }
         });
 
-    }
-
-    private void writeToXmlFile(User user) {
-        String studentID = user.getStudentID();
-        String email = user.getEmail();
-        File fileName =  new File("\\app\\data\\studentID.txt");
-
-        try {
-            fileName.createNewFile();
-            BufferedWriter out = new BufferedWriter(new FileWriter(fileName));
-            out.append(studentID);
-            out.append(email);
-            out.newLine();
-        }
-        catch (Exception e) {
-            Log.e("Exception", "File write failed: " + e.toString());
-        }
     }
 
     }
