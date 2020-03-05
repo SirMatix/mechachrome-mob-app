@@ -2,20 +2,14 @@ package com.example.mechachromemobileapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +59,7 @@ public class LibraryAdmin extends AppCompatActivity {
         booksData.add(new Books("The oceans of pleasure", "John Dick", "Adventure", 238, 23, 4, 100, R.drawable.gsce_mathematics));
         booksData.add(new Books("The oceans of pleasure", "John Dick", "Adventure", 238, 23, 4, 100, R.drawable.computer_programming));
 
+        /*
         fStore.collection("library_books")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -98,6 +93,8 @@ public class LibraryAdmin extends AppCompatActivity {
                         }
                     }
                 });
+
+         */
     }
 
     private void initViews() {

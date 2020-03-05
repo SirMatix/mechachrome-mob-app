@@ -1,7 +1,7 @@
 package com.example.mechachromemobileapp;
 
 public class Books {
-    private String title, description, author, imgUrl, category;
+    private String title, description, author, category;
     private int pages, numReviews, drawableResources, numRatings;
     private float rating;
 
@@ -89,14 +89,6 @@ public class Books {
 
     public void setAuthor(String author) {
         this.author = author;
-    }
-
-    public String getImgUrl() {
-        return imgUrl;
-    }
-
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
     }
 
     public int getPages() {
