@@ -85,7 +85,7 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BooksViewHol
 
         holder.title.setText(book.getTitle());
         holder.author.setText("By " + book.getAuthor());
-        holder.pages.setText(book.getPages() + " Pages | " + book.getReview() + " reviews");
+        holder.pages.setText(book.getPages() + " Pages | " + book.getNumReviews() + " reviews");
         holder.ratingBar.setRating(book.getRating());
     }
 

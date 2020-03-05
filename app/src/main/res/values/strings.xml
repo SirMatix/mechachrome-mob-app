@@ -12,4 +12,5 @@
     <string name="available_books">Available books:</string>
     <string name="reserved_books">Reserved books</string>
     <string name="reserve_book">Reserve book</string>
+    <string name="number_of_books">Number of books</string>
 </resources>
