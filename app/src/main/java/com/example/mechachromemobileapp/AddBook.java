@@ -68,7 +68,9 @@ public class AddBook extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(getApplicationContext(), LibraryAdmin.class));
+        Intent intent = new Intent(AddBook.this, LibraryAdmin.class);
+        startActivity(intent);
+        finish();
     }
 
     public void addBook(){
