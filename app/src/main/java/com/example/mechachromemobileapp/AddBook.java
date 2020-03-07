@@ -66,32 +66,64 @@ public class AddBook extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(getApplicationContext(), LibraryAdmin.class));
+    }
+
     public void addBook(){
         // getting data from layout variables
-        String title =  bookTitle.getText().toString();
-        String description = bookDescription.getText().toString();
-        String author =  bookAuthor.getText().toString();
-        String category = bCategorySpinner.getSelectedItem().toString();
-        int pages = Integer.parseInt(bookPages.getText().toString());
-        int numReviews = 0;
-        int rating = 0;
-        int numRatings = 0;
+        final String title =  bookTitle.getText().toString();
+        final String description = bookDescription.getText().toString();
+        final String author =  bookAuthor.getText().toString();
+        final String category = bCategorySpinner.getSelectedItem().toString();
+        final int pages = Integer.parseInt(bookPages.getText().toString());
+        final int numReviews = 0;
+        final int rating = 0;
+        final int numRatings = 0;
+        // the uploading image function
+        final StorageReference reference = mStorageRef.child(title+author+'.'+getExtension(imgUri));
+        reference.putFile(imgUri)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                String imageUrl = uri.toString();
+                                // setting document Reference for book object in collection library_books
+                                DocumentReference book_data = fStore.collection("library_books").document(title+author);
 
-        // setting document Reference for book object in collection library_books
-        DocumentReference book_data = fStore.collection("library_books").document(title+author);
+                                // initializing book object
+                                Books book = new Books(title, author, description, category, imageUrl, pages, numReviews, rating, numRatings);
 
-        // initializing book object
-        Books book = new Books(title, author, description, category, pages, numReviews, rating, numRatings);
+                                book_data.set(book).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d(TAG,"book document created");
+                                        Toast.makeText(AddBook.this,"Added Book data", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        });
+                        Toast.makeText(AddBook.this,"Image uploaded successfully", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getApplicationContext(), LibraryAdmin.class));
+                        finish();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle unsuccessful uploads
+                        // ...
+                    }
+                });
 
-        book_data.set(book).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Log.d(TAG,"book document created");
-                Toast.makeText(AddBook.this,"Added Book data", Toast.LENGTH_SHORT).show();
-            }
-        });
 
-        uploadFile(title,author);
+
+
+
+
     }
 
     private void chooseFile() {
@@ -102,25 +134,6 @@ public class AddBook extends AppCompatActivity {
     }
 
     private void uploadFile(String title, String author) {
-        StorageReference reference = mStorageRef.child(title+author+'.'+getExtension(imgUri));
-
-        reference.putFile(imgUri)
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        // Get a URL to the uploaded content
-                        // Uri downloadUrl = taskSnapshot.getDownloadUrl();
-
-                        Toast.makeText(AddBook.this,"Image uploaded successfully", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        // Handle unsuccessful uploads
-                        // ...
-                    }
-                });
 
     }
 
@@ -143,7 +156,7 @@ public class AddBook extends AppCompatActivity {
     public void initElements() {
         // Data variables
         bookTitle = findViewById(R.id.bookTitle);
-        bookDescription = findViewById(R.id.numberOfBooks);
+        bookDescription = findViewById(R.id.item_book_description);
         bookAuthor = findViewById(R.id.bookAuthor);
         bookPages = findViewById(R.id.bookPages);
         bookImage = findViewById(R.id.bookImage);
@@ -157,7 +170,7 @@ public class AddBook extends AppCompatActivity {
 
         // Firestore initialization
         fStore = FirebaseFirestore.getInstance();
-        mStorageRef = FirebaseStorage.getInstance().getReference("book_images");
+        mStorageRef = FirebaseStorage.getInstance().getReference("library_books_image");
     }
 
     public void initSpinner() {

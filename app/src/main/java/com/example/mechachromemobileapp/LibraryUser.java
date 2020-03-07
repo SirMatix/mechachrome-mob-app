@@ -55,11 +55,6 @@ public class LibraryUser extends AppCompatActivity {
         fStore = FirebaseFirestore.getInstance();
         booksData = new ArrayList<>();
 
-        booksData.add(new Books("The oceans of pleasure", "John Dick", "Adventure", 238, 23, 4, 100, R.drawable.python_for_begginers));
-        booksData.add(new Books("The oceans of pleasure", "John Dick", "Adventure", 238, 23, 4, 100, R.drawable.codding_for_dummies));
-        booksData.add(new Books("The oceans of pleasure", "John Dick", "Adventure", 238, 23, 4, 100, R.drawable.gsce_mathematics));
-        booksData.add(new Books("The oceans of pleasure", "John Dick", "Adventure", 238, 23, 4, 100, R.drawable.computer_programming));
-
         fStore.collection("library_books")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -72,14 +67,14 @@ public class LibraryUser extends AppCompatActivity {
                                 String author = document.getString("author");
                                 String description = document.getString("description");
                                 String category = document.getString("category");
-                                int pages = (int) document.get("pages");
-                                int numReviews = (int) document.get("numReviews");
-                                float rating = (float) document.get("rating");
-                                int numRatings = (int) document.get("numRatings");
-                                int drawableResources = (int) document.get("drawableResources");
+                                String imgUrl = document.getString("imgUrl");
+                                long pages = (long) document.get("pages");
+                                long numReviews = (long) document.get("numReviews");
+                                double rating = (double) document.get("rating");
+                                long numRatings = (long) document.get("numRatings");
 
                                 // initializing new book
-                                Books book = new Books(title, author, description, category, pages, numReviews, rating, numRatings, drawableResources);
+                                Books book = new Books(title, author, description, category, imgUrl, pages, numReviews, rating, numRatings);
 
                                 Log.d(TAG, "Got the book title: " + document.getString("title"));
 

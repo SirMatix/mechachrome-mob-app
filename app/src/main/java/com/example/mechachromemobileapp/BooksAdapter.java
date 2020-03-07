@@ -79,14 +79,14 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BooksViewHol
         Books book = booksData.get(position);
 
         Glide.with(holder.itemView.getContext())
-                .load(book.getDrawableResources()) //set the img book url
+                .load(book.getImgUrl()) //set the img book url
                 .transforms(new CenterCrop() , new RoundedCorners(16))
                 .into(holder.bookImage); //destination path
 
         holder.title.setText(book.getTitle());
         holder.author.setText("By " + book.getAuthor());
         holder.pages.setText(book.getPages() + " Pages | " + book.getNumReviews() + " reviews");
-        holder.ratingBar.setRating(book.getRating());
+        holder.ratingBar.setRating((float)book.getRating());
     }
 
     @Override

@@ -2,14 +2,22 @@ package com.example.mechachromemobileapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +29,8 @@ public class LibraryAdmin extends AppCompatActivity {
     private BooksAdapter booksAdapter;
     private List<Books> booksData;
     private Button addBookButton, removeBookButton;
-    FirebaseFirestore fStore;
+    private FirebaseFirestore fStore;
+    private StorageReference mStorageRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +53,7 @@ public class LibraryAdmin extends AppCompatActivity {
             public void onItemClick(int position) {
                 Books book = booksData.get(position);
                 Intent intent = new Intent(LibraryAdmin.this, BookPage.class);
-                intent.putExtra("book_title", book.getTitle());
+                intent.putExtra("title_author", book.getTitle()+book.getAuthor());
                 startActivity(intent);
             }
         });
@@ -53,13 +62,20 @@ public class LibraryAdmin extends AppCompatActivity {
     private void initBooksData() {
         fStore = FirebaseFirestore.getInstance();
         booksData = new ArrayList<>();
+        /*String title = "The oceans of pleasure";
+        String author = "John Dick";
+        String category = "Adventure";
+        String imgUrl = "https://firebasestorage.googleapis.com/v0/b/mechachromemobileapp-963dc.appspot.com/o/library_books_image%2F123123.jpg?alt=media&token=eaa76b0a-c610-4c8c-aac5-177e02919cdc";
+        int pages = 238;
+        int numReviews = 23;
+        int rating = 4;
+        int numRatings = 100;
 
-        booksData.add(new Books("The oceans of pleasure", "John Dick", "Adventure", 238, 23, 4, 100, R.drawable.python_for_begginers));
-        booksData.add(new Books("The oceans of pleasure", "John Dick", "Adventure", 238, 23, 4, 100, R.drawable.codding_for_dummies));
-        booksData.add(new Books("The oceans of pleasure", "John Dick", "Adventure", 238, 23, 4, 100, R.drawable.gsce_mathematics));
-        booksData.add(new Books("The oceans of pleasure", "John Dick", "Adventure", 238, 23, 4, 100, R.drawable.computer_programming));
+        booksData.add(new Books(title,author,category,imgUrl,pages,numReviews,rating,numRatings));
 
-        /*
+         */
+
+
         fStore.collection("library_books")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -72,14 +88,14 @@ public class LibraryAdmin extends AppCompatActivity {
                                 String author = document.getString("author");
                                 String description = document.getString("description");
                                 String category = document.getString("category");
-                                int pages = (int) document.get("pages");
-                                int numReviews = (int) document.get("numReviews");
-                                float rating = (float) document.get("rating");
-                                int numRatings = (int) document.get("numRatings");
-                                int drawableResources = (int) document.get("drawableResources");
+                                String imgUrl = document.getString("imgUrl");
+                                long pages = (long) document.get("pages");
+                                long numReviews = (long) document.get("numReviews");
+                                double rating = (double) document.get("rating");
+                                long numRatings = (long) document.get("numRatings");
 
                                 // initializing new book
-                                Books book = new Books(title, author, description, category, pages, numReviews, rating, numRatings, drawableResources);
+                                Books book = new Books(title, author, description, category, imgUrl, pages, numReviews, rating, numRatings);
 
                                 Log.d(TAG, "Got the book title: " + document.getString("title"));
 
@@ -93,11 +109,11 @@ public class LibraryAdmin extends AppCompatActivity {
                         }
                     }
                 });
-
-         */
     }
 
     private void initViews() {
+        mStorageRef = FirebaseStorage.getInstance().getReference("library_books_image");
+
         addBookButton = findViewById(R.id.addBookBtn);
         removeBookButton = findViewById(R.id.removeBookBtn);
         booksRecyclerView = findViewById(R.id.libraryAdminRecyclerView);
@@ -120,6 +136,7 @@ public class LibraryAdmin extends AppCompatActivity {
                 about succesful adding of a book (this is admin only functionality)
                  */
                 startActivity(new Intent(getApplicationContext(), AddBook.class));
+                finish();
             }
         });
 

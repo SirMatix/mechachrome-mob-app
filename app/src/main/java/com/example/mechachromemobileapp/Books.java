@@ -1,46 +1,43 @@
 package com.example.mechachromemobileapp;
 
 public class Books {
-    private String title, description, author, category;
-    private int pages, numReviews, drawableResources, numRatings;
-    private float rating;
+    private String title, description, author, category, imgUrl;
+    private long numReviews, numRatings,pages;
+    private double rating;
 
 
-    public Books(String title, String author, String description, String category, int pages, int numReviews, float rating, int numRatings) {
+    public Books(String title, String author, String description, String category, String imgUrl, long pages, long numReviews, double rating, long numRatings) {
         this.title = title;
         this.author = author;
         this.description = description;
         this.category = category;
+        this.imgUrl = imgUrl;
         this.pages = pages;
         this.numReviews = numReviews;
         this.rating = rating;
         this.numRatings = numRatings;
-        this.drawableResources = 0;
+
     }
 
-    public Books(String title, String author, String category, int pages, int numReviews, float rating, int numRatings, int drawableResources) {
+    public Books(String title, String author, String category, String imgUrl, long pages, long numReviews, double rating, long numRatings) {
         this.title = title;
         this.author = author;
         this.description = null;
         this.category = category;
+        this.imgUrl = imgUrl;
         this.pages = pages;
         this.numReviews = numReviews;
         this.rating = rating;
         this.numRatings = numRatings;
-        this.drawableResources = drawableResources;
     }
 
 
-    public Books(String title, String author, String description, String category, int pages, int numReviews, float rating, int numRatings, int drawableResources) {
-        this.title = title;
-        this.author = author;
-        this.description = description;
-        this.category = category;
-        this.pages = pages;
-        this.numReviews = numReviews;
-        this.rating = rating;
-        this.numRatings = numRatings;
-        this.drawableResources = drawableResources;
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 
     public String getCategory(){
@@ -51,7 +48,7 @@ public class Books {
         this.category = category;
     }
 
-    public int getNumReviews(){
+    public long getNumReviews(){
         return numReviews;
     }
 
@@ -59,7 +56,7 @@ public class Books {
         this.numReviews = numReviews;
     }
 
-    public int getNumRatings() {
+    public long getNumRatings() {
         return numRatings;
     }
 
@@ -91,7 +88,7 @@ public class Books {
         this.author = author;
     }
 
-    public int getPages() {
+    public long getPages() {
         return pages;
     }
 
@@ -99,20 +96,12 @@ public class Books {
         this.pages = pages;
     }
 
-    public float getRating() {
+    public double getRating() {
         return rating;
     }
 
     public void setRating(float rating) {
         this.rating = rating;
-    }
-
-    public int getDrawableResources() {
-        return drawableResources;
-    }
-
-    public void setDrawableResources(int drawableResources) {
-        this.drawableResources = drawableResources;
     }
 
     }
