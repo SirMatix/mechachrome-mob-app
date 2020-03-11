@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BookPage">
+
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="0dp"
+        android:layout_height="135dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp"
+        android:background="@drawable/container_bg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.060000002" />
+
+    <ImageView
+
+        android:id="@+id/item_book_img"
+        android:layout_width="100dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.48" />
+
+    <TextView
+        android:id="@+id/item_book_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/item_book_img"
+        app:layout_constraintTop_toTopOf="@+id/imageView1" />
+
+    <TextView
+        android:id="@+id/item_book_author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@+id/item_book_img"
+        app:layout_constraintTop_toBottomOf="@+id/item_book_title" />
+
+    <RatingBar
+        android:id="@+id/item_book_ratingBar"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:numStars="5"
+        android:progressTint="#FDD835"
+        android:stepSize="0.5"
+        app:layout_constraintStart_toEndOf="@+id/item_book_img"
+        app:layout_constraintTop_toBottomOf="@+id/item_book_author" />
+
+    <TextView
+
+        android:id="@+id/item_book_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/item_book_ratingBar"
+        app:layout_constraintStart_toEndOf="@+id/item_book_ratingBar"
+        app:layout_constraintTop_toTopOf="@+id/item_book_ratingBar" />
+
+    <TextView
+        android:id="@+id/item_book_pagesrev"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@+id/item_book_img"
+        app:layout_constraintTop_toBottomOf="@+id/item_book_ratingBar" />
+
+    <ImageView
+        android:id="@+id/item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:tint="#CAC7C7"
+        app:layout_constraintEnd_toEndOf="@+id/imageView1"
+        app:layout_constraintTop_toTopOf="@+id/imageView1"
+        app:srcCompat="@drawable/ic_favorite_black_24dp" />
+
+    <TextView
+        android:id="@+id/availableTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginBottom="5dp"
+        android:text="@string/available_books"
+        app:layout_constraintBottom_toTopOf="@+id/reservedTextView"
+        app:layout_constraintEnd_toStartOf="@+id/numAvailable"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView1" />
+
+    <TextView
+        android:id="@+id/numAvailable"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:textAlignment="viewStart"
+        app:layout_constraintBottom_toTopOf="@+id/reservedTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/availableTextView"
+        app:layout_constraintTop_toBottomOf="@+id/imageView1" />
+
+    <TextView
+        android:id="@+id/reservedTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginBottom="5dp"
+        android:text="@string/reserved_books"
+        app:layout_constraintBottom_toTopOf="@+id/descriptionTextView"
+        app:layout_constraintEnd_toStartOf="@+id/numReserved"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/availableTextView" />
+
+    <TextView
+        android:id="@+id/numReserved"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/descriptionTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/reservedTextView"
+        app:layout_constraintTop_toBottomOf="@+id/numAvailable" />
+
+    <TextView
+        android:id="@+id/descriptionTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:text="@string/book_description"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/numReserved" />
+
+    <TextView
+        android:id="@+id/availableBooks"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionTextView" />
+
+    <Button
+        android:id="@+id/reserveBookBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:text="@string/reserve_book"
+        app:layout_constraintBottom_toTopOf="@+id/reviewsTextView"
+        app:layout_constraintEnd_toStartOf="@+id/writeReviewBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/availableBooks" />
+
+    <Button
+        android:id="@+id/cancelBookBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:text="Cancel Reservation"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/reviewsTextView"
+        app:layout_constraintEnd_toStartOf="@+id/writeReviewBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/availableBooks" />
+
+    <Button
+        android:id="@+id/writeReviewBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:text="@string/write_review"
+        app:layout_constraintBottom_toTopOf="@+id/reviewsTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/reserveBookBtn"
+        app:layout_constraintTop_toBottomOf="@+id/availableBooks" />
+
+    <TextView
+        android:id="@+id/reviewsTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:text="@string/reviews"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reserveBookBtn" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/bookPageRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reviewsTextView" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

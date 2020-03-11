@@ -13,12 +13,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+<<<<<<< HEAD
+        <activity android:name=".ReserveBook"></activity>
+        <activity android:name=".AddReview" />
+        <activity android:name=".BookPage" />
+        <activity android:name=".AddBook" />
+        <activity android:name=".Forum" />
+        <activity android:name=".FloorPlan" />
+        <activity android:name=".More" />
+        <activity android:name=".LibraryAdmin" />
+        <activity android:name=".LibraryUser" />
+=======
         <activity android:name=".ForumPostReply"></activity>
         <activity android:name=".ForumTopic" />
         <activity android:name=".ForumPostTopic" />
         <activity android:name=".Forum" />
-        <activity android:name=".FloorPlan" />
-        <activity android:name=".Library" />
+        <activity android:name=".FloorPlan" /><![CDATA[
+        >>>>>>> master
+        ]]>
         <activity android:name=".Timetables" />
         <activity android:name=".Login" />
         <activity android:name=".Register" />

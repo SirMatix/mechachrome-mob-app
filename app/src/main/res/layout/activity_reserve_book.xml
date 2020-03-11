@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ReserveBook">
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="0dp"
+        android:layout_height="135dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp"
+        android:background="@drawable/container_bg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.19999999" />
+
+    <ImageView
+
+        android:id="@+id/item_book_img"
+        android:layout_width="100dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="8dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.84000003" />
+
+    <TextView
+        android:id="@+id/item_book_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/item_book_img"
+        app:layout_constraintTop_toTopOf="@+id/imageView1" />
+
+    <TextView
+        android:id="@+id/item_book_author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@+id/item_book_img"
+        app:layout_constraintTop_toBottomOf="@+id/item_book_title" />
+
+    <RatingBar
+        android:id="@+id/item_book_ratingBar"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:numStars="5"
+        android:progressTint="#C6FFC500"
+        android:stepSize="0.5"
+        app:layout_constraintStart_toEndOf="@+id/item_book_img"
+        app:layout_constraintTop_toBottomOf="@+id/item_book_author" />
+
+    <TextView
+
+        android:id="@+id/item_book_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/item_book_ratingBar"
+        app:layout_constraintStart_toEndOf="@+id/item_book_ratingBar"
+        app:layout_constraintTop_toTopOf="@+id/item_book_ratingBar" />
+
+    <TextView
+        android:id="@+id/item_book_pagesrev"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@+id/item_book_img"
+        app:layout_constraintTop_toBottomOf="@+id/item_book_ratingBar" />
+
+    <ImageView
+        android:id="@+id/item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:tint="#CAC7C7"
+        app:layout_constraintEnd_toEndOf="@+id/imageView1"
+        app:layout_constraintTop_toTopOf="@+id/imageView1"
+        app:srcCompat="@drawable/ic_favorite_black_24dp" />
+
+    <TextView
+        android:id="@+id/availableTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="2dp"
+        android:text="@string/available_books"
+        app:layout_constraintEnd_toStartOf="@+id/numAvailable"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView1" />
+
+    <TextView
+        android:id="@+id/numAvailable"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:textAlignment="viewStart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/availableTextView"
+        app:layout_constraintTop_toBottomOf="@+id/imageView1" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp"
+        android:text="From date"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toStartOf="@+id/textView13"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/availableTextView" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp"
+        android:text="To date"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView12"
+        app:layout_constraintTop_toBottomOf="@+id/numAvailable" />
+
+    <TextView
+        android:id="@+id/reserve_from"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="10dp"
+        android:textAlignment="center"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/reserve_book_btn"
+        app:layout_constraintEnd_toStartOf="@+id/reserve_to"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView12" />
+
+    <TextView
+        android:id="@+id/reserve_to"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:textAlignment="center"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/reserve_from"
+        app:layout_constraintTop_toBottomOf="@+id/textView13" />
+
+    <Button
+        android:id="@+id/reserve_book_btn"
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="75dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/reserve_book"
+        app:layout_constraintBottom_toTopOf="@+id/discard_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reserve_from" />
+
+    <Button
+        android:id="@+id/discard_btn"
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Discard"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reserve_book_btn" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background2"
+    tools:context=".Register">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/roehampton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="30dp"
+            android:fontFamily="@font/roboto_slab"
+            android:lineSpacingExtra="8sp"
+            android:text="@string/roehampton_university_student_portal"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/colorPrimary"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@+id/message"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/constraint_layout" />
+
+
+        <TextView
+            android:id="@+id/message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="15dp"
+            android:fontFamily="@font/roboto_slab"
+            android:text="@string/add_new_book"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/bookTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/roehampton" />
+
+        <EditText
+            android:id="@+id/bookTitle"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="2dp"
+            android:ems="10"
+            android:fontFamily="@font/roboto_slab"
+            android:hint="@string/book_title"
+            android:inputType="textMultiLine"
+            android:textAlignment="center"
+            android:textColor="#CD943131"
+            android:textColorHint="#80943131"
+            app:layout_constraintBottom_toTopOf="@+id/bookAuthor"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/message" />
+
+        <EditText
+            android:id="@+id/bookAuthor"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="2dp"
+            android:ems="10"
+            android:fontFamily="@font/roboto_slab"
+            android:hint="@string/book_author"
+            android:inputType="textMultiLine"
+            android:textAlignment="center"
+            android:textColor="#CD943131"
+            android:textColorHint="#80943131"
+            app:layout_constraintBottom_toTopOf="@+id/bookDescription"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bookTitle" />
+
+        <EditText
+            android:id="@+id/bookDescription"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="2dp"
+            android:ems="10"
+            android:fontFamily="@font/roboto_slab"
+            android:hint="@string/book_description"
+            android:inputType="textMultiLine"
+            android:textAlignment="center"
+            android:textColor="#CD943131"
+            android:textColorHint="#80943131"
+            app:layout_constraintBottom_toTopOf="@+id/categorySpinner"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bookAuthor" />
+
+        <Spinner
+            android:id="@+id/categorySpinner"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="2dp"
+            android:spinnerMode="dropdown"
+            app:layout_constraintBottom_toTopOf="@+id/availableBooks"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bookDescription"/>
+
+        <EditText
+            android:id="@+id/availableBooks"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="2dp"
+            android:ems="10"
+            android:fontFamily="@font/roboto_slab"
+            android:hint="@string/number_of_books"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:textColor="#CD943131"
+            android:textColorHint="#80943131"
+            app:layout_constraintBottom_toTopOf="@+id/bookPages"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/categorySpinner" />
+
+        <EditText
+            android:id="@+id/bookPages"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:ems="10"
+            android:fontFamily="@font/roboto_slab"
+            android:hint="@string/number_of_pages"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:textColor="#CD943131"
+            android:textColorHint="#80943131"
+            app:layout_constraintBottom_toTopOf="@+id/addBookImageBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/availableBooks" />
+
+        <Button
+            android:id="@+id/addBookImageBtn"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_slab"
+            android:text="@string/add_book_image"
+            android:textColor="#CD943131"
+            app:layout_constraintBottom_toTopOf="@+id/bookImage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bookPages" />
+
+        <ImageView
+            android:id="@+id/bookImage"
+            android:layout_width="100dp"
+            android:layout_height="150dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/addBookBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/addBookImageBtn" />
+
+        <Button
+            android:id="@+id/addBookBtn"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_slab"
+            android:text="@string/add_book"
+            android:textColor="#CD943131"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bookImage" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
