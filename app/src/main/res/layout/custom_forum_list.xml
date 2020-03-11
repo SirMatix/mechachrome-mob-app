@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+
+
+    <TextView
+        android:id="@+id/numReplies"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toStartOf="@+id/forumTopicView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/forumTopicView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:textAlignment="center"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@+id/createdText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/numReplies"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/createdText"
+        android:layout_width="90dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:text="@string/created_by"
+        android:textAlignment="textStart"
+        app:layout_constraintEnd_toStartOf="@+id/topicUserText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/forumTopicView" />
+
+    <TextView
+        android:id="@+id/topicUserText"
+        android:layout_width="0dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toStartOf="@+id/topicPublishedText"
+        app:layout_constraintStart_toEndOf="@+id/createdText"
+        app:layout_constraintTop_toBottomOf="@+id/forumTopicView" />
+
+    <TextView
+        android:id="@+id/topicPublishedText"
+        android:layout_width="0dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/topicUserText"
+        app:layout_constraintTop_toBottomOf="@+id/forumTopicView" />
+
+    <TextView
+        android:id="@+id/lastPost"
+        android:layout_width="90dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:text="@string/last_post_by"
+        android:textAlignment="textStart"
+        app:layout_constraintEnd_toStartOf="@+id/postUserText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/createdText" />
+
+    <TextView
+        android:id="@+id/postUserText"
+        android:layout_width="0dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toStartOf="@+id/postUserPublished"
+        app:layout_constraintStart_toEndOf="@+id/lastPost"
+        app:layout_constraintTop_toBottomOf="@+id/topicUserText" />
+
+    <TextView
+        android:id="@+id/postUserPublished"
+        android:layout_width="0dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/postUserText"
+        app:layout_constraintTop_toBottomOf="@+id/topicPublishedText" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,8 +16,9 @@
     <string name="timetables">Timetables</string>
     <string name="library">Library</string>
     <string name="moodle">Moodle</string>
-    <string name="more">More...</string>
+    <string name="more">Forum</string>
     <string name="floor_plan">Floor plan</string>
     <string name="logout">Logout</string>
     <string name="registration_success">User registered!</string>
+    <string name="empty">The forum is empty</string>
 </resources>
