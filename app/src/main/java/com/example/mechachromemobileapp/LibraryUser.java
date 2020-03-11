@@ -14,6 +14,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +26,8 @@ public class LibraryUser extends AppCompatActivity {
     private RecyclerView bookRecyclerView;
     private BooksAdapter booksAdapter;
     private List<Books> booksData;
-    FirebaseFirestore fStore;
+    private FirebaseFirestore fStore;
+    private StorageReference mStorageRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +55,7 @@ public class LibraryUser extends AppCompatActivity {
     }
 
     private void initBooksData() {
-        fStore = FirebaseFirestore.getInstance();
         booksData = new ArrayList<>();
-
         fStore.collection("library_books")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -62,22 +63,8 @@ public class LibraryUser extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                // getting the book variables
-                                String title = document.getString("title");
-                                String author = document.getString("author");
-                                String description = document.getString("description");
-                                String category = document.getString("category");
-                                String imgUrl = document.getString("imgUrl");
-                                long pages = (long) document.get("pages");
-                                long numReviews = (long) document.get("numReviews");
-                                double rating = (double) document.get("rating");
-                                long numRatings = (long) document.get("numRatings");
-
-                                // initializing new book
-                                Books book = new Books(title, author, description, category, imgUrl, pages, numReviews, rating, numRatings);
-
+                                Books book = document.toObject(Books.class);
                                 Log.d(TAG, "Got the book title: " + document.getString("title"));
-
                                 // adding book to the ArrayList
                                 booksData.add(book);
                             }
@@ -91,6 +78,11 @@ public class LibraryUser extends AppCompatActivity {
     }
 
     private void initViews() {
+        // firebase init
+        mStorageRef = FirebaseStorage.getInstance().getReference("library_books_image");
+        fStore = FirebaseFirestore.getInstance();
+
+        // Recycler view init
         bookRecyclerView = findViewById(R.id.libraryUserRecyclerView);
         bookRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         bookRecyclerView.setHasFixedSize(true);

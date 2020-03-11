@@ -13,7 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".BookPage"></activity>
+        <activity android:name=".ReserveBook"></activity>
+        <activity android:name=".AddReview" />
+        <activity android:name=".BookPage" />
         <activity android:name=".AddBook" />
         <activity android:name=".Forum" />
         <activity android:name=".FloorPlan" />

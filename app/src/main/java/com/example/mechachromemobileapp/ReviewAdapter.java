@@ -1,5 +1,6 @@
 package com.example.mechachromemobileapp;
 
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,10 +10,49 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
-public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewViewHolder> {
+public class ReviewAdapter extends FirestoreRecyclerAdapter<Review, ReviewAdapter.ReviewHolder> {
 
+
+    public ReviewAdapter(@NonNull FirestoreRecyclerOptions<Review> options) {
+        super(options);
+    }
+
+    @Override
+    protected void onBindViewHolder(@NonNull ReviewHolder holder, int position, @NonNull Review model) {
+        holder.reviewAuthor.setText(model.getAuthor());
+        CharSequence date_published = DateFormat.format("dd-MM-yyyy hh:mm:ss",model.getDate_published());
+        holder.reviewDatePublished.setText(date_published.toString());
+        holder.reviewContent.setText(model.getContent());
+        holder.reviewScore.setRating(model.getRating());
+    }
+
+    @NonNull
+    @Override
+    public ReviewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_review_item, parent, false);
+        ReviewHolder reviewViewHolder = new ReviewHolder(view);
+        return reviewViewHolder;
+    }
+
+    class ReviewHolder extends RecyclerView.ViewHolder {
+        public TextView reviewAuthor, reviewDatePublished, reviewContent;
+        public RatingBar reviewScore;
+
+        public ReviewHolder(@NonNull View itemView) {
+            super(itemView);
+            reviewAuthor = itemView.findViewById(R.id.author);
+            reviewDatePublished = itemView.findViewById(R.id.date_published);
+            reviewContent = itemView.findViewById(R.id.content);
+            reviewScore = itemView.findViewById(R.id.review_score);
+        }
+    }
+}
+
+
+    /*
     private ArrayList<Review> reviewsList;
 
     public static class ReviewViewHolder extends RecyclerView.ViewHolder {
@@ -47,9 +87,10 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
         Review currentReview = reviewsList.get(position);
 
         holder.reviewAuthor.setText(currentReview.getAuthor());
-        holder.reviewDatePublished.setText(currentReview.getDate_published());
+        CharSequence date_published = DateFormat.format("dd-MM-yyyy hh:mm:ss",currentReview.getDate_published());
+        holder.reviewDatePublished.setText(date_published.toString());
         holder.reviewContent.setText(currentReview.getContent());
-        holder.reviewScore.setNumStars(currentReview.getScore());
+        holder.reviewScore.setRating(currentReview.getRating());
 
     }
 
@@ -57,4 +98,11 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
     public int getItemCount() {
         return reviewsList.size();
     }
+
+    @Override
+    protected void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position, @NonNull Object model) {
+
+    }
 }
+
+     */

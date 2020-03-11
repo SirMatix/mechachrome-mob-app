@@ -2,6 +2,7 @@ package com.example.mechachromemobileapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -14,26 +15,26 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.ArrayList;
+import com.google.firebase.firestore.Query;
 
 public class BookPage extends AppCompatActivity {
 
     public static final String TAG = "TAG";
-    ArrayList<Review> reviewsList;
     private RecyclerView reviewRecyclerView;
-    private RecyclerView.Adapter reviewAdapter;
-    private RecyclerView.LayoutManager reviewLayoutManager;
+    private ReviewAdapter reviewAdapter;
     FirebaseFirestore fStore;
-    String titleAuthorFeed;
+    String titleAuthorFeed, titleFeed;
     Button reserveButton, writeReviewButton;
     TextView bookTitle, bookAuthor, bookDescription, bookPages, availableBooks, reservedBooks;
     ImageView bookImage;
-    RatingBar bookScore;
+    RatingBar bookRating;
+    DocumentReference bookReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +42,21 @@ public class BookPage extends AppCompatActivity {
         setContentView(R.layout.activity_book_page);
         initViews();
         loadBookData();
+        buildRecyclerView();
 
+        writeReviewButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                writeReview();
+            }
+        });
+
+        reserveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                reserveBook();
+            }
+        });
 
     }
 
@@ -51,19 +66,24 @@ public class BookPage extends AppCompatActivity {
         // getting intent from Library activity and getting extra string
         Intent intent = getIntent();
         titleAuthorFeed = intent.getStringExtra("title_author");
+        titleFeed = intent.getStringExtra("title");
 
         // finding variables from layout
         bookTitle = findViewById(R.id.item_book_title);
         bookAuthor = findViewById(R.id.item_book_author);
-        bookDescription = findViewById(R.id.item_book_description);
+        bookDescription = findViewById(R.id.availableBooks);
         bookPages = findViewById(R.id.item_book_pagesrev);
         availableBooks = findViewById(R.id.numAvailable);
         reservedBooks = findViewById(R.id.numReserved);
         bookImage = findViewById(R.id.item_book_img);
+        bookRating = findViewById(R.id.item_book_ratingBar);
+        writeReviewButton = findViewById(R.id.writeReviewBtn);
+        reserveButton = findViewById(R.id.reserveBookBtn);
+        reviewRecyclerView = findViewById(R.id.bookPageRecyclerView);
     }
 
     public void loadBookData() {
-        DocumentReference bookReference = fStore.collection("library_books").document(titleAuthorFeed);
+        bookReference = fStore.collection("library_books").document(titleAuthorFeed);
         bookReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -74,77 +94,55 @@ public class BookPage extends AppCompatActivity {
                 String numreviews = documentSnapshot.get("numReviews").toString();
                 String pagesrev = pages + " Pages | " + numreviews + " reviews";
                 bookPages.setText(pagesrev);
-                // availableBooks.setText(documentSnapshot.get("availableBooks").toString();
-                // reservedBooks.setText(documentSnapshot.get("numReserved").toString();
+                availableBooks.setText(documentSnapshot.get("availableBooksNum").toString());
+                reservedBooks.setText((documentSnapshot.get("numReserved").toString()));
+                bookRating.setRating(Float.parseFloat(documentSnapshot.get("rating").toString()));
+
                 Glide.with(BookPage.this)
                         .load(documentSnapshot.get("imgUrl").toString()) //set the img book url
                         .transforms(new CenterCrop() , new RoundedCorners(16))
                         .into(bookImage); //destination path
             }
         });
-
-
-    }
-
-    public void loadReviews() {
-        reviewsList = new ArrayList<>();
-        reviewsList.add(new Review("John Doe","12-02-2020", "This book is super cool", 5));
-        reviewsList.add(new Review("Mark Twain","15-02-2020", "This book is everything but cool", 1));
-        reviewsList.add(new Review("Agatha Christie","12-02-2020", "This book is super cool", 5));
-
-        buildRecyclerView();
-
-        /*
-        fStore.collection("bookReviews")
-                .whereEqualTo("book_title", titleFeed)
-                .orderBy("date_published", Query.Direction.ASCENDING)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            //int count = 0;
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-
-                                Review review = new Review;
-                                review.setContent(document.getString("content"));
-                                review.setAuthor(document.getString("author"));
-                                Date date_published = document.getTimestamp("date_published").toDate();
-                                review.setDate_published(DateFormat.format("dd-MM-yyyy hh:mm:ss",date_published).toString());
-                                reviewsList.add(review);
-
-                                Log.d(TAG, "Got the book titied: " + document.get("book_title"));
-                            }
-                            (reviewAdapter).notifyDataSetChanged();
-                            //progressBar.setVisibility(View.GONE);
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
-                        }
-                    }
-                });
-
-         */
-
-
     }
 
     public void reserveBook() {
-
-
+        Intent intent = new Intent(BookPage.this, ReserveBook.class);
+        intent.putExtra("title_author", titleAuthorFeed);
+        intent.putExtra("title", titleFeed);
+        startActivity(intent);
     }
 
     public void writeReview() {
-
-
+        Intent intent = new Intent(BookPage.this, AddReview.class);
+        intent.putExtra("title_author", titleAuthorFeed);
+        intent.putExtra("title", titleFeed);
+        startActivity(intent);
     }
 
     public void buildRecyclerView() {
-        reviewRecyclerView.findViewById(R.id.bookPageRecyclerView);
-        reviewRecyclerView.setHasFixedSize(true);
-        reviewLayoutManager = new LinearLayoutManager(this);
-        reviewAdapter = new ReviewAdapter(reviewsList);
+        CollectionReference reviewsReference = fStore.collection("library_book_reviews");
+        Query query = reviewsReference.whereEqualTo("book_title", titleFeed).orderBy("date_published", Query.Direction.ASCENDING);
 
-        reviewRecyclerView.setLayoutManager(reviewLayoutManager);
+        FirestoreRecyclerOptions<Review> options = new FirestoreRecyclerOptions.Builder<Review>()
+                .setQuery(query, Review.class)
+                .build();
+
+        reviewAdapter = new ReviewAdapter(options);
+        reviewRecyclerView.setHasFixedSize(true);
+        reviewRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         reviewRecyclerView.setAdapter(reviewAdapter);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        reviewAdapter.startListening();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        reviewAdapter.stopListening();
     }
 }

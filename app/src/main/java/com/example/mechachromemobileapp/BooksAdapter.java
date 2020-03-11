@@ -84,9 +84,11 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BooksViewHol
                 .into(holder.bookImage); //destination path
 
         holder.title.setText(book.getTitle());
-        holder.author.setText("By " + book.getAuthor());
-        holder.pages.setText(book.getPages() + " Pages | " + book.getNumReviews() + " reviews");
-        holder.ratingBar.setRating((float)book.getRating());
+        String byauthor = "By " + book.getAuthor();
+        holder.author.setText(byauthor);
+        String pagesrev = book.getPages() + " Pages | " + book.getNumReviews() + " reviews";
+        holder.pages.setText(pagesrev);
+        holder.ratingBar.setRating(book.getRating());
     }
 
     @Override

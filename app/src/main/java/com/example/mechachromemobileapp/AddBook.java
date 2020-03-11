@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +34,7 @@ public class AddBook extends AppCompatActivity {
 
     public static final String TAG = "TAG";
     public Uri imgUri;
-    private EditText bookTitle, bookDescription, bookAuthor, bookPages;
+    private EditText bookTitle, bookDescription, bookAuthor, bookPages, availableBooks;
     private ImageView bookImage;
     private Button bAddBtn, bAddImage;
     private Spinner bCategorySpinner;
@@ -49,7 +50,6 @@ public class AddBook extends AppCompatActivity {
 
         initSpinner();
 
-        // getting the image
         bAddImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,9 +60,15 @@ public class AddBook extends AppCompatActivity {
         bAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addBook();
+                if(imgUri != null) {
+                    addBook();
+                    startActivity(new Intent(AddBook.this, LibraryAdmin.class));
+                    finish();
+                }
+                else {
+                    Toast.makeText(AddBook.this,"Please add book image", Toast.LENGTH_SHORT).show();
+                }
             }
-
         });
     }
 
@@ -73,16 +79,53 @@ public class AddBook extends AppCompatActivity {
         finish();
     }
 
+    public void fieldValidation() {
+        if(TextUtils.isEmpty(bookTitle.getText().toString())){
+            bookTitle.setError("Title is required");
+            return;
+        }
+        if(TextUtils.isEmpty(bookAuthor.getText().toString())){
+            bookAuthor.setError("Author is required");
+            return;
+        }
+        if(TextUtils.isEmpty(bookDescription.getText().toString())){
+            bookDescription.setError("Description is required");
+            return;
+        }
+        if(TextUtils.isEmpty(bCategorySpinner.getSelectedItem().toString())){
+            Toast.makeText(AddBook.this,"Please chose book category", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(TextUtils.isEmpty(availableBooks.getText().toString())){
+            availableBooks.setError("Number of available books is required");
+            return;
+        }
+        if(TextUtils.isEmpty(bookPages.getText().toString())) {
+            bookPages.setError("Number of pages is required");
+            return;
+        }
+    }
+
     public void addBook(){
-        // getting data from layout variables
-        final String title =  bookTitle.getText().toString();
-        final String description = bookDescription.getText().toString();
-        final String author =  bookAuthor.getText().toString();
-        final String category = bCategorySpinner.getSelectedItem().toString();
-        final int pages = Integer.parseInt(bookPages.getText().toString());
-        final int numReviews = 0;
-        final int rating = 0;
-        final int numRatings = 0;
+        final Books book = new Books();
+        final String title = bookTitle.getText().toString();
+        final String author = bookAuthor.getText().toString();
+
+        fieldValidation();
+
+        book.setTitle(title);
+        book.setAuthor(author);
+        book.setDescription(bookDescription.getText().toString());
+        book.setCategory(bCategorySpinner.getSelectedItem().toString());
+        book.setAvailableBooksNum(Integer.parseInt(availableBooks.getText().toString()));
+        book.setPages(Integer.parseInt(bookPages.getText().toString()));
+        book.setNumReserved(0);
+        book.setNumReviews(0);
+        book.setRating(0f);
+
+        // setting document Reference for book object in collection library_books
+        final DocumentReference book_data = fStore.collection("library_books").document(title + author);
+
         // the uploading image function
         final StorageReference reference = mStorageRef.child(title+author+'.'+getExtension(imgUri));
         reference.putFile(imgUri)
@@ -92,13 +135,7 @@ public class AddBook extends AppCompatActivity {
                         reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
-                                String imageUrl = uri.toString();
-                                // setting document Reference for book object in collection library_books
-                                DocumentReference book_data = fStore.collection("library_books").document(title+author);
-
-                                // initializing book object
-                                Books book = new Books(title, author, description, category, imageUrl, pages, numReviews, rating, numRatings);
-
+                                book.setImgUrl(uri.toString());
                                 book_data.set(book).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
@@ -106,11 +143,9 @@ public class AddBook extends AppCompatActivity {
                                         Toast.makeText(AddBook.this,"Added Book data", Toast.LENGTH_SHORT).show();
                                     }
                                 });
+                                Toast.makeText(AddBook.this,"Image uploaded successfully", Toast.LENGTH_SHORT).show();
                             }
                         });
-                        Toast.makeText(AddBook.this,"Image uploaded successfully", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getApplicationContext(), LibraryAdmin.class));
-                        finish();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -120,12 +155,6 @@ public class AddBook extends AppCompatActivity {
                         // ...
                     }
                 });
-
-
-
-
-
-
     }
 
     private void chooseFile() {
@@ -133,10 +162,6 @@ public class AddBook extends AppCompatActivity {
         intent.setType("image/");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent,1);
-    }
-
-    private void uploadFile(String title, String author) {
-
     }
 
     private String getExtension(Uri uri) {
@@ -158,10 +183,11 @@ public class AddBook extends AppCompatActivity {
     public void initElements() {
         // Data variables
         bookTitle = findViewById(R.id.bookTitle);
-        bookDescription = findViewById(R.id.item_book_description);
+        bookDescription = findViewById(R.id.bookDescription);
         bookAuthor = findViewById(R.id.bookAuthor);
         bookPages = findViewById(R.id.bookPages);
         bookImage = findViewById(R.id.bookImage);
+        availableBooks = findViewById(R.id.availableBooks);
 
         // Spinner
         bCategorySpinner = findViewById(R.id.categorySpinner);
