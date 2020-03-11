@@ -33,8 +33,7 @@ public class ReviewAdapter extends FirestoreRecyclerAdapter<Review, ReviewAdapte
     @Override
     public ReviewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_review_item, parent, false);
-        ReviewHolder reviewViewHolder = new ReviewHolder(view);
-        return reviewViewHolder;
+        return new ReviewHolder(view);
     }
 
     class ReviewHolder extends RecyclerView.ViewHolder {

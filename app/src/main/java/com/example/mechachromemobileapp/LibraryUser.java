@@ -2,91 +2,78 @@ package com.example.mechachromemobileapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.google.firebase.firestore.Query;
 
 public class LibraryUser extends AppCompatActivity {
 
-    private final String TAG = "TAG";
-    private RecyclerView bookRecyclerView;
+    private RecyclerView booksRecyclerView;
     private BooksAdapter booksAdapter;
-    private List<Books> booksData;
     private FirebaseFirestore fStore;
-    private StorageReference mStorageRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_library_user);
+        setContentView(R.layout.activity_library_admin);
 
         initViews();
-        initBooksData();
-        setupBooksAdapter();
-    }
-
-    private void setupBooksAdapter() {
-        booksAdapter = new BooksAdapter(booksData);
-        bookRecyclerView.setAdapter(booksAdapter);
+        buildBooksRecyclerView();
 
         booksAdapter.setOnItemClickListener(new BooksAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(int position) {
-                Books book = booksData.get(position);
+            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+                Books book = documentSnapshot.toObject(Books.class);
                 Intent intent = new Intent(LibraryUser.this, BookPage.class);
                 intent.putExtra("book_title", book.getTitle());
+                intent.putExtra("book_id", documentSnapshot.getId());
                 startActivity(intent);
             }
         });
     }
 
-    private void initBooksData() {
-        booksData = new ArrayList<>();
-        fStore.collection("library_books")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Books book = document.toObject(Books.class);
-                                Log.d(TAG, "Got the book title: " + document.getString("title"));
-                                // adding book to the ArrayList
-                                booksData.add(book);
-                            }
-                            // notifying the booksAdapter with data change
-                            booksAdapter.notifyDataSetChanged();
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
-                        }
-                    }
-                });
+    @Override
+    protected void onStart() {
+        super.onStart();
+        booksAdapter.startListening();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        booksAdapter.stopListening();
     }
 
     private void initViews() {
-        // firebase init
-        mStorageRef = FirebaseStorage.getInstance().getReference("library_books_image");
+        // Firebase init
         fStore = FirebaseFirestore.getInstance();
 
-        // Recycler view init
-        bookRecyclerView = findViewById(R.id.libraryUserRecyclerView);
-        bookRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        bookRecyclerView.setHasFixedSize(true);
-        bookRecyclerView.setItemAnimator(new CustomItemAnimation());
+        // recyclerView init
+        booksRecyclerView = findViewById(R.id.libraryAdminRecyclerView);
+        booksRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        booksRecyclerView.setHasFixedSize(true);
+        booksRecyclerView.setItemAnimator(new CustomItemAnimation());
     }
 
+    private void buildBooksRecyclerView() {
+        CollectionReference booksReference = fStore.collection("library_books");
+        // query to display newest books in library first
+        Query query = booksReference.orderBy("add_date", Query.Direction.ASCENDING);
+
+        FirestoreRecyclerOptions<Books> options = new FirestoreRecyclerOptions.Builder<Books>()
+                .setQuery(query, Books.class)
+                .build();
+
+        booksAdapter = new BooksAdapter(options);
+        booksRecyclerView.setHasFixedSize(true);
+        booksRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        booksRecyclerView.setAdapter(booksAdapter);
+    }
 }

@@ -61,7 +61,7 @@ public class ReserveBook extends AppCompatActivity {
                 startActivity(intent);
 
                  */
-                finish();
+
             }
         });
 
@@ -156,7 +156,7 @@ public class ReserveBook extends AppCompatActivity {
                         reservation.setBook_author(book.getAuthor());
                         reservation.setBook_title(book.getTitle());
                         reservation.setUser_reserved_for(user.getFname() + " " + user.getLname());
-                        reservation.setUser_reserver_id(user.getStudentID());
+                        reservation.setUser_reserver_id(userID);
                         Calendar calendar1 = Calendar.getInstance();
                         Date today = calendar1.getTime();
                         reservation.setReserved_from(today);
@@ -166,16 +166,17 @@ public class ReserveBook extends AppCompatActivity {
                         reservation.setIs_active(true);
                         reservation.setIs_cancelled(false);
                         reservation.setIs_done(false);
+                        bookReference.update("numReserved", FieldValue.increment(1));
+                        bookReference.update("availableBooksNum", FieldValue.increment(-1));
 
                         reservationReference.set(reservation).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Log.d(TAG,"new reservation has been made");
                                 Toast.makeText(ReserveBook.this,"Reservation successful", Toast.LENGTH_SHORT).show();
-                                bookReference.update("numReserved", FieldValue.increment(1));
-                                bookReference.update("availableBooksNum", FieldValue.increment(-1));
                             }
                         });
+                        finish();
                     }
                 });
             }

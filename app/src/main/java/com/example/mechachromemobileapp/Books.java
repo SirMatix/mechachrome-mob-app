@@ -1,28 +1,17 @@
 package com.example.mechachromemobileapp;
 
+import java.util.Date;
+
 public class Books {
     private String title, description, author, category, imgUrl;
-    private Integer numReviews, pages, availableBooksNum, numReserved;
+    private Integer numReviews, pages, totalBooksNum, availableBooksNum, numReserved;
+    private Date add_date;
     private Float rating;
 
     public Books(){
 
     }
 
-    /*
-    public Books(String title, String author, String description, String category, String imgUrl, Integer availableBooksNum, Integer pages, Integer numReviews, Float rating) {
-        this.title = title;
-        this.author = author;
-        this.description = description;
-        this.category = category;
-        this.imgUrl = imgUrl;
-        this.availableBooksNum = availableBooksNum;
-        this.pages = pages;
-        this.numReviews = numReviews;
-        this.rating = rating;
-    }
-
-     */
 
     public String getTitle() {
         return title;
@@ -102,5 +91,21 @@ public class Books {
 
     public void setNumReserved(Integer numReserved) {
         this.numReserved = numReserved;
+    }
+
+    public Date getAdd_date() {
+        return add_date;
+    }
+
+    public void setAdd_date(Date add_date) {
+        this.add_date = add_date;
+    }
+
+    public Integer getTotalBooksNum() {
+        return totalBooksNum;
+    }
+
+    public void setTotalBooksNum(Integer totalBooksNum) {
+        this.totalBooksNum = totalBooksNum;
     }
 }

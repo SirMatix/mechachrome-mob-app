@@ -118,7 +118,7 @@ public class AddReview extends AppCompatActivity {
 
                                         // setting the review
                                         DocumentReference reviewRef = fStore.collection("library_book_reviews").document();
-                                        Review review = new Review(author.get(0),titleFeed,date_published,content,new_rating);
+                                        Review review = new Review(author.get(0),titleFeed,date_published,content,rating);
 
                                         reviewRef.set(review).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
@@ -139,8 +139,6 @@ public class AddReview extends AppCompatActivity {
                         }
                     }
                 });
-
-
             }
         });
 

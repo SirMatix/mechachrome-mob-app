@@ -30,6 +30,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.Calendar;
+
 public class AddBook extends AppCompatActivity {
 
     public static final String TAG = "TAG";
@@ -118,10 +120,12 @@ public class AddBook extends AppCompatActivity {
         book.setDescription(bookDescription.getText().toString());
         book.setCategory(bCategorySpinner.getSelectedItem().toString());
         book.setAvailableBooksNum(Integer.parseInt(availableBooks.getText().toString()));
+        book.setTotalBooksNum(Integer.parseInt(availableBooks.getText().toString()));
         book.setPages(Integer.parseInt(bookPages.getText().toString()));
         book.setNumReserved(0);
         book.setNumReviews(0);
         book.setRating(0f);
+        book.setAdd_date(Calendar.getInstance().getTime());
 
         // setting document Reference for book object in collection library_books
         final DocumentReference book_data = fStore.collection("library_books").document(title + author);
