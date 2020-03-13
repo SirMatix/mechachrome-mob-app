@@ -1,4 +1,4 @@
-package com.example.mechachromemobileapp;
+package com.example.mechachromemobileapp.Activities;
 
 import android.os.Bundle;
 import android.view.View;
@@ -7,6 +7,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.mechachromemobileapp.R;
 
 public class FloorPlan extends AppCompatActivity {
     private Button button2;

@@ -1,4 +1,4 @@
-package com.example.mechachromemobileapp;
+package com.example.mechachromemobileapp.Activities.Library;
 
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -22,6 +22,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.mechachromemobileapp.Models.Books;
+import com.example.mechachromemobileapp.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;

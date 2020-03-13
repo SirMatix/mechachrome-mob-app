@@ -1,4 +1,4 @@
-package com.example.mechachromemobileapp;
+package com.example.mechachromemobileapp.Activities;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -11,6 +11,11 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.mechachromemobileapp.Activities.Forum.Forum;
+import com.example.mechachromemobileapp.Activities.Library.LibraryAdmin;
+import com.example.mechachromemobileapp.Activities.Library.LibraryUser;
+import com.example.mechachromemobileapp.Activities.Timetables.Timetables;
+import com.example.mechachromemobileapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -47,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         timetables.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),Timetables.class));
+                startActivity(new Intent(getApplicationContext(), Timetables.class));
             }
         });
 
@@ -75,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         moreBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),Forum.class));
+                startActivity(new Intent(getApplicationContext(), Forum.class));
             }
         });
 

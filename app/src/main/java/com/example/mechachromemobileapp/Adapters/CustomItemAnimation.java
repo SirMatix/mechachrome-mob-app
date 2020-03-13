@@ -1,9 +1,11 @@
-package com.example.mechachromemobileapp;
+package com.example.mechachromemobileapp.Adapters;
 
 import android.view.animation.AnimationUtils;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.mechachromemobileapp.R;
 
 public class CustomItemAnimation extends DefaultItemAnimator {
 

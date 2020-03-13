@@ -1,4 +1,4 @@
-package com.example.mechachromemobileapp;
+package com.example.mechachromemobileapp.Adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.example.mechachromemobileapp.Models.Books;
+import com.example.mechachromemobileapp.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.DocumentSnapshot;

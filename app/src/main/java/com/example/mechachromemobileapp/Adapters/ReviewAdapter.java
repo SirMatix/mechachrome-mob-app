@@ -1,4 +1,4 @@
-package com.example.mechachromemobileapp;
+package com.example.mechachromemobileapp.Adapters;
 
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mechachromemobileapp.Models.Review;
+import com.example.mechachromemobileapp.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 

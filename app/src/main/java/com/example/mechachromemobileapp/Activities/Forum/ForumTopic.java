@@ -1,4 +1,4 @@
-package com.example.mechachromemobileapp;
+package com.example.mechachromemobileapp.Activities.Forum;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.example.mechachromemobileapp.Adapters.PostAdapter;
+import com.example.mechachromemobileapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;

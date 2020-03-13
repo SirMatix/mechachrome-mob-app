@@ -1,4 +1,4 @@
-package com.example.mechachromemobileapp;
+package com.example.mechachromemobileapp.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,10 +9,13 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.example.mechachromemobileapp.R;
+
 import java.util.ArrayList;
 import java.util.Map;
 
-class ForumAdapter extends ArrayAdapter<Map> {
+public class ForumAdapter extends ArrayAdapter<Map> {
     public ForumAdapter(@NonNull Context context, ArrayList<Map> forumTopics) {
         super(context, R.layout.custom_forum_list, forumTopics);
     }

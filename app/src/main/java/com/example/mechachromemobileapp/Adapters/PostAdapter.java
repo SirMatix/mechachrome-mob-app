@@ -1,4 +1,4 @@
-package com.example.mechachromemobileapp;
+package com.example.mechachromemobileapp.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,10 +10,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.mechachromemobileapp.R;
+
 import java.util.ArrayList;
 import java.util.Map;
 
-class PostAdapter extends ArrayAdapter<Map> {
+public class PostAdapter extends ArrayAdapter<Map> {
     public PostAdapter(@NonNull Context context, ArrayList<Map> forumPosts) {
         super(context, R.layout.custom_post_list, forumPosts);
     }

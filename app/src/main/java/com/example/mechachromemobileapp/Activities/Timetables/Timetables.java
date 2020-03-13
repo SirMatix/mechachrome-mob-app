@@ -1,8 +1,10 @@
-package com.example.mechachromemobileapp;
+package com.example.mechachromemobileapp.Activities.Timetables;
+
+import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Bundle;
+import com.example.mechachromemobileapp.R;
 
 public class Timetables extends AppCompatActivity {
 
