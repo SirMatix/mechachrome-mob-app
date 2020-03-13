@@ -5,6 +5,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 
@@ -15,6 +17,8 @@ import com.example.mechachromemobileapp.Activities.Forum.Forum;
 import com.example.mechachromemobileapp.Activities.Library.LibraryAdmin;
 import com.example.mechachromemobileapp.Activities.Library.LibraryUser;
 import com.example.mechachromemobileapp.Activities.Timetables.Timetables;
+import com.example.mechachromemobileapp.Activities.User.Login;
+import com.example.mechachromemobileapp.Activities.User.Register;
 import com.example.mechachromemobileapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -86,9 +90,16 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.user_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
     public void logout (View view){
         FirebaseAuth.getInstance().signOut(); //logout
-        startActivity(new Intent(getApplicationContext(),Login.class));
+        startActivity(new Intent(getApplicationContext(), Login.class));
         finish();
     }
 

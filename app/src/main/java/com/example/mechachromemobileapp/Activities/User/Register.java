@@ -1,4 +1,4 @@
-package com.example.mechachromemobileapp.Activities;
+package com.example.mechachromemobileapp.Activities.User;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.mechachromemobileapp.Activities.MainActivity;
 import com.example.mechachromemobileapp.R;
 import com.example.mechachromemobileapp.Models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -86,7 +87,7 @@ public class Register extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         if (fAuth.getCurrentUser() != null) {
-            startActivity(new Intent(getApplicationContext(),MainActivity.class));
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
             finish();
         }
     }
