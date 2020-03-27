@@ -21,4 +21,7 @@
     <string name="logout">Logout</string>
     <string name="registration_success">User registered!</string>
     <string name="empty">The forum is empty</string>
+
+
+
 </resources>
