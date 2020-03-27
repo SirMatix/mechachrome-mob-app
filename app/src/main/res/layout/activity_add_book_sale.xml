@@ -114,18 +114,23 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bookAuthor" />
 
-        <Spinner
-            android:id="@+id/categorySpinner"
+        <EditText
+            android:id="@+id/bookPages"
             android:layout_width="360dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
+            android:layout_marginTop="2dp"
             android:layout_marginBottom="2dp"
-            android:spinnerMode="dropdown"
+            android:ems="10"
+            android:fontFamily="@font/roboto_slab"
+            android:hint="@string/number_of_pages"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:textColor="#CD943131"
+            android:textColorHint="#80943131"
             app:layout_constraintBottom_toTopOf="@+id/availableBooks"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bookDescription"/>
+            app:layout_constraintTop_toBottomOf="@+id/bookDescription" />
 
         <EditText
             android:id="@+id/availableBooks"
@@ -142,24 +147,19 @@
             android:textAlignment="center"
             android:textColor="#CD943131"
             android:textColorHint="#80943131"
-            app:layout_constraintBottom_toTopOf="@+id/bookPages"
+            app:layout_constraintBottom_toTopOf="@+id/categorySpinner"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/categorySpinner" />
+            app:layout_constraintTop_toBottomOf="@+id/bookPages" />
 
-        <EditText
-            android:id="@+id/bookPages"
+        <Spinner
+            android:id="@+id/categorySpinner"
             android:layout_width="360dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
             android:layout_marginBottom="2dp"
-            android:ems="10"
-            android:fontFamily="@font/roboto_slab"
-            android:hint="@string/number_of_pages"
-            android:inputType="number"
-            android:textAlignment="center"
-            android:textColor="#CD943131"
-            android:textColorHint="#80943131"
+            android:spinnerMode="dropdown"
             app:layout_constraintBottom_toTopOf="@+id/addBookImageBtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

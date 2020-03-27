@@ -1,4 +1,4 @@
-package com.example.mechachromemobileapp.Adapters;
+package com.example.mechachromemobileapp.Models;
 
 import android.view.animation.AnimationUtils;
 
