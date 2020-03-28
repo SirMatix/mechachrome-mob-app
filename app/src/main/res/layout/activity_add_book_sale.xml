@@ -44,7 +44,7 @@
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="15dp"
             android:fontFamily="@font/roboto_slab"
-            android:text="@string/add_new_book"
+            android:text="Add a new book for sale"
             android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="20sp"
@@ -127,13 +127,13 @@
             android:textAlignment="center"
             android:textColor="#CD943131"
             android:textColorHint="#80943131"
-            app:layout_constraintBottom_toTopOf="@+id/availableBooks"
+            app:layout_constraintBottom_toTopOf="@+id/bookPrice"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bookDescription" />
 
         <EditText
-            android:id="@+id/availableBooks"
+            android:id="@+id/bookPrice"
             android:layout_width="360dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
@@ -142,15 +142,28 @@
             android:layout_marginBottom="2dp"
             android:ems="10"
             android:fontFamily="@font/roboto_slab"
-            android:hint="@string/number_of_books"
+            android:hint="Book Price"
             android:inputType="number"
             android:textAlignment="center"
             android:textColor="#CD943131"
             android:textColorHint="#80943131"
-            app:layout_constraintBottom_toTopOf="@+id/categorySpinner"
+            app:layout_constraintBottom_toTopOf="@+id/conditionSpinner"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bookPages" />
+
+        <Spinner
+            android:id="@+id/conditionSpinner"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="2dp"
+            android:spinnerMode="dropdown"
+            app:layout_constraintBottom_toTopOf="@+id/categorySpinner"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bookPrice" />
 
         <Spinner
             android:id="@+id/categorySpinner"
@@ -163,7 +176,7 @@
             app:layout_constraintBottom_toTopOf="@+id/addBookImageBtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/availableBooks" />
+            app:layout_constraintTop_toBottomOf="@+id/conditionSpinner" />
 
         <Button
             android:id="@+id/addBookImageBtn"
@@ -175,7 +188,7 @@
             app:layout_constraintBottom_toTopOf="@+id/bookImage"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bookPages" />
+            app:layout_constraintTop_toBottomOf="@+id/categorySpinner" />
 
         <ImageView
             android:id="@+id/bookImage"

@@ -128,7 +128,7 @@
             app:layout_constraintTop_toBottomOf="@+id/bookDescription"/>
 
         <EditText
-            android:id="@+id/availableBooks"
+            android:id="@+id/bookPrice"
             android:layout_width="360dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
