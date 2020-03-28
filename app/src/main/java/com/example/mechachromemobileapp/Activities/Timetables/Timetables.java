@@ -23,7 +23,7 @@ import com.google.firebase.firestore.Query;
 public class Timetables extends AppCompatActivity {
 
     private FirebaseFirestore fStore = FirebaseFirestore.getInstance();
-    private CollectionReference dayRef = fStore.collection("Timetables");
+    private CollectionReference dayRef = fStore.collection("timetables");
 
     private DayAdapter adapter;
     String groupFeed, modeFeed;
@@ -69,7 +69,7 @@ public class Timetables extends AppCompatActivity {
                         String roomNumber = timetableString.substring(indexOfRoom + 6, indexOfTeacher - 1);
                         Intent intent = new Intent(getApplicationContext(), FloorPlan.class);
                         intent.putExtra("roomNumber", roomNumber);
-                        Toast.makeText(Timetables.this, "Room number is: " + roomNumber, Toast.LENGTH_SHORT).show();
+                        startActivity(intent);
                     }
                 } else {
                     Toast.makeText(Timetables.this, "No lesson here!", Toast.LENGTH_SHORT).show();
