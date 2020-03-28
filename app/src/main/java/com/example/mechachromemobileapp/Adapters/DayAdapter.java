@@ -12,10 +12,10 @@ import com.example.mechachromemobileapp.Models.Day;
 import com.example.mechachromemobileapp.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-
-import org.w3c.dom.Text;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 public class DayAdapter extends FirestoreRecyclerAdapter<Day, DayAdapter.DayHolder> {
+    private OnItemClickListener listener;
 
     public DayAdapter(@NonNull FirestoreRecyclerOptions<Day> options) {
         super(options);
@@ -52,6 +52,79 @@ public class DayAdapter extends FirestoreRecyclerAdapter<Day, DayAdapter.DayHold
             timeframe4 = itemView.findViewById(R.id.timeframe4);
             timeframe5 = itemView.findViewById(R.id.timeframe5);
             timeframe6 = itemView.findViewById(R.id.timeframe6);
+
+            timeframe1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION && listener != null) {
+                        listener.onItemClick(getSnapshots().getSnapshot(position), position, "timeframe1");
+
+                    }
+                }
+            });
+            timeframe2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION && listener != null) {
+                        listener.onItemClick(getSnapshots().getSnapshot(position), position, "timeframe2");
+
+                    }
+                }
+            });
+            timeframe3.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION && listener != null) {
+                        listener.onItemClick(getSnapshots().getSnapshot(position), position, "timeframe3");
+
+                    }
+                }
+            });
+            timeframe4.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION && listener != null) {
+                        listener.onItemClick(getSnapshots().getSnapshot(position), position, "timeframe4");
+
+                    }
+                }
+            });
+            timeframe5.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION && listener != null) {
+                        listener.onItemClick(getSnapshots().getSnapshot(position), position, "timeframe5");
+
+                    }
+                }
+            });
+            timeframe6.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION && listener != null) {
+                        listener.onItemClick(getSnapshots().getSnapshot(position), position, "timeframe6");
+
+                    }
+                }
+            });
+
         }
     }
+
+    public interface OnItemClickListener {
+        void onItemClick(DocumentSnapshot documentSnapshot, int position, String timeframe);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
+
+
 }
