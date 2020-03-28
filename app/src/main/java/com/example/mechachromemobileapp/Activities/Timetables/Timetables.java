@@ -1,18 +1,22 @@
 package com.example.mechachromemobileapp.Activities.Timetables;
 
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.os.Bundle;
-
+import com.example.mechachromemobileapp.Activities.FloorPlan;
 import com.example.mechachromemobileapp.Adapters.DayAdapter;
 import com.example.mechachromemobileapp.Models.Day;
 import com.example.mechachromemobileapp.R;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
@@ -50,6 +54,30 @@ public class Timetables extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(adapter);
+
+
+        adapter.setOnItemClickListener(new DayAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(DocumentSnapshot documentSnapshot, int position, String timeframe) {
+                String timetableString = documentSnapshot.getString(timeframe);
+                if (!TextUtils.equals(timetableString,"")){
+                    if(TextUtils.equals(timetableString, "Lunch")) {
+                        Toast.makeText(Timetables.this, "It's lunch time!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        int indexOfRoom= timetableString.indexOf("room:");
+                        int indexOfTeacher = timetableString.indexOf("teacher:");
+                        String roomNumber = timetableString.substring(indexOfRoom + 6, indexOfTeacher - 1);
+                        Intent intent = new Intent(getApplicationContext(), FloorPlan.class);
+                        intent.putExtra("roomNumber", roomNumber);
+                        Toast.makeText(Timetables.this, "Room number is: " + roomNumber, Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(Timetables.this, "No lesson here!", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
     }
 
     @Override
