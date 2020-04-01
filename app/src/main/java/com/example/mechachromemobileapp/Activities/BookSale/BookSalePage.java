@@ -13,4 +13,12 @@ public class BookSalePage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_sale_page);
     }
+
+    public void initViews() {
+
+    }
+
+    public void buyBook() {
+
+    }
 }
