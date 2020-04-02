@@ -45,7 +45,7 @@ public class BookSalePage extends AppCompatActivity {
     public void initViews(){
         fStore = FirebaseFirestore.getInstance();
         fAuth = FirebaseAuth.getInstance();
-        bookSaleCollection = fStore.collection("library_books");
+        bookSaleCollection = fStore.collection("books_for_sale");
 
         // getting intent from Library activity and getting extra string
         Intent intent = getIntent();
@@ -55,8 +55,8 @@ public class BookSalePage extends AppCompatActivity {
         // finding variables from layout
         bookTitle = findViewById(R.id.item_book_title);
         bookAuthor = findViewById(R.id.item_book_author);
-        bookDescription = findViewById(R.id.availableBooks);
-        bookPages = findViewById(R.id.item_book_pagesrev);
+        bookDescription = findViewById(R.id.book_description);
+        bookPages = findViewById(R.id.item_book_pages);
         bookPrice = findViewById(R.id.book_price);
         bookImage = findViewById(R.id.item_book_img);
         bookCondition = findViewById(R.id.item_book_condition);
@@ -78,10 +78,11 @@ public class BookSalePage extends AppCompatActivity {
                 String displayPages = pages + " Pages";
                 bookPages.setText(displayPages);
                 bookCondition.setText(documentSnapshot.getString("condition"));
-                bookPrice.setText(documentSnapshot.getString("price"));
+                String priceString = "Price: £" + documentSnapshot.get("price").toString();
+                bookPrice.setText(priceString);
 
                 Glide.with(getApplicationContext())
-                        .load(documentSnapshot.get("imgUrl").toString()) //set the img book url
+                        .load(documentSnapshot.getString("imgUrl")) //set the img book url
                         .transforms(new CenterCrop(), new RoundedCorners(16))
                         .into(bookImage); //destination path
             }
@@ -89,6 +90,9 @@ public class BookSalePage extends AppCompatActivity {
     }
 
     public void buyBook() {
+
+
+
 
     }
 

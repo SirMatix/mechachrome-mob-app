@@ -4,9 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -99,6 +97,7 @@ public class BookSale extends AppCompatActivity {
         bookSaleRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         bookSaleRecyclerView.setAdapter(bookSaleAdapter);
 
+        /*
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
@@ -111,6 +110,8 @@ public class BookSale extends AppCompatActivity {
                 bookSaleAdapter.deleteItem(viewHolder.getAdapterPosition());
             }
         }).attachToRecyclerView(bookSaleRecyclerView);
+
+         */
 
     }
 
@@ -125,7 +126,4 @@ public class BookSale extends AppCompatActivity {
         super.onStop();
         bookSaleAdapter.stopListening();
     }
-
-
-
 }

@@ -26,6 +26,7 @@ import com.example.mechachromemobileapp.Models.BookSaleModel;
 import com.example.mechachromemobileapp.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -44,6 +45,7 @@ public class AddSaleBook extends AppCompatActivity {
     private Spinner bCategorySpinner, bConditionSpinner;
     private FirebaseFirestore fStore;
     private StorageReference mStorageRef;
+    private FirebaseAuth fAuth;
 
 
     @Override
@@ -116,9 +118,17 @@ public class AddSaleBook extends AppCompatActivity {
         sellBook.setPages(Integer.parseInt(bookPages.getText().toString()));
         sellBook.setAdd_date(Calendar.getInstance().getTime());
         sellBook.setPrice(Float.parseFloat(bookPrice.getText().toString()));
+        sellBook.setRating(0f);
+        sellBook.setNumReviews(0);
+        sellBook.setNumReserved(0);
+        sellBook.setTotalBooksNum(1);
+        sellBook.setAvailableBooksNum(1);
+        sellBook.setSeller_id(fAuth.getCurrentUser().getUid());
+        sellBook.setSold(false);
+
 
         // setting document Reference for book object in collection books_for_sale
-        final DocumentReference sale_book_data = fStore.collection("book_for_sale").document(title + author);
+        final DocumentReference sale_book_data = fStore.collection("books_for_sale").document(title + author);
 
         // the uploading image function
         final StorageReference reference = mStorageRef.child(title+author+'.'+getExtension(imgUri));
@@ -133,7 +143,7 @@ public class AddSaleBook extends AppCompatActivity {
                                 sale_book_data.set(sellBook).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        Log.d(TAG,"book document created");
+                                        Log.d(TAG,"book sale document created");
                                         Toast.makeText(getApplicationContext(),"Added Book data", Toast.LENGTH_SHORT).show();
                                     }
                                 });
@@ -194,6 +204,7 @@ public class AddSaleBook extends AppCompatActivity {
         // Firestore initialization
         fStore = FirebaseFirestore.getInstance();
         mStorageRef = FirebaseStorage.getInstance().getReference("books_for_sale");
+        fAuth =FirebaseAuth.getInstance();
     }
 
     public void initCategorySpinner() {

@@ -4,6 +4,7 @@ public class BookSaleModel extends Books {
 
     String seller_id, condition;
     float price;
+    boolean sold;
 
     public BookSaleModel() {
 
@@ -31,5 +32,13 @@ public class BookSaleModel extends Books {
 
     public void setPrice(float price) {
         this.price = price;
+    }
+
+    public boolean isSold() {
+        return sold;
+    }
+
+    public void setSold(boolean sold) {
+        this.sold = sold;
     }
 }
