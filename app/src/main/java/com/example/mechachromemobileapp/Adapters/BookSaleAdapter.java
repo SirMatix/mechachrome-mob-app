@@ -24,7 +24,7 @@ public class BookSaleAdapter extends FirestoreRecyclerAdapter<BookSaleModel, Boo
 
     public BookSaleAdapter(@NonNull FirestoreRecyclerOptions<BookSaleModel> options) {
             super(options);
-            }
+    }
 
     @Override
     protected void onBindViewHolder(@NonNull BookSaleHolder holder, int position, @NonNull BookSaleModel model) {
@@ -49,20 +49,18 @@ public class BookSaleAdapter extends FirestoreRecyclerAdapter<BookSaleModel, Boo
             } else {
                 holder.sold.setVisibility(View.VISIBLE);
             }
-
-
-            }
+    }
 
     @NonNull
     @Override
     public BookSaleHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_book_sale, parent, false);
             return new BookSaleHolder(view);
-            }
+    }
 
     public void deleteItem(int position) {
             getSnapshots().getSnapshot(position).getReference().delete();
-            }
+    }
 
     class BookSaleHolder extends RecyclerView.ViewHolder {
         ImageView bookImage;

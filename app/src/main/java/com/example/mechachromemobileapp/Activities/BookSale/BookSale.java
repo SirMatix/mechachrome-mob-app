@@ -41,10 +41,12 @@ public class BookSale extends AppCompatActivity {
             @Override
             public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
                 BookSaleModel sellBook = documentSnapshot.toObject(BookSaleModel.class);
-                Intent intent = new Intent(getApplicationContext(), BookSalePage.class);
-                intent.putExtra("book_title", sellBook.getTitle());
-                intent.putExtra("book_id", documentSnapshot.getId());
-                startActivity(intent);
+                if(!sellBook.isSold()){
+                    Intent intent = new Intent(getApplicationContext(), BookSalePage.class);
+                    intent.putExtra("book_title", sellBook.getTitle());
+                    intent.putExtra("book_id", documentSnapshot.getId());
+                    startActivity(intent);
+                }
             }
         });
     }
