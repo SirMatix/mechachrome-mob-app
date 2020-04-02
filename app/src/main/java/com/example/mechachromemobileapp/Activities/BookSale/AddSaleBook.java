@@ -22,7 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.mechachromemobileapp.Models.SaleBook;
+import com.example.mechachromemobileapp.Models.BookSaleModel;
 import com.example.mechachromemobileapp.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -68,7 +68,7 @@ public class AddSaleBook extends AppCompatActivity {
             public void onClick(View v) {
                 if(imgUri != null) {
                     addBookSale();
-                    startActivity(new Intent(getApplicationContext(), BookSale.class));
+                    startActivity(new Intent(getApplicationContext(), com.example.mechachromemobileapp.Activities.BookSale.BookSale.class));
                     finish();
                 }
                 else {
@@ -102,7 +102,7 @@ public class AddSaleBook extends AppCompatActivity {
     }
 
     public void addBookSale(){
-        final SaleBook sellBook = new SaleBook();
+        final BookSaleModel sellBook = new BookSaleModel();
         final String title = bookTitle.getText().toString();
         final String author = bookAuthor.getText().toString();
 

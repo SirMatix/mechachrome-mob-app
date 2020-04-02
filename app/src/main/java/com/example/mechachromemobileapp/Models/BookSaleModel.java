@@ -1,11 +1,11 @@
 package com.example.mechachromemobileapp.Models;
 
-public class SaleBook extends Books {
+public class BookSaleModel extends Books {
 
     String seller_id, condition;
     float price;
 
-    public SaleBook() {
+    public BookSaleModel() {
 
     }
 
