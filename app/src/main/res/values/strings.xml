@@ -29,4 +29,6 @@
     <string name="discard">Discard</string>
     <string name="reply">Reply</string>
     <string name="new_topic">New Topic</string>
+    <string name="buy_book">Buy Book</string>
+    <string name="message_seller">Message seller</string>
 </resources>
