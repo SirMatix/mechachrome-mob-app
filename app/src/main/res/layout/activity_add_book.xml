@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background2"
-    tools:context=".Activities.Library.AddBook">
+    tools:context=".Activities.User.Register">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraint_layout"
@@ -128,7 +128,7 @@
             app:layout_constraintTop_toBottomOf="@+id/bookDescription"/>
 
         <EditText
-            android:id="@+id/bookPrice"
+            android:id="@+id/availableBooks"
             android:layout_width="360dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
