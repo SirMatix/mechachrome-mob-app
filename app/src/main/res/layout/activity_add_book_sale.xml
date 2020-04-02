@@ -11,7 +11,11 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraint_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/roehampton"
@@ -109,7 +113,7 @@
             android:textAlignment="center"
             android:textColor="#CD943131"
             android:textColorHint="#80943131"
-            app:layout_constraintBottom_toTopOf="@+id/categorySpinner"
+            app:layout_constraintBottom_toTopOf="@+id/bookPages"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bookAuthor" />
