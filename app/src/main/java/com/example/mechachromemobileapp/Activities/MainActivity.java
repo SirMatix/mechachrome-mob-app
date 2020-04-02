@@ -14,6 +14,7 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.mechachromemobileapp.Activities.BookSale.BookSale;
 import com.example.mechachromemobileapp.Activities.Forum.Forum;
 import com.example.mechachromemobileapp.Activities.Library.LibraryAdmin;
 import com.example.mechachromemobileapp.Activities.Library.LibraryUser;
@@ -34,7 +35,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class MainActivity extends AppCompatActivity {
 
     private final String TAG = "TAG";
-    Button timetables, library, moodle, floor_plan, moreBtn;
+    Button timetables, library, moodle, floor_plan, moreBtn, bookSaleBtn;
     String userID;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         moodle = findViewById(R.id.moodle);
         floor_plan = findViewById(R.id.floor_plan);
         moreBtn = findViewById(R.id.moreBtn);
+        bookSaleBtn = findViewById(R.id.book_sale);
 
         timetables.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,6 +94,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        bookSaleBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), BookSale.class));
+            }
+        });
+
     }
 
     @Override
@@ -113,6 +122,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.user_settings:
                 userSettings();
                 return true;
+            case R.id.user_logout:
+                logout();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -129,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(getApplicationContext(), UserSettings.class));
     }
 
-    public void logout (View view){
+    public void logout (){
         FirebaseAuth.getInstance().signOut(); //logout
         startActivity(new Intent(getApplicationContext(), Login.class));
         finish();

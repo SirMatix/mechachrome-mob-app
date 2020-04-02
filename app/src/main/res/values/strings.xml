@@ -31,4 +31,5 @@
     <string name="new_topic">New Topic</string>
     <string name="buy_book">Buy Book</string>
     <string name="message_seller">Message seller</string>
+    <string name="book_sale">Book Sale</string>
 </resources>
