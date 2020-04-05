@@ -6,16 +6,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mechachromemobileapp.R;
 
-public class UserInbox extends AppCompatActivity {
+public class UserMessage extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_inbox);
+        setContentView(R.layout.activity_user_message);
     }
-
-
-
-
-
 }

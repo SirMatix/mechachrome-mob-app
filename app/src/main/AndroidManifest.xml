@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Activities.User.UserAccount"></activity>
+        <activity android:name=".Activities.User.UserMessage"></activity>
+        <activity android:name=".Activities.User.UserAccount" />
         <activity android:name=".Activities.User.UserSettings" />
         <activity android:name=".Activities.User.UserInbox" />
         <activity android:name=".Activities.Library.ReserveBook" />
