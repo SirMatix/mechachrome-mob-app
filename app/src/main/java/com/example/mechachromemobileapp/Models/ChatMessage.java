@@ -1,17 +1,8 @@
 package com.example.mechachromemobileapp.Models;
 
-import java.util.Date;
-
 public class ChatMessage {
-    private String messageText, messageUser;
+    private String messageText, messageSender, messageReceiver;
     private long messageTime;
-
-    public ChatMessage(String messageText, String messageUser) {
-        this.messageText = messageText;
-        this.messageUser = messageUser;
-
-        messageTime = new Date().getTime();
-    }
 
     public ChatMessage() {
 
@@ -25,12 +16,20 @@ public class ChatMessage {
         this.messageText = messageText;
     }
 
-    public String getMessageUser() {
-        return messageUser;
+    public String getMessageSender() {
+        return messageSender;
     }
 
-    public void setMessageUser(String messageUser) {
-        this.messageUser = messageUser;
+    public void setMessageSender(String messageSender) {
+        this.messageSender = messageSender;
+    }
+
+    public String getMessageReceiver() {
+        return messageReceiver;
+    }
+
+    public void setMessageReceiver(String messageReceiver) {
+        this.messageReceiver = messageReceiver;
     }
 
     public long getMessageTime() {
