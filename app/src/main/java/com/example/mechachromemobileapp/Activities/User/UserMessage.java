@@ -148,7 +148,7 @@ public class UserMessage extends AppCompatActivity {
 
         messageAdapter = new MessageAdapter(options);
         messageRecyclerView.setHasFixedSize(true);
-        messageRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        messageRecyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false ));
         messageRecyclerView.setAdapter(messageAdapter);
     }
 

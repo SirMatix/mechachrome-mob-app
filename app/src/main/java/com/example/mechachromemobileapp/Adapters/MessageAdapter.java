@@ -19,10 +19,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MessageAdapter extends FirestoreRecyclerAdapter<ChatMessage, MessageAdapter.MessageHolder> {
 
-    public static final int MSG_TYPE_LEFT = 0;
-    public static final int MSG_TYPE_RIGHT = 1;
+    private static final int MSG_TYPE_LEFT = 0;
+    private static final int MSG_TYPE_RIGHT = 1;
 
-    FirebaseUser fUser;
+    private FirebaseUser fUser;
 
     public MessageAdapter(@NonNull FirestoreRecyclerOptions<ChatMessage> options) {
         super(options);

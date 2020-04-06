@@ -2,12 +2,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="300dp"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_alignParentEnd="false"
-    android:layout_alignParentRight="false"
+    android:layout_alignParentEnd="true"
     android:layout_gravity="end"
-    android:padding="5dp">
+    android:padding="5dp"
+    app:layout_anchorGravity="end">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_picture"
@@ -27,6 +27,8 @@
         android:text="Hello"
         android:textColor="#fff"
         app:layout_constraintEnd_toStartOf="@id/profile_picture"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
