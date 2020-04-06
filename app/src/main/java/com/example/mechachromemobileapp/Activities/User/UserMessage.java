@@ -9,11 +9,15 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.mechachromemobileapp.Adapters.MessageAdapter;
 import com.example.mechachromemobileapp.Models.ChatMessage;
 import com.example.mechachromemobileapp.Models.User;
 import com.example.mechachromemobileapp.R;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,8 +26,10 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 import java.util.Date;
+import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -41,12 +47,19 @@ public class UserMessage extends AppCompatActivity {
     CollectionReference userRef;
     DocumentReference userDocument;
 
+    private RecyclerView messageRecyclerView;
+    private MessageAdapter messageAdapter;
+
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_message);
         initViews();
+        buildRecyclerView();
     }
 
     public void initViews() {
@@ -64,6 +77,7 @@ public class UserMessage extends AppCompatActivity {
         username = findViewById(R.id.user_name);
         sendMessageButton = findViewById(R.id.send_message_button);
         messageText = findViewById(R.id.message_input);
+        messageRecyclerView = findViewById(R.id.inbox_recycler_view);
 
         Intent intent = getIntent();
         final String userID = intent.getStringExtra("userID");
@@ -100,12 +114,15 @@ public class UserMessage extends AppCompatActivity {
         });
     }
 
-
     public void sendMessage(String sender, String receiver, String message) {
-
         CollectionReference chatReference = FirebaseFirestore.getInstance().collection("chat_rooms");
-        String chatID = "chat_" + sender + "_" + receiver;
+        String chatID = sender + "_" + receiver;
         DocumentReference privateChat = chatReference.document(chatID);
+
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("sender", sender);
+        hashMap.put("receiver", receiver);
+        privateChat.set(hashMap);
 
         ChatMessage chatMessage = new ChatMessage();
         chatMessage.setMessageSender(sender);
@@ -115,8 +132,35 @@ public class UserMessage extends AppCompatActivity {
 
         CollectionReference privateChatMessage = privateChat.collection("messages");
         privateChatMessage.document().set(chatMessage);
-
     }
 
+    public void buildRecyclerView() {
+        Intent intent = getIntent();
+        String userID = intent.getStringExtra("userID");
+        String chatID = fUser.getUid() + "_" + userID;
+        CollectionReference chatReference = fStore.collection("chat_rooms").document(chatID).collection("messages");
 
+        Query query = chatReference.orderBy("messageTime", Query.Direction.ASCENDING);
+
+        FirestoreRecyclerOptions<ChatMessage> options = new FirestoreRecyclerOptions.Builder<ChatMessage>()
+                .setQuery(query, ChatMessage.class)
+                .build();
+
+        messageAdapter = new MessageAdapter(options);
+        messageRecyclerView.setHasFixedSize(true);
+        messageRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        messageRecyclerView.setAdapter(messageAdapter);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        messageAdapter.startListening();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        messageAdapter.stopListening();
+    }
 }
