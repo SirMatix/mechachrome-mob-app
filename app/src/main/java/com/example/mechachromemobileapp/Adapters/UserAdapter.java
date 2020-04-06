@@ -13,11 +13,13 @@ import com.example.mechachromemobileapp.Models.User;
 import com.example.mechachromemobileapp.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserAdapter extends FirestoreRecyclerAdapter<User, UserAdapter.UserHolder> {
 
+    private OnItemClickListener listener;
 
     public UserAdapter(@NonNull FirestoreRecyclerOptions<User> options) {
         super(options);
@@ -53,7 +55,25 @@ public class UserAdapter extends FirestoreRecyclerAdapter<User, UserAdapter.User
             super(itemView);
             userName = itemView.findViewById(R.id.user_name);
             userImage = itemView.findViewById(R.id.profile_picture);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION && listener != null) {
+                        listener.onItemClick(getSnapshots().getSnapshot(position), position);
+                    }
+                }
+            });
         }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(DocumentSnapshot documentSnapshot, int position);
+    }
+
+    public void setOnItemClickListener(UserAdapter.OnItemClickListener listener) {
+        this.listener = listener;
     }
 
 

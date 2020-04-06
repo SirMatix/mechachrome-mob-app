@@ -1,17 +1,14 @@
 package com.example.mechachromemobileapp.Activities.User;
 
+import android.content.Intent;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
-
-import com.example.mechachromemobileapp.Adapters.UserAdapter;
 import com.example.mechachromemobileapp.Fragments.ChatsFragment;
 import com.example.mechachromemobileapp.Fragments.UsersFragment;
 import com.example.mechachromemobileapp.R;
@@ -26,13 +23,10 @@ public class UserInbox extends AppCompatActivity {
 
     private FirebaseAuth fAuth;
     private FirebaseFirestore fStore;
-    private RecyclerView inboxRecyclerView;
-    private UserAdapter userAdapter;
     private CollectionReference inboxRef;
-    private String userID;
+    private String userID, groupFeed, modeFeed;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +34,7 @@ public class UserInbox extends AppCompatActivity {
         setContentView(R.layout.activity_user_inbox);
 
         initViews();
+        createFragments();
 
     }
 
@@ -55,20 +50,29 @@ public class UserInbox extends AppCompatActivity {
         tabLayout = findViewById(R.id.tab_layout);
         viewPager = findViewById(R.id.view_pager);
 
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-
-        viewPagerAdapter.addFragment(new ChatsFragment(), "Messages");
-        viewPagerAdapter.addFragment(new UsersFragment(), "My group");
-
-        viewPager.setAdapter(viewPagerAdapter);
-
-        tabLayout.setupWithViewPager(viewPager);
-
     }
 
+    public void createFragments(){
+        Intent intent = getIntent();
+        groupFeed = intent.getStringExtra("group");
+        modeFeed = intent.getStringExtra("mode");
+
+        Bundle bundle = new Bundle();
+        bundle.putString("group", groupFeed);
+        bundle.putString("mode", modeFeed);
+        Fragment usersFragment = new UsersFragment();
+        Fragment chatsFragment = new ChatsFragment();
+        usersFragment.setArguments(bundle);
+
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        viewPagerAdapter.addFragment(chatsFragment, "Messages");
+        viewPagerAdapter.addFragment(usersFragment, "My group");
+
+        viewPager.setAdapter(viewPagerAdapter);
+        tabLayout.setupWithViewPager(viewPager);
+    }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
-
         private ArrayList<Fragment> fragments;
         private ArrayList<String> titles;
 
