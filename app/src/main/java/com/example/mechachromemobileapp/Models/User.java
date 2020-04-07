@@ -2,7 +2,7 @@ package com.example.mechachromemobileapp.Models;
 
 public class User {
 
-    public String studentID, fname, lname, email, group, mode, imgUrl, id;
+    public String studentID, fname, lname, email, group, mode, imgUrl, id, permission;
 
     public User() {
 
@@ -77,5 +77,13 @@ public class User {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getPermission() {
+        return permission;
+    }
+
+    public void setPermission(String permission) {
+        this.permission = permission;
     }
 }

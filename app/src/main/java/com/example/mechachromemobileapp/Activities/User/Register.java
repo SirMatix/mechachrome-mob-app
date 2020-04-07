@@ -130,7 +130,14 @@ public class Register extends AppCompatActivity {
                     Toast.makeText(Register.this, "Account created", Toast.LENGTH_SHORT).show();
                     userID = fAuth.getCurrentUser().getUid();
                     DocumentReference docRef = fStore.collection("users").document(userID);
-                    User user = new User(studentID,fname,lname,email);
+                    User user = new User();
+                    user.setFname(fname);
+                    user.setLname(lname);
+                    user.setEmail(email);
+                    user.setId(userID);
+                    user.setImgUrl("default");
+                    user.setPermission("user");
+                    user.setStudentID(studentID);
                     docRef.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
