@@ -2,7 +2,7 @@ package com.example.mechachromemobileapp.Models;
 
 public class User {
 
-    public String studentID, fname, lname, email, group, mode;
+    public String studentID, fname, lname, email, group, mode, imgUrl, ID;
 
     public User() {
 
@@ -13,6 +13,14 @@ public class User {
         this.fname = fname;
         this.lname = lname;
         this.email = email;
+    }
+
+    public String getStudentID() {
+        return studentID;
+    }
+
+    public void setStudentID(String studentID) {
+        this.studentID = studentID;
     }
 
     public String getFname() {
@@ -31,15 +39,7 @@ public class User {
         this.lname = lname;
     }
 
-    public String getStudentID(){
-        return studentID;
-    }
-
-    public void setStudentID(String studentID) {
-        this.studentID = studentID;
-    }
-
-    public String getEmail(){
+    public String getEmail() {
         return email;
     }
 
@@ -63,4 +63,19 @@ public class User {
         this.mode = mode;
     }
 
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
+    }
 }
