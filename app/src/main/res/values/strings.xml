@@ -35,4 +35,7 @@
     <string name="timeframe4">14:30-16:30</string>
     <string name="timeframe5">17:30-19:30</string>
     <string name="timeframe6">19:30-21:30</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

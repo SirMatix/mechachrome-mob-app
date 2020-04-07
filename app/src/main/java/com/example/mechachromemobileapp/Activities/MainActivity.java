@@ -126,7 +126,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void userMessages() {
-        startActivity(new Intent(getApplicationContext(), UserInbox.class));
+        String userID = fAuth.getCurrentUser().getUid();
+        userRef.document(userID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                User user = documentSnapshot.toObject(User.class);
+                String group = user.getGroup();
+                String mode = user.getMode();
+                Intent intent = new Intent(getApplicationContext(), UserInbox.class);
+                intent.putExtra("group", group);
+                intent.putExtra("mode", mode);
+                startActivity(intent);
+            }
+        });
     }
 
     public void userSettings() {
