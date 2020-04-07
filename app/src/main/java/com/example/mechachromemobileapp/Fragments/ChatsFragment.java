@@ -1,88 +1,110 @@
 package com.example.mechachromemobileapp.Fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mechachromemobileapp.Activities.User.UserMessage;
-import com.example.mechachromemobileapp.Adapters.UserAdapter;
+import com.example.mechachromemobileapp.Adapters.UserInboxAdapter;
+import com.example.mechachromemobileapp.Models.ChatRoom;
 import com.example.mechachromemobileapp.Models.User;
 import com.example.mechachromemobileapp.R;
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ChatsFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    private UserAdapter userAdapter;
+    private RecyclerView.Adapter userAdapter;
+    private RecyclerView.LayoutManager layoutManager;
     FirebaseFirestore fStore = FirebaseFirestore.getInstance();
-    FirebaseAuth fAuth = FirebaseAuth.getInstance();
     CollectionReference userRef = fStore.collection("users");
     CollectionReference chatRef = fStore.collection("chat_rooms");
-    String groupFeed, modeFeed;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_chats, container, false);
-
-
-
-
+        readUsers(view);
         return view;
     }
 
-    public void buildRecyclerView(View view) {
-        Query query = userRef.whereEqualTo("group", groupFeed).whereEqualTo("mode", modeFeed);
-
-        FirestoreRecyclerOptions<User> options = new FirestoreRecyclerOptions.Builder<User>()
-                .setQuery(query, User.class)
-                .build();
-
-        userAdapter = new UserAdapter(options);
-        recyclerView = view.findViewById(R.id.user_recycler_view);
+    public void buildRecyclerView(View view, ArrayList<User> userList) {
+        recyclerView = view.findViewById(R.id.chats_recycler_view);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        layoutManager = new LinearLayoutManager(getContext());
+        userAdapter = new UserInboxAdapter(userList);
+        recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(userAdapter);
+    }
 
-
-        userAdapter.setOnItemClickListener(new UserAdapter.OnItemClickListener() {
+    private void readUsers(final View view) {
+        readChats(new usersIDListCallback() {
             @Override
-            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
-                // User user = documentSnapshot.toObject(User.class);
-                String userID = documentSnapshot.getId();
-                Intent intent = new Intent(getContext(), UserMessage.class);
-                intent.putExtra("userID", userID);
-                startActivity(intent);
+            public void onUsersIDList(ArrayList<String> userIDList) {
+                Query query = userRef.whereIn("ID",userIDList);
+                query.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            return;
+                        }
+                        List<User> chatUsers = queryDocumentSnapshots.toObjects(User.class);
+                        ArrayList<User> userList = new ArrayList<>();
+                        userList.addAll(chatUsers);
+                        buildRecyclerView(view, userList);
+                    }
+                });
             }
         });
     }
 
+    private void readChats(final usersIDListCallback callback) {
+        FirebaseUser fUser = FirebaseAuth.getInstance().getCurrentUser();
+        final String userID = fUser.getUid();
+        Query query = chatRef.whereArrayContains("filter", userID);
 
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        userAdapter.startListening();
+        query.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                if(e != null) {
+                    return;
+                }
+                List<ChatRoom> chatRooms = queryDocumentSnapshots.toObjects(ChatRoom.class);
+                ArrayList<String> usersIDList = new ArrayList<>();
+                usersIDList.add("default");
+                for(ChatRoom chatRoom: chatRooms) {
+                    if(chatRoom.getMessageSender().equals(userID)){
+                        usersIDList.add(chatRoom.getMessageReceiver());
+                    }
+                    if(chatRoom.getMessageReceiver().equals(userID)){
+                        usersIDList.add(chatRoom.getMessageSender());
+                    }
+                }
+                callback.onUsersIDList(usersIDList);
+            }
+        });
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        userAdapter.stopListening();
+    interface usersIDListCallback{
+        void onUsersIDList(ArrayList<String> userIDList);
     }
-
 
 }

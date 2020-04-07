@@ -2,8 +2,8 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:padding="5dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -13,7 +13,7 @@
         android:src="@drawable/ic_account" />
 
     <TextView
-        android:id="@+id/user_name"
+        android:id="@+id/user_full_name"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="left|center_vertical"

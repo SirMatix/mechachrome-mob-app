@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.mechachromemobileapp.Adapters.MessageAdapter;
 import com.example.mechachromemobileapp.Models.ChatMessage;
+import com.example.mechachromemobileapp.Models.ChatRoom;
 import com.example.mechachromemobileapp.Models.User;
 import com.example.mechachromemobileapp.R;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -28,8 +29,9 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
+import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -74,7 +76,7 @@ public class UserMessage extends AppCompatActivity {
             }
         });
         userImage = findViewById(R.id.user_image);
-        username = findViewById(R.id.user_name);
+        username = findViewById(R.id.user_full_name);
         sendMessageButton = findViewById(R.id.send_message_button);
         messageText = findViewById(R.id.message_input);
         messageRecyclerView = findViewById(R.id.inbox_recycler_view);
@@ -116,13 +118,27 @@ public class UserMessage extends AppCompatActivity {
 
     public void sendMessage(String sender, String receiver, String message) {
         CollectionReference chatReference = FirebaseFirestore.getInstance().collection("chat_rooms");
+
+        /*
+        generating numeric ID for chat
+        String senderNoAlpha = sender.replaceAll("[^0-9]", "");
+        int senderInt = Integer.parseInt(senderNoAlpha);
+        String receiverNoAlpha = receiver.replaceAll("[^0-9]", "");
+        int receiverInt = Integer.parseInt(receiverNoAlpha);
+        int chatIntID = senderInt * receiverInt;
+        String chatID = String.valueOf(chatIntID);
+         */
+
         String chatID = sender + "_" + receiver;
         DocumentReference privateChat = chatReference.document(chatID);
 
-        HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("sender", sender);
-        hashMap.put("receiver", receiver);
-        privateChat.set(hashMap);
+        ChatRoom chatRoom = new ChatRoom();
+        chatRoom.setMessageReceiver(receiver);
+        chatRoom.setMessageSender(sender);
+        String[] chatters = {sender, receiver};
+        List<String> filter = Arrays.asList(chatters);
+        chatRoom.setFilter(filter);
+        privateChat.set(chatRoom);
 
         ChatMessage chatMessage = new ChatMessage();
         chatMessage.setMessageSender(sender);

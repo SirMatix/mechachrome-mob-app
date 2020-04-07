@@ -13,6 +13,8 @@ import com.example.mechachromemobileapp.Models.User;
 import com.example.mechachromemobileapp.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -20,6 +22,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class UserAdapter extends FirestoreRecyclerAdapter<User, UserAdapter.UserHolder> {
 
     private OnItemClickListener listener;
+    FirebaseUser fUser;
 
     public UserAdapter(@NonNull FirestoreRecyclerOptions<User> options) {
         super(options);
@@ -27,21 +30,29 @@ public class UserAdapter extends FirestoreRecyclerAdapter<User, UserAdapter.User
 
     @Override
     protected void onBindViewHolder(@NonNull UserAdapter.UserHolder holder, int position, @NonNull User model) {
-        String full_name = model.getFname() + " " + model.getLname();
-        holder.userName.setText(full_name);
+        fUser = FirebaseAuth.getInstance().getCurrentUser();
+        // check if the document isn't equal to currently viewing user
+        if(!getSnapshots().getSnapshot(position).getId().equals(fUser.getUid())) {
+            String full_name = model.getFname() + " " + model.getLname();
+            holder.userName.setText(full_name);
 
-        if(model.getImgUrl().equals("default")) {
-            holder.userImage.setImageResource(R.drawable.ic_account);
+            if(model.getImgUrl().equals("default")) {
+                holder.userImage.setImageResource(R.drawable.ic_account);
+            } else {
+                Glide.with(holder.itemView.getContext())
+                        .load(model.getImgUrl()) //set the user image url
+                        .into(holder.userImage); //destination path
+            }
         } else {
-            Glide.with(holder.itemView.getContext())
-                    .load(model.getImgUrl()) //set the user image url
-                    .into(holder.userImage); //destination path
+            holder.userName.setVisibility(View.GONE);  // if it is equal set visibility to GONE
+            holder.userImage.setVisibility(View.GONE); // if it is equal set visibility to GONE
         }
     }
 
     @NonNull
     @Override
     public UserAdapter.UserHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_user_item,
                 parent, false);
         return new UserAdapter.UserHolder(v);
@@ -53,7 +64,7 @@ public class UserAdapter extends FirestoreRecyclerAdapter<User, UserAdapter.User
 
         public UserHolder(@NonNull View itemView) {
             super(itemView);
-            userName = itemView.findViewById(R.id.user_name);
+            userName = itemView.findViewById(R.id.user_full_name);
             userImage = itemView.findViewById(R.id.profile_picture);
 
             itemView.setOnClickListener(new View.OnClickListener() {

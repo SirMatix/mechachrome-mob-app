@@ -52,6 +52,7 @@ public class UsersFragment extends Fragment {
     public void buildRecyclerView(View view) {
         Query query = userRef.whereEqualTo("group", groupFeed).whereEqualTo("mode", modeFeed);
 
+
         FirestoreRecyclerOptions<User> options = new FirestoreRecyclerOptions.Builder<User>()
                 .setQuery(query, User.class)
                 .build();
