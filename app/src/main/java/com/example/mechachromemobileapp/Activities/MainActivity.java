@@ -24,10 +24,13 @@ import com.example.mechachromemobileapp.Activities.User.Register;
 import com.example.mechachromemobileapp.Activities.User.UserAccount;
 import com.example.mechachromemobileapp.Activities.User.UserInbox;
 import com.example.mechachromemobileapp.Activities.User.UserSettings;
+import com.example.mechachromemobileapp.Models.User;
 import com.example.mechachromemobileapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -37,15 +40,15 @@ public class MainActivity extends AppCompatActivity {
     private final String TAG = "TAG";
     Button timetables, library, moodle, floor_plan, moreBtn, bookSaleBtn;
     String userID;
-    FirebaseAuth fAuth;
-    FirebaseFirestore fStore;
+    FirebaseAuth fAuth = FirebaseAuth.getInstance();
+    FirebaseFirestore fStore = FirebaseFirestore.getInstance();
     String url;
+    CollectionReference userRef = fStore.collection("users");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        fAuth = FirebaseAuth.getInstance();
 
         if(fAuth.getCurrentUser() == null){
             startActivity(new Intent(getApplicationContext(), Register.class));
@@ -59,10 +62,11 @@ public class MainActivity extends AppCompatActivity {
         moreBtn = findViewById(R.id.moreBtn);
         bookSaleBtn = findViewById(R.id.book_sale);
 
+
         timetables.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), Timetables.class));
+                timetable();
             }
         });
 
@@ -134,7 +138,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void userMessages() {
-        startActivity(new Intent(getApplicationContext(), UserInbox.class));
+        String userID = fAuth.getCurrentUser().getUid();
+        userRef.document(userID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                User user = documentSnapshot.toObject(User.class);
+                String group = user.getGroup();
+                String mode = user.getMode();
+                Intent intent = new Intent(getApplicationContext(), UserInbox.class);
+                intent.putExtra("group", group);
+                intent.putExtra("mode", mode);
+                startActivity(intent);
+            }
+        });
     }
 
     public void userSettings() {
@@ -176,5 +192,22 @@ public class MainActivity extends AppCompatActivity {
         url = "https://partnerships.moodle.roehampton.ac.uk/login/index.php";
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         startActivity(browserIntent);
+    }
+
+
+    public void timetable() {
+        String userID = fAuth.getCurrentUser().getUid();
+        userRef.document(userID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                User user = documentSnapshot.toObject(User.class);
+                String group = user.getGroup();
+                String mode = user.getMode();
+                Intent intent = new Intent(getApplicationContext(), Timetables.class);
+                intent.putExtra("group", group);
+                intent.putExtra("mode", mode);
+                startActivity(intent);
+            }
+        });
     }
 }

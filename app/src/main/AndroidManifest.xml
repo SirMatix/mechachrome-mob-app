@@ -16,6 +16,9 @@
         <activity android:name=".Activities.BookSale.BookSalePage"/>
         <activity android:name=".Activities.BookSale.BookSale"/>
         <activity android:name=".Activities.BookSale.AddSaleBook" />
+        <activity android:name=".Activities.User.UserMessage"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <activity android:name=".Activities.User.UserAccount" />
         <activity android:name=".Activities.User.UserSettings" />
         <activity android:name=".Activities.User.UserInbox" />

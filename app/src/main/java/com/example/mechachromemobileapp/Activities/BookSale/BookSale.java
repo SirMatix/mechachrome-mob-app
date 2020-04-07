@@ -1,12 +1,15 @@
 package com.example.mechachromemobileapp.Activities.BookSale;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 
 import com.example.mechachromemobileapp.Adapters.BookSaleAdapter;
 import com.example.mechachromemobileapp.Models.BookSaleModel;
@@ -18,6 +21,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+
 
 public class BookSale extends AppCompatActivity {
 
