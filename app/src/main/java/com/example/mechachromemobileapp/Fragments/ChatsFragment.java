@@ -59,7 +59,7 @@ public class ChatsFragment extends Fragment {
         readChats(new usersIDListCallback() {
             @Override
             public void onUsersIDList(ArrayList<String> userIDList) {
-                Query query = userRef.whereIn("ID",userIDList);
+                Query query = userRef.whereIn("id",userIDList);
                 query.addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {

@@ -2,7 +2,7 @@ package com.example.mechachromemobileapp.Models;
 
 public class User {
 
-    public String studentID, fname, lname, email, group, mode, imgUrl, ID;
+    public String studentID, fname, lname, email, group, mode, imgUrl, id;
 
     public User() {
 
@@ -71,11 +71,11 @@ public class User {
         this.imgUrl = imgUrl;
     }
 
-    public String getID() {
-        return ID;
+    public String getId() {
+        return id;
     }
 
-    public void setID(String ID) {
-        this.ID = ID;
+    public void setId(String id) {
+        this.id = id;
     }
 }

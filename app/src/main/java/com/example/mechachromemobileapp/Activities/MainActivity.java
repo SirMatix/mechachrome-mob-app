@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
                 userAccount();
                 return true;
             case R.id.user_inbox:
-                userMessages();
+                userInbox();
                 return true;
             case R.id.user_settings:
                 userSettings();
@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(getApplicationContext(), UserAccount.class));
     }
 
-    public void userMessages() {
+    public void userInbox() {
         String userID = fAuth.getCurrentUser().getUid();
         userRef.document(userID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
