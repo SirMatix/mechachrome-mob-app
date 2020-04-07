@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mechachromemobileapp.Models.Books;
 import com.example.mechachromemobileapp.Adapters.BooksAdapter;
-import com.example.mechachromemobileapp.Adapters.CustomItemAnimation;
+import com.example.mechachromemobileapp.Models.CustomItemAnimation;
 import com.example.mechachromemobileapp.R;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;

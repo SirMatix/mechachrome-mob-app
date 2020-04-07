@@ -100,23 +100,22 @@
         android:textColor="#000000"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/logout"
+        app:layout_constraintBottom_toTopOf="@+id/book_sale"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.509"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/floor_plan" />
 
     <Button
-        android:id="@+id/logout"
+        android:id="@+id/book_sale"
         android:layout_width="360dp"
         android:layout_height="wrap_content"
         android:background="#B3FDD835"
         android:fontFamily="@font/roboto_slab"
-        android:text="@string/logout"
+        android:text="@string/book_sale"
         android:textColor="#000000"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:onClick="logout"
         app:layout_constraintBottom_toTopOf="@+id/progressBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.509"
@@ -133,7 +132,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logout"
+        app:layout_constraintTop_toBottomOf="@+id/book_sale"
         app:layout_constraintVertical_bias="0.26" />
 
 
