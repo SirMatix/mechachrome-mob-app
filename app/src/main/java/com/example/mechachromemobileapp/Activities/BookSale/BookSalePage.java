@@ -2,6 +2,7 @@ package com.example.mechachromemobileapp.Activities.BookSale;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,9 +13,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.example.mechachromemobileapp.Activities.User.UserMessage;
+import com.example.mechachromemobileapp.Models.BookSaleModel;
 import com.example.mechachromemobileapp.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -25,6 +29,7 @@ public class BookSalePage extends AppCompatActivity {
     public static final String TAG = "TAG";
     FirebaseFirestore fStore;
     FirebaseAuth fAuth;
+    FirebaseUser fUser;
     String bookSaleIDFeed, titleFeed;
     Button buyBookButton, messageSellerButton;
     TextView bookTitle, bookAuthor, bookDescription, bookPages, bookPrice, bookCondition;
@@ -40,6 +45,20 @@ public class BookSalePage extends AppCompatActivity {
 
         initViews();
         loadBookData();
+
+        buyBookButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                buyBook();
+            }
+        });
+
+        messageSellerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                messageSeller();
+            }
+        });
 
     }
 
@@ -94,12 +113,32 @@ public class BookSalePage extends AppCompatActivity {
         bookSaleReference = bookSaleCollection.document(bookSaleIDFeed);
         bookSaleReference.update("sold", true);
         Toast.makeText(getApplicationContext(), "Congratulations you just bought a book", Toast.LENGTH_SHORT).show();
-
+        bookSaleReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                BookSaleModel bookForSale = documentSnapshot.toObject(BookSaleModel.class);
+                fUser = FirebaseAuth.getInstance().getCurrentUser();
+                String userID = fUser.getUid();
+                String message = "I have just bought you book" + bookForSale.getTitle() + " by " + bookForSale.getAuthor() + " for £" + bookForSale.getPrice();
+                UserMessage buyMessage = new UserMessage();
+                buyMessage.sendMessage(userID, bookForSale.getSeller_id(), message);
+                finish();
+            }
+        });
     }
 
     public void messageSeller() {
-
-
+        bookSaleReference = bookSaleCollection.document(bookSaleIDFeed);
+        bookSaleReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                BookSaleModel bookForSale = documentSnapshot.toObject(BookSaleModel.class);
+                String sellerID = bookForSale.getSeller_id();
+                Intent intent = new Intent(getApplicationContext(), UserMessage.class);
+                intent.putExtra("userID", sellerID);
+                startActivity(intent);
+            }
+        });
     }
 
 }

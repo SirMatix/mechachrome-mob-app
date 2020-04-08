@@ -45,7 +45,6 @@ public class UserMessage extends AppCompatActivity {
 
     FirebaseUser fUser;
     FirebaseFirestore fStore;
-    FirebaseAuth fAuth;
 
     CollectionReference userRef;
     DocumentReference userDocument;
@@ -91,6 +90,7 @@ public class UserMessage extends AppCompatActivity {
                 String message = messageText.getText().toString();
                 if (!message.equals("")) {
                     sendMessage(fUser.getUid(), userID, message);
+                    messageText.setText("");
                 } else {
                     Toast.makeText(getApplicationContext(), "You cannot send empty message!", Toast.LENGTH_SHORT).show();
                 }
@@ -143,7 +143,6 @@ public class UserMessage extends AppCompatActivity {
         CollectionReference privateChatMessage = privateChat.collection("messages");
         privateChatMessage.document().set(chatMessage);
 
-        messageText.setText("");
     }
 
     public void buildRecyclerView() {
