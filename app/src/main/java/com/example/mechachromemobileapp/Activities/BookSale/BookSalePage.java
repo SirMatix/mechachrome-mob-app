@@ -65,7 +65,9 @@ public class BookSalePage extends AppCompatActivity {
     public void initViews(){
         fStore = FirebaseFirestore.getInstance();
         fAuth = FirebaseAuth.getInstance();
+        fUser = fAuth.getCurrentUser();
         bookSaleCollection = fStore.collection("books_for_sale");
+
 
         // getting intent from Library activity and getting extra string
         Intent intent = getIntent();
@@ -111,18 +113,22 @@ public class BookSalePage extends AppCompatActivity {
 
     public void buyBook() {
         bookSaleReference = bookSaleCollection.document(bookSaleIDFeed);
-        bookSaleReference.update("sold", true);
-        Toast.makeText(getApplicationContext(), "Congratulations you just bought a book", Toast.LENGTH_SHORT).show();
         bookSaleReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 BookSaleModel bookForSale = documentSnapshot.toObject(BookSaleModel.class);
-                fUser = FirebaseAuth.getInstance().getCurrentUser();
                 String userID = fUser.getUid();
-                String message = "I have just bought you book" + bookForSale.getTitle() + " by " + bookForSale.getAuthor() + " for £" + bookForSale.getPrice();
-                UserMessage buyMessage = new UserMessage();
-                buyMessage.sendMessage(userID, bookForSale.getSeller_id(), message);
-                finish();
+                if(!userID.equals(bookForSale.getSeller_id())) {
+                    Toast.makeText(getApplicationContext(), "Congratulations you just bought a book", Toast.LENGTH_SHORT).show();
+                    bookSaleReference.update("sold", true, "availableBookNum", 0, "totalBookNum", 0);
+                    String message = "I have just bought you book" + bookForSale.getTitle() + " by " + bookForSale.getAuthor() + " for £" + bookForSale.getPrice();
+                    UserMessage buyMessage = new UserMessage();
+                    buyMessage.sendMessage(userID, bookForSale.getSeller_id(), message);
+                    finish();
+                } else {
+                    Toast.makeText(getApplicationContext(), "You can't buy book from yourself!", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
     }
@@ -133,10 +139,16 @@ public class BookSalePage extends AppCompatActivity {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 BookSaleModel bookForSale = documentSnapshot.toObject(BookSaleModel.class);
-                String sellerID = bookForSale.getSeller_id();
-                Intent intent = new Intent(getApplicationContext(), UserMessage.class);
-                intent.putExtra("userID", sellerID);
-                startActivity(intent);
+                String userID = fUser.getUid();
+                if(!userID.equals(bookForSale.getSeller_id())) {
+                    String sellerID = bookForSale.getSeller_id();
+                    Intent intent = new Intent(getApplicationContext(), UserMessage.class);
+                    intent.putExtra("userID", sellerID);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getApplicationContext(), "You can't write message to yourself!", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
     }
