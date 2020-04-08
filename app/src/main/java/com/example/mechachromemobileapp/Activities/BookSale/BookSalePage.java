@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -90,13 +91,14 @@ public class BookSalePage extends AppCompatActivity {
     }
 
     public void buyBook() {
-
-
-
+        bookSaleReference = bookSaleCollection.document(bookSaleIDFeed);
+        bookSaleReference.update("sold", true);
+        Toast.makeText(getApplicationContext(), "Congratulations you just bought a book", Toast.LENGTH_SHORT).show();
 
     }
 
     public void messageSeller() {
+
 
     }
 

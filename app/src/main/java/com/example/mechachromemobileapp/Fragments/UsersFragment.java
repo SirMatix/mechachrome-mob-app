@@ -88,4 +88,14 @@ public class UsersFragment extends Fragment {
         userAdapter.stopListening();
     }
 
+    public int stringToNumber(String old_word){
+        char[] word = old_word.toCharArray();
+        int numberString = 0;
+        for(char letter: word) {
+            int a = letter;
+            numberString += a;
+        }
+        return numberString;
+    }
+
 }

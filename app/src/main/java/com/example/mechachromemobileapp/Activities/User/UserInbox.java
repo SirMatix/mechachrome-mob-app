@@ -65,8 +65,8 @@ public class UserInbox extends AppCompatActivity {
         usersFragment.setArguments(bundle);
 
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        viewPagerAdapter.addFragment(chatsFragment, "Messages");
-        viewPagerAdapter.addFragment(usersFragment, "My group");
+        viewPagerAdapter.addFragment(chatsFragment, "My Inbox");
+        viewPagerAdapter.addFragment(usersFragment, "My Course Group");
 
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);

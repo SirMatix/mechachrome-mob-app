@@ -1,5 +1,6 @@
 package com.example.mechachromemobileapp.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mechachromemobileapp.Activities.User.UserMessage;
 import com.example.mechachromemobileapp.Adapters.UserInboxAdapter;
 import com.example.mechachromemobileapp.Models.ChatRoom;
 import com.example.mechachromemobileapp.Models.User;
@@ -30,7 +32,7 @@ import java.util.List;
 public class ChatsFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    private RecyclerView.Adapter userAdapter;
+    private UserInboxAdapter userAdapter;
     private RecyclerView.LayoutManager layoutManager;
     FirebaseFirestore fStore = FirebaseFirestore.getInstance();
     CollectionReference userRef = fStore.collection("users");
@@ -46,13 +48,23 @@ public class ChatsFragment extends Fragment {
         return view;
     }
 
-    public void buildRecyclerView(View view, ArrayList<User> userList) {
+    public void buildRecyclerView(View view, final ArrayList<User> userList) {
         recyclerView = view.findViewById(R.id.chats_recycler_view);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getContext());
         userAdapter = new UserInboxAdapter(userList);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(userAdapter);
+
+        userAdapter.setOnItemClickListener(new UserInboxAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                String userID = userList.get(position).getId();
+                Intent intent = new Intent(getContext(), UserMessage.class);
+                intent.putExtra("userID", userID);
+                startActivity(intent);
+            }
+        });
     }
 
     private void readUsers(final View view) {

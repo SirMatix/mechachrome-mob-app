@@ -19,15 +19,37 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class UserInboxAdapter extends RecyclerView.Adapter<UserInboxAdapter.UserInboxViewHolder> {
 
     private ArrayList<User> mUserList;
+    private OnItemClickListener mListener;
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mListener = listener;
+
+    }
 
     public static class UserInboxViewHolder extends RecyclerView.ViewHolder {
         public CircleImageView userImage;
         public TextView userFullName;
 
-        public UserInboxViewHolder(@NonNull View itemView) {
+        public UserInboxViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
             userImage = itemView.findViewById(R.id.profile_picture);
             userFullName = itemView.findViewById(R.id.user_full_name);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(listener != null) {
+                        int position = getAdapterPosition();
+                        if(position != RecyclerView.NO_POSITION){
+                            listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
 
@@ -39,7 +61,7 @@ public class UserInboxAdapter extends RecyclerView.Adapter<UserInboxAdapter.User
     @Override
     public UserInboxViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_user_item, parent, false);
-        return new UserInboxViewHolder(v);
+        return new UserInboxViewHolder(v, mListener);
     }
 
     @Override
@@ -59,6 +81,8 @@ public class UserInboxAdapter extends RecyclerView.Adapter<UserInboxAdapter.User
                     .into(holder.userImage); //destination path
         }
     }
+
+
 
     @Override
     public int getItemCount() {

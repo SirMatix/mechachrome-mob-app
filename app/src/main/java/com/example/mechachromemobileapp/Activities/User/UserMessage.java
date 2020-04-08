@@ -2,6 +2,7 @@ package com.example.mechachromemobileapp.Activities.User;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -119,17 +120,10 @@ public class UserMessage extends AppCompatActivity {
     public void sendMessage(String sender, String receiver, String message) {
         CollectionReference chatReference = FirebaseFirestore.getInstance().collection("chat_rooms");
 
-        /*
-        generating numeric ID for chat
-        String senderNoAlpha = sender.replaceAll("[^0-9]", "");
-        int senderInt = Integer.parseInt(senderNoAlpha);
-        String receiverNoAlpha = receiver.replaceAll("[^0-9]", "");
-        int receiverInt = Integer.parseInt(receiverNoAlpha);
-        int chatIntID = senderInt * receiverInt;
-        String chatID = String.valueOf(chatIntID);
-         */
+        Log.d("TAG", "sender to number: " + stringToNumber(sender));
+        Log.d("TAG", "receiver to number: " + stringToNumber(receiver));
 
-        String chatID = sender + "_" + receiver;
+        String chatID = "chat_room" + stringToNumber(sender) * stringToNumber(receiver);
         DocumentReference privateChat = chatReference.document(chatID);
 
         ChatRoom chatRoom = new ChatRoom();
@@ -148,12 +142,14 @@ public class UserMessage extends AppCompatActivity {
 
         CollectionReference privateChatMessage = privateChat.collection("messages");
         privateChatMessage.document().set(chatMessage);
+
+        messageText.setText("");
     }
 
     public void buildRecyclerView() {
         Intent intent = getIntent();
         String userID = intent.getStringExtra("userID");
-        String chatID = fUser.getUid() + "_" + userID;
+        String chatID = "chat_room" + stringToNumber(fUser.getUid()) * stringToNumber(userID);
         CollectionReference chatReference = fStore.collection("chat_rooms").document(chatID).collection("messages");
 
         Query query = chatReference.orderBy("messageTime", Query.Direction.ASCENDING);
@@ -178,5 +174,15 @@ public class UserMessage extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         messageAdapter.stopListening();
+    }
+
+    public int stringToNumber(String old_word){
+        char[] word = old_word.toCharArray();
+        int numberString = 0;
+        for(char letter: word) {
+            int a = letter;
+            numberString += a;
+        }
+        return numberString;
     }
 }
