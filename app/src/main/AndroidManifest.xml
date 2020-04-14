@@ -13,7 +13,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Activities.User.UserForumPosts"></activity>
         <activity android:name=".Activities.User.UserBookReservations" />
         <activity android:name=".Activities.BookSale.BookSalePage" />
         <activity android:name=".Activities.BookSale.BookSale" />
