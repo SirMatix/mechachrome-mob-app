@@ -3,15 +3,14 @@ package com.example.mechachromemobileapp.Models;
 import java.util.Date;
 
 public class Books {
-    private String title, description, author, category, imgUrl;
+    private String title, description, author, category, imgUrl, ISBN;
     private Integer numReviews, pages, totalBooksNum, availableBooksNum, numReserved;
-    private Date add_date;
+    private Date addDate;
     private Float rating;
 
     public Books(){
 
     }
-
 
     public String getTitle() {
         return title;
@@ -19,14 +18,6 @@ public class Books {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
     }
 
     public String getDescription() {
@@ -37,11 +28,19 @@ public class Books {
         this.description = description;
     }
 
-    public String getCategory(){
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(String category){
+    public void setCategory(String category) {
         this.category = category;
     }
 
@@ -53,36 +52,44 @@ public class Books {
         this.imgUrl = imgUrl;
     }
 
-    public Integer getAvailableBooksNum() {
-        return availableBooksNum;
+    public String getISBN() {
+        return ISBN;
     }
 
-    public void setAvailableBooksNum(Integer availableBooksNum) {
-        this.availableBooksNum = availableBooksNum;
+    public void setISBN(String ISBN) {
+        this.ISBN = ISBN;
+    }
+
+    public Integer getNumReviews() {
+        return numReviews;
+    }
+
+    public void setNumReviews(Integer numReviews) {
+        this.numReviews = numReviews;
     }
 
     public Integer getPages() {
         return pages;
     }
 
-    public void setPages(int pages) {
+    public void setPages(Integer pages) {
         this.pages = pages;
     }
 
-    public Integer getNumReviews(){
-        return numReviews;
+    public Integer getTotalBooksNum() {
+        return totalBooksNum;
     }
 
-    public void setNumReviews(int numReviews) {
-        this.numReviews = numReviews;
+    public void setTotalBooksNum(Integer totalBooksNum) {
+        this.totalBooksNum = totalBooksNum;
     }
 
-    public float getRating() {
-        return rating;
+    public Integer getAvailableBooksNum() {
+        return availableBooksNum;
     }
 
-    public void setRating(float rating) {
-        this.rating = rating;
+    public void setAvailableBooksNum(Integer availableBooksNum) {
+        this.availableBooksNum = availableBooksNum;
     }
 
     public Integer getNumReserved() {
@@ -93,19 +100,19 @@ public class Books {
         this.numReserved = numReserved;
     }
 
-    public Date getAdd_date() {
-        return add_date;
+    public Date getAddDate() {
+        return addDate;
     }
 
-    public void setAdd_date(Date add_date) {
-        this.add_date = add_date;
+    public void setAddDate(Date addDate) {
+        this.addDate = addDate;
     }
 
-    public Integer getTotalBooksNum() {
-        return totalBooksNum;
+    public Float getRating() {
+        return rating;
     }
 
-    public void setTotalBooksNum(Integer totalBooksNum) {
-        this.totalBooksNum = totalBooksNum;
+    public void setRating(Float rating) {
+        this.rating = rating;
     }
 }
