@@ -38,5 +38,9 @@
     <string name="timeframe4">14:30-16:30</string>
     <string name="timeframe5">17:30-19:30</string>
     <string name="timeframe6">19:30-21:30</string>
+    <string name="enter_book_category">Enter book category...</string>
+    <string name="cancel_reservation">Cancel Reservation</string>
+    <string name="background_of_image_card">Background of image card</string>
+    <string name="image_of_a_book">Image of a book</string>
 
 </resources>

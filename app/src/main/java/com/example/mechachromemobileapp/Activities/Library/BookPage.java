@@ -2,6 +2,7 @@ package com.example.mechachromemobileapp.Activities.Library;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Layout;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -49,7 +50,7 @@ public class BookPage extends AppCompatActivity {
     FirebaseAuth fAuth;
     String bookIDFeed, titleFeed;
     Button reserveButton, writeReviewButton, cancelButton;
-    TextView bookTitle, bookAuthor, bookDescription, bookPages, availableBooks, reservedBooks;
+    TextView bookTitle, bookAuthor, bookDescription, bookPages, availableBooks, reservedBooks, bookISBN;
     ImageView bookImage;
     RatingBar bookRating;
     CollectionReference booksCollection, reservationCollection, usersCollection;
@@ -101,8 +102,9 @@ public class BookPage extends AppCompatActivity {
         // finding variables from layout
         bookTitle = findViewById(R.id.item_book_title);
         bookAuthor = findViewById(R.id.item_book_author);
-        bookDescription = findViewById(R.id.availableBooks);
+        bookDescription = findViewById(R.id.bookDescription);
         bookPages = findViewById(R.id.item_book_pagesrev);
+        bookISBN = findViewById(R.id.item_book_isbn);
         availableBooks = findViewById(R.id.numAvailable);
         reservedBooks = findViewById(R.id.numReserved);
         bookImage = findViewById(R.id.item_book_img);
@@ -118,17 +120,25 @@ public class BookPage extends AppCompatActivity {
         bookReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                bookTitle.setText(documentSnapshot.getString("title"));
-                bookAuthor.setText(documentSnapshot.getString("author"));
-                bookDescription.setText(documentSnapshot.getString("description"));
-                String pages = documentSnapshot.get("pages").toString();
-                String numreviews = documentSnapshot.get("numReviews").toString();
+                Books book = documentSnapshot.toObject(Books.class);
+                assert book != null;
+                String title = "Title: " + book.getTitle();
+                bookTitle.setText(title);
+                String author = "Author: " + book.getAuthor();
+                bookAuthor.setText(author);
+                bookDescription.setText(book.getDescription());
+                bookDescription.setJustificationMode(Layout.JUSTIFICATION_MODE_INTER_WORD);
+                String pages = book.getPages().toString();
+                String numreviews = book.getNumReviews().toString();
                 String pagesrev = pages + " Pages | " + numreviews + " reviews";
                 bookPages.setText(pagesrev);
-                availableBooks.setText(documentSnapshot.get("availableBooksNum").toString());
-                reservedBooks.setText((documentSnapshot.get("numReserved").toString()));
-                bookRating.setRating(Float.parseFloat(documentSnapshot.get("rating").toString()));
-
+                String available = "Available books: " + String.valueOf(book.getAvailableBooksNum());
+                availableBooks.setText(available);
+                String reserved = "Reserved books: " + String.valueOf(book.getNumReserved());
+                reservedBooks.setText(reserved);
+                bookRating.setRating(book.getRating());
+                String isbn = "ISBN: " + book.getISBN();
+                bookISBN.setText(isbn);
 
 
                 Glide.with(BookPage.this)

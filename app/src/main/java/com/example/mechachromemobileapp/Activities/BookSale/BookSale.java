@@ -92,7 +92,7 @@ public class BookSale extends AppCompatActivity {
     private void buildBookSaleRecyclerView() {
         CollectionReference booksReference = fStore.collection("books_for_sale");
         // query to display newest books for sale first
-        Query query = booksReference.orderBy("add_date", Query.Direction.ASCENDING);
+        Query query = booksReference.orderBy("addDate", Query.Direction.ASCENDING);
 
         FirestoreRecyclerOptions<BookSaleModel> options = new FirestoreRecyclerOptions.Builder<BookSaleModel>()
                 .setQuery(query, BookSaleModel.class)

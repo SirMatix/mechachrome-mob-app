@@ -127,7 +127,7 @@ public class AddBook extends AppCompatActivity {
         book.setNumReserved(0);
         book.setNumReviews(0);
         book.setRating(0f);
-        book.setAdd_date(Calendar.getInstance().getTime());
+        book.setAddDate(Calendar.getInstance().getTime());
 
         // setting document Reference for book object in collection library_books
         final DocumentReference book_data = fStore.collection("library_books").document(title + author);
@@ -193,7 +193,7 @@ public class AddBook extends AppCompatActivity {
         bookAuthor = findViewById(R.id.bookAuthor);
         bookPages = findViewById(R.id.bookPages);
         bookImage = findViewById(R.id.bookImage);
-        availableBooks = findViewById(R.id.availableBooks);
+        availableBooks = findViewById(R.id.bookDescription);
 
         // Spinner
         bCategorySpinner = findViewById(R.id.categorySpinner);

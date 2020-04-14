@@ -3,6 +3,7 @@ package com.example.mechachromemobileapp.Activities.Library;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,8 +11,8 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mechachromemobileapp.Models.Books;
 import com.example.mechachromemobileapp.Adapters.BooksAdapter;
+import com.example.mechachromemobileapp.Models.Books;
 import com.example.mechachromemobileapp.Models.CustomItemAnimation;
 import com.example.mechachromemobileapp.R;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -23,45 +24,45 @@ import com.google.firebase.firestore.Query;
 
 public class LibraryAdmin extends AppCompatActivity {
 
-    private final String TAG = "TAG";
-    private RecyclerView booksRecyclerView;
+    private EditText searchBookBar;
     private BooksAdapter booksAdapter;
-    private FloatingActionButton addBookButton;
-    private FirebaseFirestore fStore;
+    private FloatingActionButton addBookButton, searchBookButton;
+    private FirebaseFirestore fStore = FirebaseFirestore.getInstance();
+    final private CollectionReference booksReference = fStore.collection("library_books");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_library_admin);
-
         initViews();
-        buildBooksRecyclerView();
-
-        booksAdapter.setOnItemClickListener(new BooksAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
-                Books book = documentSnapshot.toObject(Books.class);
-                Intent intent = new Intent(LibraryAdmin.this, BookPage.class);
-                intent.putExtra("book_title", book.getTitle());
-                intent.putExtra("book_id", documentSnapshot.getId());
-                startActivity(intent);
-            }
-        });
+        buildBooksRecyclerView(booksAdapter);
+        setButtons();
     }
 
-    private void buildBooksRecyclerView() {
-        CollectionReference booksReference = fStore.collection("library_books");
-        // query to display newest books in library first
-        Query query = booksReference.orderBy("add_date", Query.Direction.ASCENDING);
+    private void initViews() {
+        // initialize recycler view adapter
+        booksAdapter = getAdapter();
 
+        // layout elements init
+        addBookButton = findViewById(R.id.button_add_book);
+        searchBookButton = findViewById(R.id.button_search);
+        searchBookBar = findViewById(R.id.book_search_bar);
+    }
+
+    private BooksAdapter getAdapter() {
+        Query query = booksReference.orderBy("addDate", Query.Direction.ASCENDING);
         FirestoreRecyclerOptions<Books> options = new FirestoreRecyclerOptions.Builder<Books>()
                 .setQuery(query, Books.class)
                 .build();
+        return new BooksAdapter(options);
+    }
 
-        booksAdapter = new BooksAdapter(options);
+    private void buildBooksRecyclerView(BooksAdapter adapter) {
+        RecyclerView booksRecyclerView = findViewById(R.id.libraryAdminRecyclerView);
         booksRecyclerView.setHasFixedSize(true);
         booksRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        booksRecyclerView.setAdapter(booksAdapter);
+        booksRecyclerView.setItemAnimator(new CustomItemAnimation());
+        booksRecyclerView.setAdapter(adapter);
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
@@ -75,7 +76,58 @@ public class LibraryAdmin extends AppCompatActivity {
                 booksAdapter.deleteItem(viewHolder.getAdapterPosition());
             }
         }).attachToRecyclerView(booksRecyclerView);
+    }
 
+    private void setButtons() {
+        booksAdapter.setOnItemClickListener(new BooksAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+                Books book = documentSnapshot.toObject(Books.class);
+                Intent intent = new Intent(LibraryAdmin.this, BookPage.class);
+                intent.putExtra("book_title", book.getTitle());
+                intent.putExtra("book_id", documentSnapshot.getId());
+                startActivity(intent);
+            }
+        });
+
+        addBookButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addBook();
+            }
+        });
+
+        searchBookButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(searchBookBar.getText().toString().equals("")){
+                    Query query = booksReference.orderBy("addDate", Query.Direction.ASCENDING);
+                    FirestoreRecyclerOptions<Books> options = new FirestoreRecyclerOptions.Builder<Books>()
+                            .setQuery(query, Books.class)
+                            .build();
+                    booksAdapter.updateOptions(options);
+
+                } else {
+                    String searchCategory = searchBookBar.getText().toString().trim();
+                    Query query = booksReference.whereEqualTo("category", searchCategory).orderBy("addDate", Query.Direction.ASCENDING);;
+                    FirestoreRecyclerOptions<Books> options = new FirestoreRecyclerOptions.Builder<Books>()
+                            .setQuery(query, Books.class)
+                            .build();
+                    booksAdapter.updateOptions(options);
+                }
+            }
+        });
+    }
+
+    /*
+        adding the book will work on principle that new activity is opened on which you add
+        information about a book and that data is being send to the firestore to store it
+        after successful operation admin will go back to previous activity and get a toast
+        about successful adding of a book (this is admin only functionality)
+    */
+    private void addBook() {
+        startActivity(new Intent(getApplicationContext(), AddBook.class));
+        finish();
     }
 
     @Override
@@ -90,61 +142,6 @@ public class LibraryAdmin extends AppCompatActivity {
         booksAdapter.stopListening();
     }
 
-    /* old code for getting book data
-    private void initBooksData() {
-        booksData = new ArrayList<>();
-        fStore.collection("library_books")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Books book = document.toObject(Books.class);
-                                Log.d(TAG, "Got the book title: " + document.getString("title"));
-                                // adding book to the ArrayList
-                                booksData.add(book);
-                            }
-                            // notifying the booksAdapter with data change
-                            booksAdapter.notifyDataSetChanged();
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
-                        }
-                    }
-                });
-    }
-     */
 
-    private void initViews() {
-        // Firebase init
-        fStore = FirebaseFirestore.getInstance();
 
-        // layout elements init
-        addBookButton = findViewById(R.id.button_add_book);
-
-        // recyclerView init
-        booksRecyclerView = findViewById(R.id.libraryAdminRecyclerView);
-        booksRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        booksRecyclerView.setHasFixedSize(true);
-        booksRecyclerView.setItemAnimator(new CustomItemAnimation());
-
-        // buttons on click listeners
-        addBookButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addBook();
-            }
-
-            private void addBook() {
-                /*
-                adding the book will work on principle that new activity is opened on which you add
-                information about a book and that data is being send to the firestore to store it
-                after successful operation admin will go back to previous activity and get a toast
-                about successful adding of a book (this is admin only functionality)
-                 */
-                startActivity(new Intent(getApplicationContext(), AddBook.class));
-                finish();
-            }
-        });
-    }
 }

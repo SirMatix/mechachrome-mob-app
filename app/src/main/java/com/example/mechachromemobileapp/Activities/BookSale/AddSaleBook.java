@@ -116,7 +116,7 @@ public class AddSaleBook extends AppCompatActivity {
         sellBook.setCategory(bCategorySpinner.getSelectedItem().toString());
         sellBook.setCondition(bConditionSpinner.getSelectedItem().toString());
         sellBook.setPages(Integer.parseInt(bookPages.getText().toString()));
-        sellBook.setAdd_date(Calendar.getInstance().getTime());
+        sellBook.setAddDate(Calendar.getInstance().getTime());
         sellBook.setPrice(Float.parseFloat(bookPrice.getText().toString()));
         sellBook.setRating(0f);
         sellBook.setNumReviews(0);
@@ -128,10 +128,10 @@ public class AddSaleBook extends AppCompatActivity {
 
 
         // setting document Reference for book object in collection books_for_sale
-        final DocumentReference sale_book_data = fStore.collection("books_for_sale").document(title + author);
+        final DocumentReference sale_book_data = fStore.collection("books_for_sale").document();
 
         // the uploading image function
-        final StorageReference reference = mStorageRef.child(title+author+'.'+getExtension(imgUri));
+        final StorageReference reference = mStorageRef.child(title+'.'+getExtension(imgUri));
         reference.putFile(imgUri)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
