@@ -38,5 +38,6 @@
     <string name="timeframe4">14:30-16:30</string>
     <string name="timeframe5">17:30-19:30</string>
     <string name="timeframe6">19:30-21:30</string>
+    <string name="enter_book_category">Enter book category...</string>
 
 </resources>
