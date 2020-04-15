@@ -26,10 +26,11 @@ import com.google.firebase.firestore.Query;
 public class BookSale extends AppCompatActivity {
 
     private final String TAG = "TAG";
-    private RecyclerView bookSaleRecyclerView;
+
     private BookSaleAdapter bookSaleAdapter;
     private FloatingActionButton addBookButton;
-    private FirebaseFirestore fStore;
+    private FirebaseFirestore fStore = FirebaseFirestore.getInstance();
+    private CollectionReference booksReference = fStore.collection("books_for_sale");
 
 
     @Override
@@ -38,8 +39,30 @@ public class BookSale extends AppCompatActivity {
         setContentView(R.layout.activity_book_sale);
 
         initViews();
+        buildBookSaleRecyclerView(bookSaleAdapter);
+        setButtons();
+    }
 
-        buildBookSaleRecyclerView();
+    private void initViews() {
+        // Adapter initialization
+        bookSaleAdapter = getAdapter();
+
+        // Layout buttons initialization
+        addBookButton = findViewById(R.id.button_add_book);
+    }
+
+    private void addBook() {
+        startActivity(new Intent(getApplicationContext(), AddSaleBook.class));
+        finish();
+    }
+
+    private void setButtons() {
+        addBookButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addBook();
+            }
+        });
 
         bookSaleAdapter.setOnItemClickListener(new BookSaleAdapter.OnItemClickListener() {
             @Override
@@ -55,53 +78,31 @@ public class BookSale extends AppCompatActivity {
         });
     }
 
-    private void initViews() {
-        // Firebase init
-        fStore = FirebaseFirestore.getInstance();
+    private BookSaleAdapter getAdapter() {
+        Intent intent = getIntent();
+        String userID = intent.getStringExtra("userID");
+        if(userID == null) {
+            Query query = booksReference.orderBy("addDate", Query.Direction.ASCENDING);
+            FirestoreRecyclerOptions<BookSaleModel> options = new FirestoreRecyclerOptions.Builder<BookSaleModel>()
+                    .setQuery(query, BookSaleModel.class)
+                    .build();
+            return new BookSaleAdapter(options);
+        } else {
+            Query query = booksReference.whereEqualTo("seller_id", userID).orderBy("addDate", Query.Direction.ASCENDING);
+            FirestoreRecyclerOptions<BookSaleModel> options = new FirestoreRecyclerOptions.Builder<BookSaleModel>()
+                    .setQuery(query, BookSaleModel.class)
+                    .build();
+            return new BookSaleAdapter(options);
+        }
+    }
 
-        // layout elements init
-        addBookButton = findViewById(R.id.button_add_book);
-
-        // recyclerView init
+    private void buildBookSaleRecyclerView(BookSaleAdapter adapter) {
+        RecyclerView bookSaleRecyclerView;
         bookSaleRecyclerView = findViewById(R.id.booksale_recycler_view);
         bookSaleRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         bookSaleRecyclerView.setHasFixedSize(true);
         bookSaleRecyclerView.setItemAnimator(new CustomItemAnimation());
-
-        // buttons on click listeners
-        addBookButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addBook();
-            }
-
-            private void addBook() {
-                /*
-                adding the book will work on principle that new activity is opened on which you add
-                information about a book and that data is being send to the firestore to store it
-                after successful operation admin will go back to previous activity and get a toast
-                about successful adding of a book (this is admin only functionality)
-                 */
-                startActivity(new Intent(getApplicationContext(), AddSaleBook.class));
-                finish();
-            }
-        });
-    }
-
-
-    private void buildBookSaleRecyclerView() {
-        CollectionReference booksReference = fStore.collection("books_for_sale");
-        // query to display newest books for sale first
-        Query query = booksReference.orderBy("addDate", Query.Direction.ASCENDING);
-
-        FirestoreRecyclerOptions<BookSaleModel> options = new FirestoreRecyclerOptions.Builder<BookSaleModel>()
-                .setQuery(query, BookSaleModel.class)
-                .build();
-
-        bookSaleAdapter = new BookSaleAdapter(options);
-        bookSaleRecyclerView.setHasFixedSize(true);
-        bookSaleRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        bookSaleRecyclerView.setAdapter(bookSaleAdapter);
+        bookSaleRecyclerView.setAdapter(adapter);
 
         /*
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,

@@ -77,8 +77,6 @@ public class ForumPostReply extends AppCompatActivity {
                     editContent.setError("Please add content");
                     return;
                 }
-
-
                 // getting the user
                 DocumentReference userRef = fStore.collection("users").document(userID);
                 userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {

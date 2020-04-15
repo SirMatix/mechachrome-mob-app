@@ -1,6 +1,7 @@
 package com.example.mechachromemobileapp.Activities.Library;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Layout;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,11 +21,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.example.mechachromemobileapp.Adapters.ReviewAdapter;
 import com.example.mechachromemobileapp.Models.Books;
-import com.example.mechachromemobileapp.R;
 import com.example.mechachromemobileapp.Models.Reservation;
 import com.example.mechachromemobileapp.Models.Review;
-import com.example.mechachromemobileapp.Adapters.ReviewAdapter;
+import com.example.mechachromemobileapp.R;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -46,45 +48,23 @@ public class BookPage extends AppCompatActivity {
     public static final String TAG = "TAG";
     private RecyclerView reviewRecyclerView;
     private ReviewAdapter reviewAdapter;
-    FirebaseFirestore fStore;
-    FirebaseAuth fAuth;
-    String bookIDFeed, titleFeed;
-    Button reserveButton, writeReviewButton, cancelButton;
-    TextView bookTitle, bookAuthor, bookDescription, bookPages, availableBooks, reservedBooks, bookISBN;
-    ImageView bookImage;
-    RatingBar bookRating;
-    CollectionReference booksCollection, reservationCollection, usersCollection;
-    DocumentReference bookReference, reservationReference;
+    private FirebaseFirestore fStore;
+    private FirebaseAuth fAuth;
+    private String bookIDFeed, titleFeed;
+    private Button reserveButton, writeReviewButton, cancelButton;
+    private TextView bookTitle, bookAuthor, bookDescription, bookPages, availableBooks, reservedBooks, bookISBN;
+    private ImageView bookImage;
+    private RatingBar bookRating;
+    private CollectionReference booksCollection, reservationCollection, usersCollection;
+    private DocumentReference bookReference, reservationReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_page);
-
         initViews();
         buildReviewsRecyclerView();
-
-        writeReviewButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                writeReview();
-            }
-        });
-
-        reserveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                reserveBook();
-            }
-        });
-
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cancelReservation();
-            }
-        });
-
+        setButtons();
     }
 
     public void initViews(){
@@ -115,9 +95,31 @@ public class BookPage extends AppCompatActivity {
         reviewRecyclerView = findViewById(R.id.bookPageRecyclerView);
     }
 
+    public void setButtons() {
+        writeReviewButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                writeReview();
+            }
+        });
+        reserveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                reserveBook();
+            }
+        });
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cancelReservation();
+            }
+        });
+    }
+
     public void loadBookData() {
         bookReference = booksCollection.document(bookIDFeed);
         bookReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 Books book = documentSnapshot.toObject(Books.class);

@@ -6,4 +6,5 @@
     <color name="colorAccent">#FFFFFF</color>
     <color name="light_medium_gray">#f3f3f3</color>
     <color name="fav_icon_tint">#CAC7C7</color>
+    <color name="secondary_text_material_light">#61ffffff</color>
 </resources>
