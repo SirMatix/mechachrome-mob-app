@@ -25,7 +25,7 @@ public class ReviewAdapter extends FirestoreRecyclerAdapter<Review, ReviewAdapte
     @Override
     protected void onBindViewHolder(@NonNull ReviewHolder holder, int position, @NonNull Review model) {
         holder.reviewAuthor.setText(model.getAuthor());
-        CharSequence date_published = DateFormat.format("dd-MM-yyyy hh:mm:ss",model.getDate_published());
+        CharSequence date_published = DateFormat.format("dd-MM-yyyy HH:mm:ss",model.getDate_published());
         holder.reviewDatePublished.setText(date_published.toString());
         holder.reviewContent.setText(model.getContent());
         holder.reviewScore.setRating(model.getRating());
