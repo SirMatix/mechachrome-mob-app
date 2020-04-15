@@ -16,5 +16,6 @@
     <color name="scheme_2">#A2A767</color>
     <color name="scheme_3">#469C45</color>
     <color name="topic_color">#B4E0CDAC</color>
+    <color name="transparent_white">#4BFFFFFF</color>
 
 </resources>
