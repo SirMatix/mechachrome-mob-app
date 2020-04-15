@@ -3,19 +3,19 @@ package com.example.mechachromemobileapp.Models;
 import java.util.Date;
 
 public class ForumTopic {
-    String author, author_id;
+    String topic_name, author, author_id;
     int post_num;
     Date date_published;
 
     public ForumTopic() {
     }
 
-    public String getAuthor_id() {
-        return author_id;
+    public String getTopic_name() {
+        return topic_name;
     }
 
-    public void setAuthor_id(String author_id) {
-        this.author_id = author_id;
+    public void setTopic_name(String topic_name) {
+        this.topic_name = topic_name;
     }
 
     public String getAuthor() {
@@ -24,6 +24,14 @@ public class ForumTopic {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public String getAuthor_id() {
+        return author_id;
+    }
+
+    public void setAuthor_id(String author_id) {
+        this.author_id = author_id;
     }
 
     public int getPost_num() {

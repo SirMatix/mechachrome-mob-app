@@ -30,7 +30,7 @@
         <activity android:name=".Activities.FloorPlan" />
         <activity android:name=".Activities.Library.Library" />
         <activity android:name=".Activities.Forum.ForumPostReply" />
-        <activity android:name=".Activities.Forum.ForumTopic" />
+        <activity android:name=".Activities.Forum.ForumViewTopic" />
         <activity android:name=".Activities.Forum.ForumPostTopic" />
         <activity android:name=".Activities.Forum.Forum" />
         <activity android:name=".Activities.Timetables.Timetables" />
