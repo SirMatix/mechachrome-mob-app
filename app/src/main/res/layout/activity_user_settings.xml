@@ -8,7 +8,7 @@
     tools:context=".Activities.User.UserSettings">
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/setting_image"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginStart="5dp"
@@ -34,7 +34,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toBottomOf="@+id/setting_image" />
 
     <TextView
         android:id="@+id/instruction"
@@ -49,7 +49,8 @@
         app:layout_constraintBottom_toTopOf="@+id/change_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/setting_text" />
+        app:layout_constraintTop_toBottomOf="@+id/setting_text"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Switch
         android:id="@+id/change_name_switch"
@@ -75,11 +76,11 @@
         android:ems="10"
         android:hint="@string/enter_new_name"
         android:inputType="textPersonName"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/change_surname"
         app:layout_constraintEnd_toStartOf="@+id/change_name_switch"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/instruction"
-        tools:visibility="gone" />
+        app:layout_constraintTop_toBottomOf="@+id/instruction" />
 
     <Switch
         android:id="@+id/change_surname_switch"
@@ -146,8 +147,7 @@
         app:layout_constraintBottom_toTopOf="@+id/change_password_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/change_email_switch"
-        app:layout_constraintVertical_bias="0.52" />
+        app:layout_constraintTop_toBottomOf="@+id/change_email_switch" />
 
     <Button
         android:id="@+id/change_password_button"
@@ -155,6 +155,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:text="@string/change_password"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/confirm_button" />
@@ -164,7 +165,7 @@
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="@string/confirm_new_password"
+        android:text="confirm password"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -185,7 +186,7 @@
         app:layout_constraintBottom_toTopOf="@+id/confirm_password_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/change_password_button" />
+        app:layout_constraintTop_toBottomOf="@+id/confirm_password_button" />
 
     <EditText
         android:id="@+id/confirm_password_text"

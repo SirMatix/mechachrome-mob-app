@@ -49,7 +49,8 @@
     <string name="first_name">First Name:</string>
     <string name="email_address">Email Address:</string>
     <string name="password">Password</string>
-    <string name="confirm_password">Confirm Password</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="confirm_password2">Confirm password:</string>
     <string name="student_id">Student ID:</string>
     <string name="surname">Surname:</string>
     <string name="register">REGISTER</string>
@@ -82,4 +83,10 @@
     <string name="confirm_new_password">Confirm new password…</string>
     <string name="settings_image">Settings image</string>
     <string name="my_reviews">My reviews</string>
+    <string name="your_password_here">Your password here...</string>
+    <string name="cancel">CANCEL</string>
+    <string name="confirm">CONFIRM</string>
+
+    <!-- dialog names -->
+    <string name="confirm_password_dialog">ConfirmPasswordDialog</string>
 </resources>

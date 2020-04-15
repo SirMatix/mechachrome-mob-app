@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mechachromemobileapp.Activities.BookSale.BookSale;
+import com.example.mechachromemobileapp.Activities.Forum.Forum;
 import com.example.mechachromemobileapp.Models.User;
 import com.example.mechachromemobileapp.R;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -98,7 +99,7 @@ public class UserAccount extends AppCompatActivity {
         userPosts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), BookSale.class);
+                Intent intent = new Intent(getApplicationContext(), Forum.class);
                 intent.putExtra("userID", userID);
                 startActivity(intent);
             }
@@ -116,15 +117,10 @@ public class UserAccount extends AppCompatActivity {
         userReviews.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), BookSale.class);
+                Intent intent = new Intent(getApplicationContext(), UserBookReviews.class);
                 intent.putExtra("userID", userID);
                 startActivity(intent);
             }
         });
-
-
-
-
-
     }
 }
