@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/author"
+        android:id="@+id/post_author"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
@@ -30,13 +30,13 @@
         android:numStars="5"
         android:progressTint="#C6FFC500"
         android:stepSize="0.5"
-        app:layout_constraintBottom_toTopOf="@+id/date_published"
+        app:layout_constraintBottom_toTopOf="@+id/post_date_published"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/author"
+        app:layout_constraintStart_toEndOf="@+id/post_author"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/date_published"
+        android:id="@+id/post_date_published"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
@@ -46,7 +46,7 @@
         android:textAlignment="textStart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/author" />
+        app:layout_constraintTop_toBottomOf="@+id/post_author" />
 
     <TextView
         android:id="@+id/content"
@@ -59,7 +59,7 @@
         android:textAlignment="textStart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/date_published" />
+        app:layout_constraintTop_toBottomOf="@+id/post_date_published" />
 
     <View
         android:id="@+id/review_divider"

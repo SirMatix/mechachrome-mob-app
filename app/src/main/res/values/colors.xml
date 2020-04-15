@@ -7,4 +7,16 @@
     <color name="light_medium_gray">#f3f3f3</color>
     <color name="fav_icon_tint">#CAC7C7</color>
     <color name="secondary_text_material_light">#61ffffff</color>
+
+
+
+
+    <!-- new Layout colors -->
+    <color name="background_blue">#B4AEDAF7</color>
+    <color name="black_text_color">#0C0F0C</color>
+    <color name="light_black">#C80C0F0C</color>
+    <color name="scheme_1">#69583A</color>
+    <color name="scheme_2">#A2A767</color>
+    <color name="scheme_3">#469C45</color>
+
 </resources>

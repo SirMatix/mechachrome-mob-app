@@ -44,8 +44,8 @@ public class ReviewAdapter extends FirestoreRecyclerAdapter<Review, ReviewAdapte
 
         public ReviewHolder(@NonNull View itemView) {
             super(itemView);
-            reviewAuthor = itemView.findViewById(R.id.author);
-            reviewDatePublished = itemView.findViewById(R.id.date_published);
+            reviewAuthor = itemView.findViewById(R.id.post_author);
+            reviewDatePublished = itemView.findViewById(R.id.post_date_published);
             reviewContent = itemView.findViewById(R.id.content);
             reviewScore = itemView.findViewById(R.id.review_score);
         }
