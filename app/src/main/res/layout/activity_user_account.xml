@@ -9,16 +9,28 @@
 
     <ImageView
         android:id="@+id/user_image"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="175dp"
+        android:layout_height="175dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:contentDescription="@string/user_image"
-        app:layout_constraintBottom_toTopOf="@+id/user_first_name"
+        app:layout_constraintBottom_toTopOf="@+id/change_image_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_account" />
+
+    <TextView
+        android:id="@+id/change_image_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Click on image to change it"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/user_first_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/user_image" />
 
     <TextView
         android:id="@+id/user_first_name"
@@ -32,7 +44,7 @@
         app:layout_constraintBottom_toTopOf="@+id/user_last_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_image" />
+        app:layout_constraintTop_toBottomOf="@+id/change_image_text" />
 
     <TextView
         android:id="@+id/user_last_name"

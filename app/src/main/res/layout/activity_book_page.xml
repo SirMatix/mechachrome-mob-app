@@ -151,7 +151,7 @@
             app:layout_constraintTop_toBottomOf="@+id/numReserved" />
 
         <TextView
-            android:id="@+id/bookDescription"
+            android:id="@+id/numberOfBooks"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
@@ -173,7 +173,7 @@
             app:layout_constraintBottom_toTopOf="@+id/reviewsTextView"
             app:layout_constraintEnd_toStartOf="@+id/writeReviewBtn"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bookDescription" />
+            app:layout_constraintTop_toBottomOf="@+id/numberOfBooks" />
 
         <Button
             android:id="@+id/cancelBookBtn"
@@ -188,7 +188,7 @@
             app:layout_constraintBottom_toTopOf="@+id/reviewsTextView"
             app:layout_constraintEnd_toStartOf="@+id/writeReviewBtn"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bookDescription" />
+            app:layout_constraintTop_toBottomOf="@+id/numberOfBooks" />
 
         <Button
             android:id="@+id/writeReviewBtn"
@@ -202,7 +202,7 @@
             app:layout_constraintBottom_toTopOf="@+id/reviewsTextView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/reserveBookBtn"
-            app:layout_constraintTop_toBottomOf="@+id/bookDescription" />
+            app:layout_constraintTop_toBottomOf="@+id/numberOfBooks" />
 
         <TextView
             android:id="@+id/reviewsTextView"

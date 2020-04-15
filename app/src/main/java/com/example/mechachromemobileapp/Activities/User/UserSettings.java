@@ -59,7 +59,7 @@ public class UserSettings extends AppCompatActivity implements EmailConfirmPassw
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "User re-authenticated.");
-                            fAuth.fetchSignInMethodsForEmail(changeEmail.getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
+                            fAuth.fetchSignInMethodsForEmail(changeEmail.getText().toString().trim().toLowerCase()).addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
                                     if (task.isSuccessful()) {
@@ -67,27 +67,28 @@ public class UserSettings extends AppCompatActivity implements EmailConfirmPassw
                                             if (task.getResult().getSignInMethods().size() == 1) {
                                                 Toast.makeText(getApplicationContext(), "That email is already in use", Toast.LENGTH_SHORT).show();
                                             } else {
-                                                String userID = fUser.getUid();
-                                                DocumentReference userReference = fStore.collection("users").document(userID);
-                                                fUser.updateEmail(changeEmail.getText().toString().trim())
+                                                fUser.updateEmail(changeEmail.getText().toString().trim().toLowerCase())
                                                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                             @Override
                                                             public void onComplete(@NonNull Task<Void> task) {
-                                                                Toast.makeText(getApplicationContext(), "User eail address updated", Toast.LENGTH_SHORT).show();
+                                                                String userID = fUser.getUid();
+                                                                DocumentReference userReference = fStore.collection("users").document(userID);
+                                                                userReference.update("email", changeEmail.getText().toString().trim().toLowerCase());
+                                                                userReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                                    @Override
+                                                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                                        User user = documentSnapshot.toObject(User.class);
+                                                                        assert user != null;
+                                                                        DocumentReference idsReference = fStore.collection("ids").document(user.getStudentID());
+                                                                        idsReference.update("email", changeEmail.getText().toString().trim().toLowerCase());
+                                                                        Toast.makeText(getApplicationContext(), "User email address updated", Toast.LENGTH_SHORT).show();
+                                                                        startActivity(new Intent(getApplicationContext(), UserSettings.class));
+                                                                        finish();
+                                                                    }
+                                                                });
                                                             }
                                                         });
-                                                userReference.update("email", changeEmail.getText().toString().trim());
-                                                userReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                                    @Override
-                                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                                        User user = documentSnapshot.toObject(User.class);
-                                                        assert user != null;
-                                                        DocumentReference idsReference = fStore.collection("ids").document(user.getStudentID());
-                                                        idsReference.update("email", changeEmail.getText().toString().trim());
-                                                        startActivity(new Intent(getApplicationContext(), UserSettings.class));
-                                                        finish();
-                                                    }
-                                                });
+
                                             }
                                         } catch (NullPointerException e) {
                                             Log.e(TAG, "onComplete: NullPointerException: " + e.getMessage());

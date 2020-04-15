@@ -82,7 +82,7 @@ public class BookPage extends AppCompatActivity {
         // finding variables from layout
         bookTitle = findViewById(R.id.item_book_title);
         bookAuthor = findViewById(R.id.item_book_author);
-        bookDescription = findViewById(R.id.bookDescription);
+        bookDescription = findViewById(R.id.numberOfBooks);
         bookPages = findViewById(R.id.item_book_pagesrev);
         bookISBN = findViewById(R.id.item_book_isbn);
         availableBooks = findViewById(R.id.numAvailable);
