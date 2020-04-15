@@ -27,10 +27,8 @@
         <activity android:name=".Activities.Library.ReserveBook" />
         <activity android:name=".Activities.Library.AddReview" />
         <activity android:name=".Activities.Library.BookPage" />
-        <activity android:name=".Activities.Library.AddBook" />
         <activity android:name=".Activities.FloorPlan" />
-        <activity android:name=".Activities.Library.LibraryAdmin" />
-        <activity android:name=".Activities.Library.LibraryUser" />
+        <activity android:name=".Activities.Library.Library" />
         <activity android:name=".Activities.Forum.ForumPostReply" />
         <activity android:name=".Activities.Forum.ForumTopic" />
         <activity android:name=".Activities.Forum.ForumPostTopic" />

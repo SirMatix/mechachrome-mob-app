@@ -120,7 +120,13 @@ public class AddReview extends AppCompatActivity {
 
                                         // setting the review
                                         DocumentReference reviewRef = fStore.collection("library_book_reviews").document();
-                                        Review review = new Review(author.get(0),titleFeed,date_published,content,rating);
+                                        Review review = new Review();
+                                        review.setAuthor(author.get(0));
+                                        review.setAuthor_id(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                        review.setBook_title(titleFeed);
+                                        review.setContent(content);
+                                        review.setDate_published(date_published);
+                                        review.setRating(rating);
 
                                         reviewRef.set(review).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override

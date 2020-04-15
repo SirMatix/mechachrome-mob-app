@@ -71,7 +71,7 @@ public class BookPage extends AppCompatActivity {
         fStore = FirebaseFirestore.getInstance();
         fAuth = FirebaseAuth.getInstance();
         booksCollection = fStore.collection("library_books");
-        reservationCollection = fStore.collection(("library_books_reservations"));
+        reservationCollection = fStore.collection("library_books_reservations");
         usersCollection = fStore.collection("users");
 
         // getting intent from Library activity and getting extra string

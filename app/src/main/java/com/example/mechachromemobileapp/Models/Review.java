@@ -11,21 +11,6 @@ public class Review {
 
     }
 
-    public Review(String author, Date date_published, String content, float rating){
-        this.author = author;
-        this.date_published = date_published;
-        this.content = content;
-        this.rating = rating;
-    }
-
-    public Review(String author, String book_title, Date date_published, String content, float rating){
-        this.author = author;
-        this.book_title = book_title;
-        this.date_published = date_published;
-        this.content = content;
-        this.rating = rating;
-    }
-
     public String getAuthor_id() {
         return author_id;
     }
