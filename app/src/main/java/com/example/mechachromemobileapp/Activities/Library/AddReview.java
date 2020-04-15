@@ -36,7 +36,7 @@ public class AddReview extends AppCompatActivity {
     TextView editReviewContent;
     FirebaseFirestore fStore;
     FirebaseAuth fAuth;
-    String userID, titleAuthorFeed, titleFeed;
+    String userID, bookID, titleFeed;
     Date date_published;
 
     @Override
@@ -52,7 +52,7 @@ public class AddReview extends AppCompatActivity {
     public void initViews() {
         // getting data from previous activity
         Intent intent = getIntent();
-        titleAuthorFeed = intent.getStringExtra("title_author");
+        bookID = intent.getStringExtra("book_id");
         titleFeed = intent.getStringExtra("title");
 
         // getting items from layout
@@ -102,7 +102,7 @@ public class AddReview extends AppCompatActivity {
                                 Log.d(TAG, "No such user");
                             }
 
-                            final DocumentReference bookRef = fStore.collection("library_books").document(titleAuthorFeed);
+                            final DocumentReference bookRef = fStore.collection("library_books").document(bookID);
                             // incrementing values of review number and number of ratings
                             bookRef.update("numReviews", FieldValue.increment(1));
                             bookRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -120,7 +120,14 @@ public class AddReview extends AppCompatActivity {
 
                                         // setting the review
                                         DocumentReference reviewRef = fStore.collection("library_book_reviews").document();
-                                        Review review = new Review(author.get(0),titleFeed,date_published,content,rating);
+                                        Review review = new Review();
+                                        review.setAuthor(author.get(0));
+                                        review.setAuthor_id(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                        review.setBook_title(titleFeed);
+                                        review.setBook_id(bookID);
+                                        review.setContent(content);
+                                        review.setDate_published(date_published);
+                                        review.setRating(rating);
 
                                         reviewRef.set(review).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
@@ -149,7 +156,7 @@ public class AddReview extends AppCompatActivity {
             public void onClick(View v) {
                 // Finishing the activity and starting previous one
                 Intent intent = new Intent(AddReview.this, BookPage.class);
-                intent.putExtra("title_author", titleAuthorFeed);
+                intent.putExtra("book_id", bookID);
                 startActivity(intent);
                 finish();
             }

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="5dp"
-    tools:context=".Activities.Library.LibraryAdmin">
+    tools:context=".Activities.Library.Library">
 
     <EditText
         android:id="@+id/book_search_bar"
@@ -19,7 +19,7 @@
         android:paddingTop="5dp"
         android:paddingRight="20dp"
         android:paddingBottom="5dp"
-        app:layout_constraintBottom_toTopOf="@+id/libraryAdminRecyclerView"
+        app:layout_constraintBottom_toTopOf="@+id/libraryRecyclerView"
         app:layout_constraintEnd_toStartOf="@+id/button_search"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -31,36 +31,19 @@
         android:layout_margin="16dp"
         android:backgroundTint="#CA2121"
         android:src="@drawable/ic_search"
-        app:layout_constraintBottom_toTopOf="@+id/libraryAdminRecyclerView"
+        app:layout_constraintBottom_toTopOf="@+id/libraryRecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/book_search_bar"
         app:layout_constraintTop_toTopOf="parent" />
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/libraryAdminRecyclerView"
+        android:id="@+id/libraryRecyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_search" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/button_add_book"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="#CA2121"
-        android:src="@drawable/ic_add"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

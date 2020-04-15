@@ -93,13 +93,13 @@
             android:textAlignment="center"
             android:textColor="#CD943131"
             android:textColorHint="#80943131"
-            app:layout_constraintBottom_toTopOf="@+id/bookDescription"
+            app:layout_constraintBottom_toTopOf="@+id/numberOfBooks"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bookTitle" />
 
         <EditText
-            android:id="@+id/bookDescription"
+            android:id="@+id/numberOfBooks"
             android:layout_width="360dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
@@ -134,7 +134,7 @@
             app:layout_constraintBottom_toTopOf="@+id/bookPrice"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bookDescription" />
+            app:layout_constraintTop_toBottomOf="@+id/numberOfBooks" />
 
         <EditText
             android:id="@+id/bookPrice"

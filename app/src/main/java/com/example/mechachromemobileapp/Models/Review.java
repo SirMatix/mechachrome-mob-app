@@ -3,7 +3,7 @@ package com.example.mechachromemobileapp.Models;
 import java.util.Date;
 
 public class Review {
-    private String author, author_id, content, book_title;
+    private String author, author_id, content, book_title, book_id;
     private Date date_published;
     private float rating;
 
@@ -11,19 +11,12 @@ public class Review {
 
     }
 
-    public Review(String author, Date date_published, String content, float rating){
-        this.author = author;
-        this.date_published = date_published;
-        this.content = content;
-        this.rating = rating;
+    public String getBook_id() {
+        return book_id;
     }
 
-    public Review(String author, String book_title, Date date_published, String content, float rating){
-        this.author = author;
-        this.book_title = book_title;
-        this.date_published = date_published;
-        this.content = content;
-        this.rating = rating;
+    public void setBook_id(String book_id) {
+        this.book_id = book_id;
     }
 
     public String getAuthor_id() {

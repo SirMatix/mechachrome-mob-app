@@ -187,7 +187,7 @@ public class AddSaleBook extends AppCompatActivity {
     public void initElements() {
         // Data variables
         bookTitle = findViewById(R.id.bookTitle);
-        bookDescription = findViewById(R.id.bookDescription);
+        bookDescription = findViewById(R.id.numberOfBooks);
         bookAuthor = findViewById(R.id.bookAuthor);
         bookPages = findViewById(R.id.bookPages);
         bookImage = findViewById(R.id.bookImage);
