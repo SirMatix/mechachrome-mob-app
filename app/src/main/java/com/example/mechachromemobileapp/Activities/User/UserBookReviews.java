@@ -57,4 +57,16 @@ public class UserBookReviews extends AppCompatActivity {
     public void setButtons() {
 
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        reviewAdapter.startListening();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        reviewAdapter.stopListening();
+    }
 }

@@ -92,7 +92,6 @@ public class BookPage extends AppCompatActivity {
         writeReviewButton = findViewById(R.id.writeReviewBtn);
         reserveButton = findViewById(R.id.reserveBookBtn);
         cancelButton = findViewById(R.id.cancelBookBtn);
-        reviewRecyclerView = findViewById(R.id.bookPageRecyclerView);
     }
 
     public void setButtons() {
@@ -181,7 +180,7 @@ public class BookPage extends AppCompatActivity {
                 Books book = documentSnapshot.toObject(Books.class);
                 if(book.getAvailableBooksNum() > 0) {
                     Intent intent = new Intent(BookPage.this, ReserveBook.class);
-                    intent.putExtra("title_author", bookIDFeed);
+                    intent.putExtra("book_id", bookIDFeed);
                     intent.putExtra("title", titleFeed);
                     startActivity(intent);
                 } else {
@@ -259,14 +258,21 @@ public class BookPage extends AppCompatActivity {
 
     public void writeReview() {
         Intent intent = new Intent(BookPage.this, AddReview.class);
-        intent.putExtra("title_author", bookIDFeed);
+        intent.putExtra("book_id", bookIDFeed);
         intent.putExtra("title", titleFeed);
         startActivity(intent);
     }
 
     public void buildReviewsRecyclerView() {
+        reviewRecyclerView = findViewById(R.id.bookPageRecyclerView);
+        Intent intent = getIntent();
+        bookIDFeed = intent.getStringExtra("book_id");
+        titleFeed = intent.getStringExtra("book_title");
+        Log.d(TAG, "book titile is: " + titleFeed);
         CollectionReference reviewsCollection = fStore.collection("library_book_reviews");
         Query query = reviewsCollection.whereEqualTo("book_title", titleFeed).orderBy("date_published", Query.Direction.DESCENDING);
+
+        Log.d(TAG, "Query is: " + query);
 
         FirestoreRecyclerOptions<Review> options = new FirestoreRecyclerOptions.Builder<Review>()
                 .setQuery(query, Review.class)

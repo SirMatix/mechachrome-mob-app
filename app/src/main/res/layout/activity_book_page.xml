@@ -6,7 +6,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.Library.BookPage">
+    tools:context=".Activities.Library.BookPage"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraint_layout"
@@ -223,12 +225,11 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/bookPageRecyclerView"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="300dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/reviewsTextView" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

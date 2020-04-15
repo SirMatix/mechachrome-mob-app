@@ -65,9 +65,8 @@ public class Library extends AppCompatActivity {
         booksAdapter.setOnItemClickListener(new BooksAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
-                Books book = documentSnapshot.toObject(Books.class);
                 Intent intent = new Intent(getApplicationContext(), BookPage.class);
-                intent.putExtra("book_title", book.getTitle());
+                intent.putExtra("book_title", documentSnapshot.getString("title"));
                 intent.putExtra("book_id", documentSnapshot.getId());
                 startActivity(intent);
             }
