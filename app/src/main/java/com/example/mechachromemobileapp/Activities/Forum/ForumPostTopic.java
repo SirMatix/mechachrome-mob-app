@@ -68,6 +68,8 @@ public class ForumPostTopic extends AppCompatActivity {
         discardTopicBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(ForumPostTopic.this, Forum.class);
+                startActivity(intent);
                 finish();
             }
         });

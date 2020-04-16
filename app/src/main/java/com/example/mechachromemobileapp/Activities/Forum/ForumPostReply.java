@@ -28,8 +28,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ *
+ */
 public class ForumPostReply extends AppCompatActivity {
 
+    // Global variables
     public static final String TAG = "ForumPostReply";
     private EditText editContent;
     private TextView topic, viewTopic;
@@ -48,30 +52,36 @@ public class ForumPostReply extends AppCompatActivity {
         setButtons();
     }
 
+    /**
+     *  Method for initialization widgets, fields and Firebase instances
+     */
     private void initViews() {
+        // Initialization EditText widgets from layout
         viewTopic = findViewById(R.id.viewTopic);
         editContent = findViewById(R.id.editContent);
         replyPostBtn = findViewById(R.id.addReplyBtn);
         discardPostBtn = findViewById(R.id.discardPostBtn);
 
-        // getting Auth and userID
+        // Instantiating of Firebase widgets
         fAuth = FirebaseAuth.getInstance();
         fUser = fAuth.getCurrentUser();
-
-        // getting fStore instance
         fStore = FirebaseFirestore.getInstance();
 
-        // getting intent from Forum activity and getting extra string
+        // Getting intent from Forum activity and getting extra string
         Intent intent = getIntent();
         topicName = intent.getStringExtra("topic_name");
         topicID = intent.getStringExtra("topic_id");
 
-        // getting and setting the topic name on top of our layout to topic name
+        // Getting and setting the topic name on top of our layout to topic name
         topic = findViewById(R.id.topic_name);
         viewTopic.setText(topicName);
     }
 
+    /**
+     *  This method sets the onClickListener to buttons
+     */
     private void setButtons() {
+        // Button to reply to a post
         replyPostBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,6 +89,7 @@ public class ForumPostReply extends AppCompatActivity {
             }
         });
 
+        // Button to discard editing of current post and close this activity
         discardPostBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,25 +102,47 @@ public class ForumPostReply extends AppCompatActivity {
         });
     }
 
+    /**
+     * Method to post a reply
+     *
+     * Validates the content String to check if it is not empty
+     * after that gets the current user from users Collection
+     * creates User object instance from documentSnapshot,
+     * creates ForumPost object instance and adds content,
+     * author, author_id,  date_published and topic_name
+     * variables and then sets this object to forum_topic
+     * sub-collection called posts also updates forum_topic
+     * document field num_post incrementing it by 1,
+     * in the end starts new activity ForumViewTopic
+     * and passes extra data topic_name, topic_id to that activity
+     *
+     */
     private void postReply() {
+        // final String containg post content
         final String content = editContent.getText().toString().trim();
 
+        // content vaildation
         if(TextUtils.isEmpty(content)){
             editContent.setError("Please add content");
             return;
         }
 
+        // DocumentReference userRef referencing users collection in Firestore
         DocumentReference userRef = fStore.collection("users").document(fUser.getUid());
+        // Getting user document
         userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     try {
                         DocumentSnapshot document = task.getResult();
+                        // Creating instance of User object
                         User user = document.toObject(User.class);
 
+                        // Creating instance of ForumPost object
                         ForumPost newPost = new ForumPost();
 
+                        // Setting ForumPost object variables
                         String author_name = user.getFname() + " " + user.getLname();
                         newPost.setAuthor(author_name);
                         newPost.setAuthor_id(fUser.getUid());
@@ -117,7 +150,7 @@ public class ForumPostReply extends AppCompatActivity {
                         newPost.setDate_published(date_published);
                         newPost.setTopic_name(topicName);
 
-                        // setting the post
+                        // Setting newPost to forum_topics document sub-collection called posts, in simple words adding a new post
                         DocumentReference postReference = fStore.collection("forum_topics").document(topicID).collection("posts").document();
                         postReference.set(newPost).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
@@ -130,7 +163,7 @@ public class ForumPostReply extends AppCompatActivity {
                         DocumentReference topicRef = fStore.collection("forum_topics").document(topicID);
                         topicRef.update("post_num", FieldValue.increment(1));
 
-                        // Finishing the activity and starting new
+                        // Finishing the activity and starting ForumViewTopic with extra data topic_name and topic_id
                         Intent intent = new Intent(ForumPostReply.this, ForumViewTopic.class);
                         intent.putExtra("topic_name", topicName);
                         intent.putExtra("topic_id", topicID);
