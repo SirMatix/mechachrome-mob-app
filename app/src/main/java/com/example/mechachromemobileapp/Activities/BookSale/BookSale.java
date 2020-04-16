@@ -62,7 +62,7 @@ public class BookSale extends AppCompatActivity {
     }
 
     /**
-     *  This method sets the onClickListener to buttons
+     *  This method sets the onClickListeners to buttons
      */
     private void setButtons() {
         // Button to add book
@@ -77,17 +77,22 @@ public class BookSale extends AppCompatActivity {
         bookSaleAdapter.setOnItemClickListener(new BookSaleAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+                // Instantiating BookSaleModel from documentSnapshot object from Firestore
                 BookSaleModel sellBook = documentSnapshot.toObject(BookSaleModel.class);
                 try{
                     /*
-                        condition to check if book is not sold it opens
+                        Condition to check if book is not sold it opens
                         BookSalePage activity, if book is sold it is unable
                         to click the book for sale item
                      */
                     if(!sellBook.isSold()){
+                        // Intent to open BookSalePage activity
                         Intent intent = new Intent(getApplicationContext(), BookSalePage.class);
+                        // Putting to intent extra String named 'book_title' containing sellBook.getTitle() value
                         intent.putExtra("book_title", sellBook.getTitle());
+                        // Putting to intent extra String named 'book_id' containing ID of book in Firestore Collection
                         intent.putExtra("book_id", documentSnapshot.getId());
+                        // Starting new activity with the intent
                         startActivity(intent);
                     }
                 } catch (NullPointerException e) {
