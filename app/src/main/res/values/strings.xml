@@ -83,10 +83,11 @@
     <string name="confirm_new_password">Confirm new password…</string>
     <string name="settings_image">Settings image</string>
     <string name="my_reviews">My reviews</string>
-    <string name="your_password_here">Your password here...</string>
-    <string name="cancel">CANCEL</string>
+    <string name="your_password_here">Your password here…</string>
+    <string name="cancel">Cancel</string>
     <string name="confirm">CONFIRM</string>
 
     <!-- dialog names -->
     <string name="confirm_password_dialog">ConfirmPasswordDialog</string>
+
 </resources>
