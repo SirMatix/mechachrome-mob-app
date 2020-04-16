@@ -45,7 +45,7 @@ import java.util.Date;
 
 public class BookPage extends AppCompatActivity {
 
-    public static final String TAG = "TAG";
+    public static final String TAG = "BookPage";
     private RecyclerView reviewRecyclerView;
     private ReviewAdapter reviewAdapter;
     private FirebaseFirestore fStore;

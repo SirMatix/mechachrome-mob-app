@@ -29,7 +29,7 @@ import java.util.Date;
 
 public class ForumPostTopic extends AppCompatActivity {
 
-    public static final String TAG = "TAG";
+    public static final String TAG = "ForumPostTopic";
     private EditText editTopic, editContent;
     private Button addTopicBtn, discardTopicBtn;
     private FirebaseAuth fAuth;
@@ -68,6 +68,8 @@ public class ForumPostTopic extends AppCompatActivity {
         discardTopicBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(ForumPostTopic.this, Forum.class);
+                startActivity(intent);
                 finish();
             }
         });

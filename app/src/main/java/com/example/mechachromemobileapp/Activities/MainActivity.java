@@ -31,7 +31,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final String TAG = "TAG";
+    private final String TAG = "MainActivity";
     Button timetables, library, moodle, floor_plan, moreBtn, bookSaleBtn;
     String userID;
     FirebaseAuth fAuth = FirebaseAuth.getInstance();

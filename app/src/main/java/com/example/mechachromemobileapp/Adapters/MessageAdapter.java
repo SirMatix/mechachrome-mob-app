@@ -22,8 +22,6 @@ public class MessageAdapter extends FirestoreRecyclerAdapter<ChatMessage, Messag
     private static final int MSG_TYPE_LEFT = 0;
     private static final int MSG_TYPE_RIGHT = 1;
 
-    private FirebaseUser fUser;
-
     public MessageAdapter(@NonNull FirestoreRecyclerOptions<ChatMessage> options) {
         super(options);
     }
@@ -62,7 +60,7 @@ public class MessageAdapter extends FirestoreRecyclerAdapter<ChatMessage, Messag
 
     @Override
     public int getItemViewType(int position) {
-        fUser = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser fUser = FirebaseAuth.getInstance().getCurrentUser();
         if (getItem(position).getMessageSender().equals(fUser.getUid())) {
             return MSG_TYPE_RIGHT;
         } else {

@@ -32,7 +32,7 @@ import java.util.Date;
 
 public class ReserveBook extends AppCompatActivity {
 
-    public static final String TAG = "TAG";
+    public static final String TAG = "ReserveBook";
     String userID, titleAuthorFeed, titleFeed;
     TextView bookTitle, bookAuthor, bookPages, availableBooks, dateReserveFrom, dateReserveTo;
     Button reserveBook, discardReserve;

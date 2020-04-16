@@ -22,7 +22,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class UserAdapter extends FirestoreRecyclerAdapter<User, UserAdapter.UserHolder> {
 
     private OnItemClickListener listener;
-    FirebaseUser fUser;
 
     public UserAdapter(@NonNull FirestoreRecyclerOptions<User> options) {
         super(options);
@@ -30,7 +29,7 @@ public class UserAdapter extends FirestoreRecyclerAdapter<User, UserAdapter.User
 
     @Override
     protected void onBindViewHolder(@NonNull UserAdapter.UserHolder holder, int position, @NonNull User model) {
-        fUser = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser fUser = FirebaseAuth.getInstance().getCurrentUser();
         // check if the document isn't equal to currently viewing user
         if(!getSnapshots().getSnapshot(position).getId().equals(fUser.getUid())) {
             String full_name = model.getFname() + " " + model.getLname();
