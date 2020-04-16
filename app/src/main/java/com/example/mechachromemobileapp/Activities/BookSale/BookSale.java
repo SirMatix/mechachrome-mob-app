@@ -25,7 +25,7 @@ import com.google.firebase.firestore.Query;
  */
 public class BookSale extends AppCompatActivity {
 
-    // global variables
+    // Global variables
     private final String TAG = "BookSale";
     private BookSaleAdapter bookSaleAdapter;
     private FloatingActionButton addBookButton;
