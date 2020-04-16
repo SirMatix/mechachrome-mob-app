@@ -30,7 +30,7 @@ import java.util.Date;
 
 public class ForumPostReply extends AppCompatActivity {
 
-    public static final String TAG = "TAG";
+    public static final String TAG = "ForumPostReply";
     private EditText editContent;
     private TextView topic, viewTopic;
     private Button replyPostBtn, discardPostBtn;

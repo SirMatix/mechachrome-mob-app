@@ -26,7 +26,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class BookSalePage extends AppCompatActivity {
 
-    public static final String TAG = "TAG";
+    public static final String TAG = "BookSalePage";
     FirebaseFirestore fStore;
     FirebaseAuth fAuth;
     FirebaseUser fUser;

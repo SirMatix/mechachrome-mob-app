@@ -31,8 +31,8 @@ public class UserInboxAdapter extends RecyclerView.Adapter<UserInboxAdapter.User
     }
 
     public static class UserInboxViewHolder extends RecyclerView.ViewHolder {
-        public CircleImageView userImage;
-        public TextView userFullName;
+        private CircleImageView userImage;
+        private TextView userFullName;
 
         public UserInboxViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);

@@ -37,7 +37,7 @@ import java.util.Calendar;
 
 public class AddSaleBook extends AppCompatActivity {
 
-    public static final String TAG = "TAG";
+    public static final String TAG = "AddSaleBook";
     public Uri imgUri;
     private EditText bookTitle, bookDescription, bookAuthor, bookPages, bookPrice;
     private ImageView bookImage;

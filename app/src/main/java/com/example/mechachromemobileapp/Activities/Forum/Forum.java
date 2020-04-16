@@ -22,7 +22,7 @@ import com.google.firebase.firestore.Query;
 
 public class Forum extends Activity {
 
-    public static final String TAG = "TAG";
+    public static final String TAG = "Forum";
     private FirebaseFirestore fStore;
     private ForumAdapter forumAdapter;
     private Button addTopic;

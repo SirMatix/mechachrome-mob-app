@@ -29,7 +29,7 @@ import java.util.Date;
 
 public class ForumPostTopic extends AppCompatActivity {
 
-    public static final String TAG = "TAG";
+    public static final String TAG = "ForumPostTopic";
     private EditText editTopic, editContent;
     private Button addTopicBtn, discardTopicBtn;
     private FirebaseAuth fAuth;

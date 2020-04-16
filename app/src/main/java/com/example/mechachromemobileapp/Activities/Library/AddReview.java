@@ -30,7 +30,7 @@ import java.util.Date;
 
 public class AddReview extends AppCompatActivity {
 
-    private String TAG = "TAG";
+    private String TAG = "AddReview";
     Button addReviewBtn, discardReviewBtn;
     RatingBar reviewScore;
     TextView editReviewContent;
