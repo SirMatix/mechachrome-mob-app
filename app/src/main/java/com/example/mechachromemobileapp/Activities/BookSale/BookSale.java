@@ -49,7 +49,7 @@ public class BookSale extends AppCompatActivity {
         // Adapter initialization
         bookSaleAdapter = getAdapter();
 
-        // Layout buttons initialization
+        // Initialization of Button widgets from layout
         addBookButton = findViewById(R.id.button_add_book);
     }
 
