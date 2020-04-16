@@ -1,8 +1,8 @@
 package com.example.mechachromemobileapp.Activities.BookSale;
 
-
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -78,11 +78,20 @@ public class BookSale extends AppCompatActivity {
             @Override
             public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
                 BookSaleModel sellBook = documentSnapshot.toObject(BookSaleModel.class);
-                if(!sellBook.isSold()){
-                    Intent intent = new Intent(getApplicationContext(), BookSalePage.class);
-                    intent.putExtra("book_title", sellBook.getTitle());
-                    intent.putExtra("book_id", documentSnapshot.getId());
-                    startActivity(intent);
+                try{
+                    /*
+                        condition to check if book is not sold it opens
+                        BookSalePage activity, if book is sold it is unable
+                        to click the book for sale item
+                     */
+                    if(!sellBook.isSold()){
+                        Intent intent = new Intent(getApplicationContext(), BookSalePage.class);
+                        intent.putExtra("book_title", sellBook.getTitle());
+                        intent.putExtra("book_id", documentSnapshot.getId());
+                        startActivity(intent);
+                    }
+                } catch (NullPointerException e) {
+                    Log.e(TAG, "onItemClick: NullPointerException " + e.getMessage());
                 }
             }
         });
