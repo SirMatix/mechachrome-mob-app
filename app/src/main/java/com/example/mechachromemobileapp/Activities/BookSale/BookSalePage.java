@@ -72,7 +72,6 @@ public class BookSalePage extends AppCompatActivity {
         fUser = fAuth.getCurrentUser();
         bookSaleCollection = fStore.collection("books_for_sale");
 
-
         // Getting intent from BookSale activity and getting extra string
         Intent intent = getIntent();
         bookSaleIDFeed = intent.getStringExtra("book_id");
@@ -128,7 +127,7 @@ public class BookSalePage extends AppCompatActivity {
                     // Setting the book image
                     Glide.with(getApplicationContext())
                             .load(thisBook.getImgUrl()) // getting book image from thisBook objects
-                            .transforms(new CenterCrop(), new RoundedCorners(16))
+                            .transform(new CenterCrop(), new RoundedCorners(16))
                             .into(bookImage); // Destination path
                 } catch (NullPointerException e) {
                     Log.e(TAG, "onSuccess: NullPointerException " + e.getMessage());

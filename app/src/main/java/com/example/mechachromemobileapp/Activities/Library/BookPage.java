@@ -183,7 +183,7 @@ public class BookPage extends AppCompatActivity {
                 // Setting the book image
                 Glide.with(BookPage.this)
                         .load(documentSnapshot.get("imgUrl").toString()) //set the img book url
-                        .transforms(new CenterCrop() , new RoundedCorners(16))
+                        .transform(new CenterCrop() , new RoundedCorners(16))
                         .into(bookImage); //destination path
             }
         });

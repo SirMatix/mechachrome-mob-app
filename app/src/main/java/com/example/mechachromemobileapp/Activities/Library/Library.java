@@ -104,7 +104,7 @@ public class Library extends AppCompatActivity {
         searchBookButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // if text from serachBookBar is an empty String display all the books
+                // if text from searchBookBar is an empty String display all the books
                 if(searchBookBar.getText().toString().equals("")){
                     Query query = booksReference.orderBy("addDate", Query.Direction.ASCENDING);
                     FirestoreRecyclerOptions<Books> options = new FirestoreRecyclerOptions.Builder<Books>()
