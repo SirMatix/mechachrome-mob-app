@@ -27,25 +27,42 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Register extends AppCompatActivity {
 
-    public static final String TAG = "TAG";
-    EditText mStudentID,mFirstName,mSurname,mEmail,mPassword,mCnfPassword;
-    Button mRegisterBtn;
-    TextView mLoginBtn;
-    FirebaseAuth fAuth;
-    FirebaseFirestore fStore;
-    ProgressBar progressBar;
-    FirebaseDatabase db;
-    String userID;
+    private static final String TAG = "TAG";
+    private EditText mStudentID,mFirstName,mSurname,mEmail,mPassword,mCnfPassword;
+    private Button mRegisterBtn;
+    private TextView mLoginBtn;
+    private FirebaseAuth fAuth;
+    private FirebaseFirestore fStore;
+    private ProgressBar progressBar;
+    private FirebaseDatabase db;
+    private String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        initViews();
+        setButtons();
+    }
 
-        // Data variables
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (fAuth.getCurrentUser() != null) {
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            finish();
+        }
+    }
+
+    /**
+     *  Method for initialization widgets, fields and Firebase instances
+     */
+    private void initViews() {
+        // Initialization widgets from layout
         mStudentID = findViewById(R.id.studentID);
         mFirstName = findViewById(R.id.firstName);
         mSurname = findViewById(R.id.surname);
@@ -53,18 +70,23 @@ public class Register extends AppCompatActivity {
         mPassword = findViewById(R.id.password);
         mCnfPassword = findViewById(R.id.confirm_password_button);
 
-        // Button variables
+        // Initialization of Button widgets
         mRegisterBtn = findViewById(R.id.registerBtn);
         mLoginBtn = findViewById(R.id.loginBtn);
 
-        // Firebase initializations
+        // Instantiating of Firebase widgets
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
         db = FirebaseDatabase.getInstance();
 
-        // Progress bar
+        // Progress bar initialization
         progressBar = findViewById(R.id.progressBar);
+    }
 
+    /**
+     * Method to set the dates
+     */
+    private void setButtons() {
         // When you click Register
         mRegisterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,28 +102,34 @@ public class Register extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(),Login.class));
             }
         });
-
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (fAuth.getCurrentUser() != null) {
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-            finish();
-        }
-    }
+    private void registerUser(){
 
-    public void registerUser(){
         final String studentID = mStudentID.getText().toString();
         final String fname = mFirstName.getText().toString();
         final String lname = mSurname.getText().toString();
         final String email = mEmail.getText().toString().trim();
         String password = mPassword.getText().toString().trim();
         String cnf_pwd = mCnfPassword.getText().toString().trim();
+
+        /*
+            Field Validation:
+            1. studentID can't be empty
+            2. email can't be empty
+            3. password can't be empty
+            4. password can't have less than 6 characters
+            5. password can't be only numbers                 ---> not implemented yet
+            6. password and compare password must match
+         */
+        // checks studentID field
+        if(TextUtils.isEmpty(studentID)){
+            mStudentID.setError("studentID is Required.");
+            return;
+        }
         // checks email field
         if(TextUtils.isEmpty(email)){
-            mStudentID.setError("Email is Required.");
+            mEmail.setError("Email is Required.");
             return;
         }
         // checks password field
@@ -109,19 +137,26 @@ public class Register extends AppCompatActivity {
             mPassword.setError("Please enter a password.");
             return;
         }
-        // compares password and confirm password field
-        if(!TextUtils.equals(password, cnf_pwd)) {
-            mCnfPassword.setError("Please repeat your password.");
-            return;
-        }
         // check password length
         if(password.length() < 6){
             mPassword.setError("The password must contains minimum 6 characters.");
             return;
         }
+        /* condition to check if password contains only numbers
+        if(){
+            mPassword.setError("The password must contains minimum 6 characters.");
+            return;
+        }
+         */
+        // compares password and confirms password field
+        if(!TextUtils.equals(password, cnf_pwd)) {
+            mCnfPassword.setError("Please repeat your password.");
+            return;
+        }
+
         // sets progressbar visibility
         progressBar.setVisibility(View.VISIBLE);
-        //know we can register the user in Firebase
+        // creating user with email and password
         fAuth.createUserWithEmailAndPassword(email,password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -129,8 +164,11 @@ public class Register extends AppCompatActivity {
                 if(task.isSuccessful()){
                     Toast.makeText(Register.this, "Account created", Toast.LENGTH_SHORT).show();
                     userID = fAuth.getCurrentUser().getUid();
+                    // Creating a user document in users collection in Firebase Firestore
                     DocumentReference docRef = fStore.collection("users").document(userID);
+                    // instance of User class
                     User user = new User();
+                    // setting user variables
                     user.setFname(fname);
                     user.setLname(lname);
                     user.setEmail(email);
@@ -138,12 +176,14 @@ public class Register extends AppCompatActivity {
                     user.setImgUrl("default");
                     user.setPermission("user");
                     user.setStudentID(studentID);
+                    // setting user object to users collection user document in Firestore
                     docRef.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Log.d(TAG,"onSuccess: user Profile is created for " + userID);
                         }
                     });
+                    // setting ids document in Firestore, it will be used to login user with studentID
                     DocumentReference docIds = fStore.collection("ids").document(studentID);
                     Map<String,Object> ids = new HashMap<>();
                     ids.put("email",email);
@@ -153,16 +193,16 @@ public class Register extends AppCompatActivity {
                             Log.d(TAG,"Ids document created");
                         }
                     });
+                    // starting MainActivity after successful user registration
                     startActivity(new Intent(getApplicationContext(),MainActivity.class));
                 }else {
-                    Toast.makeText(Register.this, "Error !" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    // prompting error message to user
+                    Toast.makeText(Register.this, "Error! " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.GONE);
                 }
             }
         });
-
     }
-
-    }
+}
 
 

@@ -20,6 +20,16 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
+/**
+ * Library activity
+ *
+ * Displays books for library_books collection onCreating of application
+ * it displays all the books if user writes category in a search bar and
+ * presses search button it updates adapter option and shows book
+ * from a specific category. When user clicks on a book item
+ * new activity starts with a detailed information about a book.
+ *
+ */
 public class Library extends AppCompatActivity {
     private EditText searchBookBar;
     private BooksAdapter booksAdapter;
@@ -36,15 +46,23 @@ public class Library extends AppCompatActivity {
         setButtons();
     }
 
+    /**
+     *  Method for initialization widgets, fields and Firebase instances
+     */
     private void initViews() {
-        // initialize recycler view adapter
+        // getting the bookAdapter
         booksAdapter = getAdapter();
 
-        // layout elements initialization
+        // Initialization widgets from layout
         searchBookButton = findViewById(R.id.button_search);
         searchBookBar = findViewById(R.id.book_search_bar);
     }
 
+    /**
+     * Method to get BooksAdapter
+     *
+     * @return BooksAdapter with all books from firestore
+     */
     private BooksAdapter getAdapter() {
         Query query = booksReference.orderBy("addDate", Query.Direction.ASCENDING);
         FirestoreRecyclerOptions<Books> options = new FirestoreRecyclerOptions.Builder<Books>()
@@ -53,6 +71,13 @@ public class Library extends AppCompatActivity {
         return new BooksAdapter(options);
     }
 
+    /**
+     *  Method to buildBooksRecyclerView
+     *
+     *  builds book recycler view
+     *
+     * @param adapter with a list of books
+     */
     private void buildBooksRecyclerView(BooksAdapter adapter) {
         RecyclerView booksRecyclerView = findViewById(R.id.libraryRecyclerView);
         booksRecyclerView.setHasFixedSize(true);
@@ -60,8 +85,11 @@ public class Library extends AppCompatActivity {
         booksRecyclerView.setItemAnimator(new CustomItemAnimation());
         booksRecyclerView.setAdapter(adapter);
     }
-
+    /**
+     *  This method sets the onClickListener to buttons
+     */
     private void setButtons() {
+        // attaching OnItemClickListener to booksAdapter, this enables clicking on each book for sale element
         booksAdapter.setOnItemClickListener(new BooksAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
@@ -72,16 +100,18 @@ public class Library extends AppCompatActivity {
             }
         });
 
+        // Button for searching book
         searchBookButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // if text from searchBookBar is an empty String display all the books
                 if(searchBookBar.getText().toString().equals("")){
                     Query query = booksReference.orderBy("addDate", Query.Direction.ASCENDING);
                     FirestoreRecyclerOptions<Books> options = new FirestoreRecyclerOptions.Builder<Books>()
                             .setQuery(query, Books.class)
                             .build();
                     booksAdapter.updateOptions(options);
-
+                // display library books from a specific category
                 } else {
                     String searchCategory = searchBookBar.getText().toString().trim();
                     Query query = booksReference.whereEqualTo("category", searchCategory).orderBy("addDate", Query.Direction.ASCENDING);;
