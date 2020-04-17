@@ -27,6 +27,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * Activity to post a topic and add it to forun_post Collection in Firestore
+ *
+ */
 public class ForumPostTopic extends AppCompatActivity {
 
     public static final String TAG = "ForumPostTopic";
@@ -44,6 +48,7 @@ public class ForumPostTopic extends AppCompatActivity {
         initViews();
         setButtons();
     }
+
 
     public void initViews() {
         editTopic = findViewById(R.id.editTopic);
