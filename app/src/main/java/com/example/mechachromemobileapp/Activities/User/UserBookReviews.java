@@ -15,6 +15,9 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
+/**
+ *
+ */
 public class UserBookReviews extends AppCompatActivity {
 
     private ReviewAdapter reviewAdapter;
@@ -28,6 +31,9 @@ public class UserBookReviews extends AppCompatActivity {
         setButtons();
     }
 
+    /**
+     *  Method for initialization widgets, fields and Firebase instances
+     */
     private void initViews() {
         // get data for previous activity
         Intent intent = getIntent();

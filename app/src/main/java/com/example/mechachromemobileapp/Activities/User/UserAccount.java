@@ -37,13 +37,16 @@ public class UserAccount extends AppCompatActivity {
         setButtons();
     }
 
+    /**
+     *  Method for initialization widgets, fields and Firebase instances
+     */
     public void initViews() {
         // Initialize Firebase Instances
         fAuth = FirebaseAuth.getInstance();
         fUser = fAuth.getCurrentUser();
         fStore = FirebaseFirestore.getInstance();
 
-        // Initialize layour variables
+        // Initialize layout variables
         userFirstName = findViewById(R.id.user_first_name);
         userLastName = findViewById(R.id.user_last_name);
         userEmail = findViewById(R.id.user_email);
