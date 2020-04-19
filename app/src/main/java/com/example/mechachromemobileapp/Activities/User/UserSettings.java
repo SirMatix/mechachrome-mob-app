@@ -287,7 +287,7 @@ public class UserSettings extends AppCompatActivity implements EmailConfirmPassw
      *
      */
     public void changeUserData() {
-        //
+        // getting current userID to get specific user document in Collection
         String userID = fUser.getUid();
         DocumentReference userReference = fStore.collection("users").document(userID);
 
