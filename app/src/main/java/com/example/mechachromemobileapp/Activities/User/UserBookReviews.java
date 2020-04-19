@@ -28,7 +28,6 @@ public class UserBookReviews extends AppCompatActivity {
         setContentView(R.layout.activity_user_book_reviews);
         initViews();
         buildBooksRecyclerView(reviewAdapter);
-        setButtons();
     }
 
     /**
@@ -58,10 +57,6 @@ public class UserBookReviews extends AppCompatActivity {
         reviewRecyclerView.setHasFixedSize(true);
         reviewRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         reviewRecyclerView.setAdapter(adapter);
-    }
-
-    public void setButtons() {
-
     }
 
     @Override

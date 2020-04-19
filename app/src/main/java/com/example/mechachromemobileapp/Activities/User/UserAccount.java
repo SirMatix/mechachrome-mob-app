@@ -19,8 +19,18 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Objects;
+
+/**
+ * UserAccount activity
+ *
+ * This activity displays all data of a current user;
+ * Buttons leading to pages showing user activity within the app
+ *
+ */
 public class UserAccount extends AppCompatActivity {
 
+    // Global variables
     private TextView userFirstName, userLastName, userEmail, userGroup, userMode, userStudentID;
     private Button userReservations, userPosts, userBookSale, userReviews;
     private FirebaseAuth fAuth;
@@ -61,18 +71,31 @@ public class UserAccount extends AppCompatActivity {
         userReviews = findViewById(R.id.book_reviews);
     }
 
+    /**
+     * getUserReference method
+     *
+     * @return a specific user reference from users Collection
+     */
     public DocumentReference getUserReference() {
         String userID = fUser.getUid();
-        DocumentReference userReference = fStore.collection("users").document(userID);
-        return userReference;
+        return fStore.collection("users").document(userID);
     }
 
+    /**
+     *  loadUserData method
+     *
+     *  Reads data from Firebase Document Reference
+     *  and displays it in appropriate fields
+     *
+     * @param userReference containing specific user from users Collection
+     */
     public void loadUserData(DocumentReference userReference){
         userReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
+                // Creating User instance from documentSnapshot
                 User user = documentSnapshot.toObject(User.class);
-                String name = "First name: " + user.getFname();
+                String name = "First name: " + Objects.requireNonNull(user).getFname();
                 userFirstName.setText(name);
                 String last_name = "Last name: " + user.getLname();
                 userLastName.setText(last_name);
@@ -88,8 +111,12 @@ public class UserAccount extends AppCompatActivity {
         });
     }
 
+    /**
+     *  This method sets the onClickListener to buttons
+     */
     public void setButtons() {
         final String userID = fUser.getUid();
+        // Button to show all the reservations made by a user
         userReservations.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,7 +125,7 @@ public class UserAccount extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+        // Button to show all the posts written by a user
         userPosts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,7 +134,7 @@ public class UserAccount extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+        // Button to show all the book being sold by a user
         userBookSale.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,7 +143,7 @@ public class UserAccount extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+        // Button to show all reviews written by a user
         userReviews.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

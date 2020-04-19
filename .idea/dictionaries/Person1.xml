@@ -2,6 +2,8 @@
   <dictionary name="Person1">
     <words>
       <w>firestore</w>
+      <w>fname</w>
+      <w>lname</w>
       <w>moodle</w>
       <w>roehampton</w>
     </words>
