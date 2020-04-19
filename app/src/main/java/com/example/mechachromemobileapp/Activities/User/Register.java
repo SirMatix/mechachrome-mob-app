@@ -84,7 +84,7 @@ public class Register extends AppCompatActivity {
     }
 
     /**
-     * Method to set the dates
+     *  This method sets the onClickListener to buttons
      */
     private void setButtons() {
         // When you click Register
@@ -104,8 +104,16 @@ public class Register extends AppCompatActivity {
         });
     }
 
+    /**
+     *  registerUser method
+     *
+     *  Captures data from EditText widgets in the layout, after
+     *  validation saves them in local variables; based on that data
+     *  creates User object, registers user in Firebase, sets User
+     *  object to users Collection document Reference
+     */
     private void registerUser(){
-
+        // Local variables for holding data from layout
         final String studentID = mStudentID.getText().toString();
         final String fname = mFirstName.getText().toString();
         final String lname = mSurname.getText().toString();
