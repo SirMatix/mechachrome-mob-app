@@ -25,6 +25,7 @@ import java.util.Objects;
  */
 public class UserInbox extends AppCompatActivity {
 
+    // Global variables
     private String userID;
     private TabLayout tabLayout;
     private ViewPager viewPager;
