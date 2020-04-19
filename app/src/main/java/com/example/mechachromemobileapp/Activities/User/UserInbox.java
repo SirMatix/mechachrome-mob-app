@@ -18,13 +18,14 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
+/**
+ * UserInbox Activity
+ */
 public class UserInbox extends AppCompatActivity {
 
-    private FirebaseAuth fAuth;
-    private FirebaseFirestore fStore;
-    private CollectionReference inboxRef;
-    private String userID, groupFeed, modeFeed;
+    private String userID;
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
@@ -32,31 +33,39 @@ public class UserInbox extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_inbox);
-
         initViews();
         createFragments();
 
     }
 
+    /**
+     *  Method for initialization widgets, fields and Firebase instances
+     */
     public void initViews() {
-        // initialize Firebase
-        fStore = FirebaseFirestore.getInstance();
-        fAuth = FirebaseAuth.getInstance();
-        inboxRef = fStore.collection("chat_rooms");
+        // Initialization of Firebase widgets
+        FirebaseFirestore fStore = FirebaseFirestore.getInstance();
+        FirebaseAuth fAuth = FirebaseAuth.getInstance();
+        CollectionReference inboxRef = fStore.collection("chat_rooms");
 
-        userID = fAuth.getCurrentUser().getUid();
+        userID = Objects.requireNonNull(fAuth.getCurrentUser()).getUid();
 
-        // initialize recycler View
+        // RecyclerView initialization
         tabLayout = findViewById(R.id.tab_layout);
         viewPager = findViewById(R.id.view_pager);
-
     }
 
+    /**
+     * createFragments method
+     *
+     * Creates Fragments which divide page.
+     */
     public void createFragments(){
+        // Getting data from previous activity
         Intent intent = getIntent();
-        groupFeed = intent.getStringExtra("group");
-        modeFeed = intent.getStringExtra("mode");
+        String groupFeed = intent.getStringExtra("group");
+        String modeFeed = intent.getStringExtra("mode");
 
+        // Creating Bundle to pass data between fragments
         Bundle bundle = new Bundle();
         bundle.putString("group", groupFeed);
         bundle.putString("mode", modeFeed);
@@ -64,14 +73,21 @@ public class UserInbox extends AppCompatActivity {
         Fragment chatsFragment = new ChatsFragment();
         usersFragment.setArguments(bundle);
 
+        // ViewPages adapter to display Fragments
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPagerAdapter.addFragment(chatsFragment, "My Inbox");
         viewPagerAdapter.addFragment(usersFragment, "My Course Group");
 
+        // Setting the adapter
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
     }
 
+    /**
+     *  ViewPagerAdapter class
+     *
+     *  Handles displaying of Fragments
+     */
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private ArrayList<Fragment> fragments;
         private ArrayList<String> titles;

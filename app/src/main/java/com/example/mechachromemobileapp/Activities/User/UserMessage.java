@@ -33,28 +33,26 @@ import com.google.firebase.firestore.Query;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+/**
+ * UserMessage Activity
+ *
+ * Handles displaying of messages between Users
+ */
 public class UserMessage extends AppCompatActivity {
 
-    CircleImageView userImage;
-    TextView username;
-    FloatingActionButton sendMessageButton;
-    EditText messageText;
-
-    FirebaseUser fUser;
-    FirebaseFirestore fStore;
-
-    CollectionReference userRef;
-    DocumentReference userDocument;
-
+    // Global variables
+    private final static String TAG = "UserMessage: ";
+    private CircleImageView userImage;
+    private TextView username;
+    private EditText messageText;
+    private FirebaseUser fUser;
+    private FirebaseFirestore fStore;
     private RecyclerView messageRecyclerView;
     private MessageAdapter messageAdapter;
-
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,10 +62,14 @@ public class UserMessage extends AppCompatActivity {
         buildRecyclerView();
     }
 
+    /**
+     *  Method for initialization widgets, fields and Firebase instances
+     */
     public void initViews() {
+        // Toolbar initialization
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,15 +77,19 @@ public class UserMessage extends AppCompatActivity {
                 finish();
             }
         });
+
+        // Initialization of layout widgets
         userImage = findViewById(R.id.user_image);
         username = findViewById(R.id.user_full_name);
-        sendMessageButton = findViewById(R.id.send_message_button);
+        FloatingActionButton sendMessageButton = findViewById(R.id.send_message_button);
         messageText = findViewById(R.id.message_input);
         messageRecyclerView = findViewById(R.id.inbox_recycler_view);
 
+        // Getting user info from previous activity
         Intent intent = getIntent();
         final String userID = intent.getStringExtra("userID");
 
+        // Setting onClickListener to sendMessageButton and forbidding user to send empty message
         sendMessageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,16 +103,17 @@ public class UserMessage extends AppCompatActivity {
             }
         });
 
+        // Firebase widgets initialization
         fStore = FirebaseFirestore.getInstance();
         fUser = FirebaseAuth.getInstance().getCurrentUser();
-        userRef = fStore.collection("users");
-        userDocument = userRef.document(userID);
+        CollectionReference userRef = fStore.collection("users");
+        DocumentReference userDocument = userRef.document(Objects.requireNonNull(userID));
 
         userDocument.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 User user = documentSnapshot.toObject(User.class);
-                String fullName = user.getFname() + " " + user.getLname();
+                String fullName = Objects.requireNonNull(user).getFname() + " " + user.getLname();
                 username.setText(fullName);
                 if(user.getImgUrl().equals("default")) {
                     userImage.setImageResource(R.drawable.ic_account);
@@ -117,15 +124,27 @@ public class UserMessage extends AppCompatActivity {
         });
     }
 
+    /**
+     * sendMessage method
+     *
+     * Converts sender and receiver ID to integer, multiplies those integers to create a chat room ID,
+     *
+     * @param sender FirebaseID of a message sender
+     * @param receiver FirebaseID of a message receiver
+     * @param message Content of message
+     */
     public void sendMessage(String sender, String receiver, String message) {
         CollectionReference chatReference = FirebaseFirestore.getInstance().collection("chat_rooms");
 
-        Log.d("TAG", "sender to number: " + stringToNumber(sender));
-        Log.d("TAG", "receiver to number: " + stringToNumber(receiver));
+        // Logging successful change of Firebase IDs to numbers
+        Log.d(TAG, "sender to number: " + stringToNumber(sender));
+        Log.d(TAG, "receiver to number: " + stringToNumber(receiver));
 
+        // Creating chatRoomID
         String chatID = "chat_room" + stringToNumber(sender) * stringToNumber(receiver);
         DocumentReference privateChat = chatReference.document(chatID);
 
+        // Instance of chatRoom class and variables
         ChatRoom chatRoom = new ChatRoom();
         chatRoom.setMessageReceiver(receiver);
         chatRoom.setMessageSender(sender);
@@ -134,6 +153,7 @@ public class UserMessage extends AppCompatActivity {
         chatRoom.setFilter(filter);
         privateChat.set(chatRoom);
 
+        // Instance of ChatMessage class and variables
         ChatMessage chatMessage = new ChatMessage();
         chatMessage.setMessageSender(sender);
         chatMessage.setMessageReceiver(receiver);
@@ -142,21 +162,28 @@ public class UserMessage extends AppCompatActivity {
 
         CollectionReference privateChatMessage = privateChat.collection("messages");
         privateChatMessage.document().set(chatMessage);
-
     }
 
+    /**
+     * buildRecyclerView method
+     */
     public void buildRecyclerView() {
+        // Getting data from previous activity
         Intent intent = getIntent();
         String userID = intent.getStringExtra("userID");
-        String chatID = "chat_room" + stringToNumber(fUser.getUid()) * stringToNumber(userID);
+        // Creating chat_room ID
+        String chatID = "chat_room" + stringToNumber(fUser.getUid()) * stringToNumber(Objects.requireNonNull(userID));
         CollectionReference chatReference = fStore.collection("chat_rooms").document(chatID).collection("messages");
 
+        // Ordering specific user chat_rooms by messageTime
         Query query = chatReference.orderBy("messageTime", Query.Direction.ASCENDING);
 
+        // Setting query to RecyclerOptions
         FirestoreRecyclerOptions<ChatMessage> options = new FirestoreRecyclerOptions.Builder<ChatMessage>()
                 .setQuery(query, ChatMessage.class)
                 .build();
 
+        // Initialization of MessageAdapter
         messageAdapter = new MessageAdapter(options);
         messageRecyclerView.setHasFixedSize(true);
         messageRecyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false ));
@@ -175,9 +202,24 @@ public class UserMessage extends AppCompatActivity {
         messageAdapter.stopListening();
     }
 
+    /**
+     * stringToNumber method
+     *
+     * Converts String to a number, based on ASCII
+     * table number representation of each character
+     * adds all the characters values and returns
+     * a number
+     *
+     * @param old_word word to be converted
+     *
+     * @return an integer that is a sum of all characters in a String
+     */
     public int stringToNumber(String old_word){
+        // Array of all the characters in a word
         char[] word = old_word.toCharArray();
+        // Integer representation initialization
         int numberString = 0;
+        // loops through a list and match char with int and add to main numberString
         for(char letter: word) {
             int a = letter;
             numberString += a;
