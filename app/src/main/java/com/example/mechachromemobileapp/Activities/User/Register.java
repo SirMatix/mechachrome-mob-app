@@ -31,7 +31,7 @@ import java.util.Objects;
 
 public class Register extends AppCompatActivity {
 
-    private static final String TAG = "TAG";
+    private static final String TAG = "Register: ";
     private EditText mStudentID,mFirstName,mSurname,mEmail,mPassword,mCnfPassword;
     private Button mRegisterBtn;
     private TextView mLoginBtn;
@@ -46,17 +46,14 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         initViews();
-        setButtons();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
+        // if user is logged in open main activity
         if (fAuth.getCurrentUser() != null) {
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
             finish();
         }
+        setButtons();
     }
+
 
     /**
      *  Method for initialization widgets, fields and Firebase instances

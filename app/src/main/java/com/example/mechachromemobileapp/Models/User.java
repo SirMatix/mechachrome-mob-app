@@ -2,7 +2,7 @@ package com.example.mechachromemobileapp.Models;
 
 public class User {
 
-    public String studentID, fname, lname, email, group, mode, imgUrl, id, permission;
+    private String studentID, fname, lname, email, group, mode, imgUrl, id, permission;
 
     public User() {
 

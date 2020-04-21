@@ -21,49 +21,57 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
+/**
+ *  UsersFragment handles displaying users from same course and mode
+ */
 public class UsersFragment extends Fragment {
 
-    private RecyclerView recyclerView;
     private UserAdapter userAdapter;
-    FirebaseFirestore fStore = FirebaseFirestore.getInstance();
-    FirebaseAuth fAuth = FirebaseAuth.getInstance();
-    CollectionReference userRef = fStore.collection("users");
-    CollectionReference chatRef = fStore.collection("chat_rooms");
-    String groupFeed, modeFeed;
+    private FirebaseFirestore fStore = FirebaseFirestore.getInstance();
+    private FirebaseAuth fAuth = FirebaseAuth.getInstance();
+    private CollectionReference userRef = fStore.collection("users");
+    private CollectionReference chatRef = fStore.collection("chat_rooms");
+    private String groupFeed, modeFeed;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_users, container, false);
 
-
+        // getting arguments from bundle
+        assert getArguments() != null;
         groupFeed = getArguments().getString("group");
         modeFeed = getArguments().getString("mode");
 
         buildRecyclerView(view);
-
-
         return view;
     }
 
-
-    public void buildRecyclerView(View view) {
+    /**
+     * buildRecyclerView - builds recycler view to display list of users
+     * from the same group and mode that currently logged in user
+     *
+     * @param view current layout
+     */
+    private void buildRecyclerView(View view) {
+        // query all the users from the same group and mode
         Query query = userRef.whereEqualTo("group", groupFeed).whereEqualTo("mode", modeFeed);
 
-
+        // build FirestoreRecyclerOptions with query
         FirestoreRecyclerOptions<User> options = new FirestoreRecyclerOptions.Builder<User>()
                 .setQuery(query, User.class)
                 .build();
 
+        // create adapter and set it on recycler view
         userAdapter = new UserAdapter(options);
-        recyclerView = view.findViewById(R.id.user_recycler_view);
+        RecyclerView recyclerView = view.findViewById(R.id.user_recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(userAdapter);
 
-
+        // setting on click listener on each recyclerview
+        // element to enable starting chat with that user
         userAdapter.setOnItemClickListener(new UserAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(DocumentSnapshot documentSnapshot, int position) {

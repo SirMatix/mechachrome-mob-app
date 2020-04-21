@@ -181,6 +181,9 @@ public class UserAccount extends AppCompatActivity {
 
     }
 
+    /**
+     * Method to set image to default
+     */
     private void setDefaultImage() {
         String userID = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
         final DocumentReference user_data = fStore.collection("users").document(userID);

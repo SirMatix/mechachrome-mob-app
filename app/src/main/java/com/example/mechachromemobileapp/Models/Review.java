@@ -3,12 +3,12 @@ package com.example.mechachromemobileapp.Models;
 import java.util.Date;
 
 public class Review {
+
     private String author, author_id, content, book_title, book_id;
     private Date date_published;
     private float rating;
 
     public Review() {
-
     }
 
     public String getBook_id() {

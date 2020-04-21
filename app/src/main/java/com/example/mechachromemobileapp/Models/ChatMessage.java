@@ -1,11 +1,15 @@
 package com.example.mechachromemobileapp.Models;
 
+/**
+ *  Child class of ChatRooms class
+ *
+ *  holds information about each chat message
+ */
 public class ChatMessage extends ChatRoom{
     private String messageText;
     private long messageTime;
 
     public ChatMessage() {
-
     }
 
     public String getMessageText() {

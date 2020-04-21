@@ -1,7 +1,11 @@
 package com.example.mechachromemobileapp.Models;
 
+/**
+ * Child of ForumTopic Class
+ */
 public class ForumPost extends ForumTopic {
-    String content;
+
+    private String content;
 
     public ForumPost() {
     }

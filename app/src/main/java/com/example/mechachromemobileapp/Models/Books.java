@@ -2,6 +2,9 @@ package com.example.mechachromemobileapp.Models;
 
 import java.util.Date;
 
+/**
+ *  This class holds all the variables for library books
+ */
 public class Books {
     private String title, description, author, category, imgUrl, ISBN;
     private Integer numReviews, pages, totalBooksNum, availableBooksNum, numReserved;
@@ -9,7 +12,6 @@ public class Books {
     private Float rating;
 
     public Books(){
-
     }
 
     public String getTitle() {

@@ -36,6 +36,14 @@ public class UserBookReservations extends AppCompatActivity {
     }
 
 
+    /**
+     * buildRecyclerView() method
+     *
+     *
+     * builds recycler view to display all the user reservations
+     * based on data in Firebase Firestore library_book_reservations
+     * Collection.
+     */
     private void buildRecyclerView() {
         // getting data from previous activity
         Intent intent = getIntent();
@@ -58,7 +66,7 @@ public class UserBookReservations extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(reservationAdapter);
 
-        // implementing onItemClockListnere interface to
+        // implementing onItemClockListener interface to
         // add ability to click on reservation and that will lead to a book page
         reservationAdapter.setOnItemClickListener(new ReservationAdapter.OnItemClickListener() {
             @Override

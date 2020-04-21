@@ -16,14 +16,32 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.DocumentSnapshot;
 
+/**
+ * ReviewAdapter Class
+ *
+ * handles displaying review information based on FirebaseUI
+ */
 public class ReviewAdapter extends FirestoreRecyclerAdapter<Review, ReviewAdapter.ReviewHolder> {
 
     private OnItemClickListener listener;
 
+    /**
+     * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
+     * FirestoreRecyclerOptions} for configuration options.
+     *
+     * @param options
+     */
     public ReviewAdapter(@NonNull FirestoreRecyclerOptions<Review> options) {
         super(options);
     }
 
+    /**
+     * method responsible for displaying data on layout
+     *
+     * @param holder   ---> ReviewHolder class that holds layout variables for each element in RecyclerView
+     * @param position ---> position of element in RecyclerView
+     * @param model    ---> Review class
+     */
     @Override
     protected void onBindViewHolder(@NonNull ReviewHolder holder, int position, @NonNull Review model) {
         holder.reviewAuthor.setText(model.getAuthor());
@@ -33,6 +51,13 @@ public class ReviewAdapter extends FirestoreRecyclerAdapter<Review, ReviewAdapte
         holder.reviewScore.setRating(model.getRating());
     }
 
+    /**
+     * this method inflates custom layout for each element in recycler view
+     *
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @NonNull
     @Override
     public ReviewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -40,17 +65,23 @@ public class ReviewAdapter extends FirestoreRecyclerAdapter<Review, ReviewAdapte
         return new ReviewHolder(view);
     }
 
+    /**
+     * This class holds variables from custom layout
+     */
     class ReviewHolder extends RecyclerView.ViewHolder {
-        public TextView reviewAuthor, reviewDatePublished, reviewContent;
-        public RatingBar reviewScore;
+        // class variables
+        private TextView reviewAuthor, reviewDatePublished, reviewContent;
+        private RatingBar reviewScore;
 
         public ReviewHolder(@NonNull View itemView) {
             super(itemView);
+            // identifying layout elements and saving them to class variables
             reviewAuthor = itemView.findViewById(R.id.post_author);
             reviewDatePublished = itemView.findViewById(R.id.post_date_published);
             reviewContent = itemView.findViewById(R.id.content);
             reviewScore = itemView.findViewById(R.id.review_score);
 
+            // setting onClickListener to make possible clicking on each element in RecyclerView
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

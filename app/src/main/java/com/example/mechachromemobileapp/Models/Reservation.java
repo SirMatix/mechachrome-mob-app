@@ -4,13 +4,12 @@ import java.util.Date;
 
 public class Reservation {
 
-    String user_reserved_for, user_reserved_id, book_title, book_author, book_id;
-    Date reserved_from, reserved_to;
-    Boolean is_active, is_cancelled, is_done;
+    private String user_reserved_for, user_reserved_id, book_title, book_author, book_id;
+    private Date reserved_from, reserved_to;
+    private Boolean is_active, is_cancelled, is_done;
 
     public Reservation(){
     }
-
 
     public String getUser_reserved_for() {
         return user_reserved_for;

@@ -18,6 +18,11 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.DocumentSnapshot;
 
+/**
+ * BookSaleAdapter()
+ *
+ * handles displaying books for sale data in RecyclerView based on FirebasrUI
+ */
 public class BookSaleAdapter extends FirestoreRecyclerAdapter<BookSaleModel, BookSaleAdapter.BookSaleHolder> {
 
     private OnItemClickListener listener;
@@ -25,35 +30,56 @@ public class BookSaleAdapter extends FirestoreRecyclerAdapter<BookSaleModel, Boo
     public BookSaleAdapter(@NonNull FirestoreRecyclerOptions<BookSaleModel> options) {
             super(options);
     }
-
+    /**
+     * method responsible for displaying data on layout
+     *
+     * @param holder   ---> BookSaleHolder class that holds layout variables for each element in RecyclerView
+     * @param position ---> position of element in RecyclerView
+     * @param model    ---> BookSale class
+     */
     @Override
     protected void onBindViewHolder(@NonNull BookSaleHolder holder, int position, @NonNull BookSaleModel model) {
+        //setting book sale image
+        Glide.with(holder.itemView.getContext())
+        .load(model.getImgUrl()) //set the img book url
+        .transform(new CenterCrop() , new RoundedCorners(16))
+        .into(holder.bookImage); //destination path
 
-            Glide.with(holder.itemView.getContext())
-            .load(model.getImgUrl()) //set the img book url
-            .transforms(new CenterCrop() , new RoundedCorners(16))
-            .into(holder.bookImage); //destination path
+        // setting book sale title
+        holder.title.setText(model.getTitle());
+        // setting book sale author
+        String authorString = "Author: " + model.getAuthor();
+        holder.author.setText(authorString);
+        // setting book sale pages
+        String pagesString = "Pages: " + model.getPages();
+        holder.pages.setText(pagesString);
+        // setting book sale price
+        String priceString = "Price: £" + model.getPrice();
+        holder.price.setText(priceString);
+        // setting book sale condition
+        String conditionString = "Condition: " + model.getCondition();
+        holder.condition.setText(conditionString);
 
-            holder.title.setText(model.getTitle());
-            String authorString = "Author: " + model.getAuthor();
-            holder.author.setText(authorString);
-            String pagesString = "Pages: " + model.getPages();
-            holder.pages.setText(pagesString);
-            String priceString = "Price: £" + model.getPrice();
-            holder.price.setText(priceString);
-            String conditionString = "Condition: " + model.getCondition();
-            holder.condition.setText(conditionString);
-
-            if(!model.isSold()) {
-                holder.sold.setVisibility(View.GONE);
-            } else {
-                holder.sold.setVisibility(View.VISIBLE);
-            }
+        // if book is sold making label visible
+        if(!model.isSold()) {
+            holder.sold.setVisibility(View.GONE);
+        } else {
+            holder.sold.setVisibility(View.VISIBLE);
+        }
     }
 
+    /**
+     *
+     * this method inflates custom layout for each element in recycler view
+     *
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @NonNull
     @Override
     public BookSaleHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        // here we define which layout we want to use for each of our recyclerView elements
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_book_sale, parent, false);
             return new BookSaleHolder(view);
     }
@@ -62,6 +88,9 @@ public class BookSaleAdapter extends FirestoreRecyclerAdapter<BookSaleModel, Boo
             getSnapshots().getSnapshot(position).getReference().delete();
     }
 
+    /**
+     * This class holds variables from custom layout
+     */
     class BookSaleHolder extends RecyclerView.ViewHolder {
         ImageView bookImage;
         TextView title, author, pages, price, condition, sold;

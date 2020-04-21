@@ -31,7 +31,7 @@ public class UserBookReviews extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_book_reviews);
         initViews();
-        buildBooksRecyclerView(reviewAdapter);
+        buildRecyclerView(reviewAdapter);
     }
 
     /**
@@ -47,6 +47,10 @@ public class UserBookReviews extends AppCompatActivity {
     }
 
     /**
+     *getAdapter() method
+     *
+     * Used to get a ReviewAdapter with options build upon
+     * library_book_reviews query
      *
      * @param userID
      * @return
@@ -61,21 +65,33 @@ public class UserBookReviews extends AppCompatActivity {
     }
 
     /**
+     * buildRecyclerView() method
      *
-     * @param adapter
+     * used to build RecyclerView with specific ReviewAdapter
+     * allows to click on elements and each element passes
+     * data and starts new BookPage activity with that data
+     *
+     * @param adapter ReviewAdapter
      */
-    private void buildBooksRecyclerView(ReviewAdapter adapter) {
+    private void buildRecyclerView(ReviewAdapter adapter) {
+        // finding recycler view in layout
         RecyclerView reviewRecyclerView = findViewById(R.id.user_book_review_recyclerview);
+        // setting recycler view attributes
         reviewRecyclerView.setHasFixedSize(true);
         reviewRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         reviewRecyclerView.setAdapter(adapter);
 
+        // setting on click listener to adapter to able clicking on recycler view elements
         adapter.setOnItemClickListener(new ReviewAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+                // getting instance of Review class from documentSnapshot
                 Review review = documentSnapshot.toObject(Review.class);
+                // getting information about a book
+                assert review != null;
                 String book_id = review.getBook_id();
                 String book_title = review.getBook_title();
+                // starting new activity and passing data forward
                 Intent intent = new Intent(getApplicationContext(), BookPage.class);
                 intent.putExtra("book_id", book_id);
                 intent.putExtra("book_title", book_title);

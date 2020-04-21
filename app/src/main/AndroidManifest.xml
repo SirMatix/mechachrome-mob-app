@@ -36,14 +36,14 @@
         <activity android:name=".Activities.Forum.Forum" />
         <activity android:name=".Activities.Timetables.Timetables" />
         <activity android:name=".Activities.User.Login" />
-        <activity android:name=".Activities.User.Register" />
-        <activity android:name=".Activities.MainActivity">
+        <activity android:name=".Activities.User.Register">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Activities.MainActivity"/>
 
         <meta-data
             android:name="preloaded_fonts"

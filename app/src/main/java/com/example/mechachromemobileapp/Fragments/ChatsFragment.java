@@ -27,16 +27,17 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-
+/**
+ *  ChatFragments handles list of all the chats the user has started with other users
+ */
 public class ChatsFragment extends Fragment {
 
-    private RecyclerView recyclerView;
-    private UserInboxAdapter userAdapter;
-    private RecyclerView.LayoutManager layoutManager;
-    FirebaseFirestore fStore = FirebaseFirestore.getInstance();
-    CollectionReference userRef = fStore.collection("users");
-    CollectionReference chatRef = fStore.collection("chat_rooms");
+    // global variables
+    private FirebaseFirestore fStore = FirebaseFirestore.getInstance();
+    private CollectionReference userRef = fStore.collection("users");
+    private CollectionReference chatRef = fStore.collection("chat_rooms");
 
 
     @Override
@@ -48,11 +49,19 @@ public class ChatsFragment extends Fragment {
         return view;
     }
 
-    public void buildRecyclerView(View view, final ArrayList<User> userList) {
-        recyclerView = view.findViewById(R.id.chats_recycler_view);
+    /**
+     * buildRecyclerView method
+     *
+     * builds RecyclerView with list of users
+     *
+     * @param view
+     * @param userList list of all users, user chats with
+     */
+    private void buildRecyclerView(View view, final ArrayList<User> userList) {
+        RecyclerView recyclerView = view.findViewById(R.id.chats_recycler_view);
         recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(getContext());
-        userAdapter = new UserInboxAdapter(userList);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+        UserInboxAdapter userAdapter = new UserInboxAdapter(userList);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(userAdapter);
 
@@ -67,10 +76,17 @@ public class ChatsFragment extends Fragment {
         });
     }
 
+    /**
+     * this method read all the users, current user is chatting with
+     * and the calls buildRecyclerView method to fill recycler view
+     *
+     * @param view with layout in which we operate
+     */
     private void readUsers(final View view) {
         readChats(new usersIDListCallback() {
             @Override
             public void onUsersIDList(ArrayList<String> userIDList) {
+                // getting all the user data which id matches that from userIDList
                 Query query = userRef.whereIn("id",userIDList);
                 query.addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
@@ -78,9 +94,11 @@ public class ChatsFragment extends Fragment {
                         if (e != null) {
                             return;
                         }
-                        List<User> chatUsers = queryDocumentSnapshots.toObjects(User.class);
-                        ArrayList<User> userList = new ArrayList<>();
-                        userList.addAll(chatUsers);
+                        // generating chatUser List from queryDocumentSnapshots
+                        List<User> chatUsers = Objects.requireNonNull(queryDocumentSnapshots).toObjects(User.class);
+                        // creating ArrayList with chatUsers objects
+                        ArrayList<User> userList = new ArrayList<>(chatUsers);
+                        // building recyclerview
                         buildRecyclerView(view, userList);
                     }
                 });
@@ -88,20 +106,35 @@ public class ChatsFragment extends Fragment {
         });
     }
 
+    /**
+     * This method goes through all the chatRoom and grabs matching userID data
+     *
+     * @param callback to return list of users that user chats with
+     */
     private void readChats(final usersIDListCallback callback) {
+
+        // getting user information
         FirebaseUser fUser = FirebaseAuth.getInstance().getCurrentUser();
+        assert fUser != null;
         final String userID = fUser.getUid();
+
+        // forming query based on 'filter' field
         Query query = chatRef.whereArrayContains("filter", userID);
 
+        // listens to query snapshots
         query.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                 if(e != null) {
                     return;
                 }
-                List<ChatRoom> chatRooms = queryDocumentSnapshots.toObjects(ChatRoom.class);
+                // converting query document snapshots to list of ChatRoom class objects
+                List<ChatRoom> chatRooms = Objects.requireNonNull(queryDocumentSnapshots).toObjects(ChatRoom.class);
+                // creating user ID list
                 ArrayList<String> usersIDList = new ArrayList<>();
+                // adding 'default' to userID list
                 usersIDList.add("default");
+                // iteration through chatRooms to get chat members id numbers
                 for(ChatRoom chatRoom: chatRooms) {
                     if(chatRoom.getMessageSender().equals(userID)){
                         usersIDList.add(chatRoom.getMessageReceiver());
@@ -110,12 +143,16 @@ public class ChatsFragment extends Fragment {
                         usersIDList.add(chatRoom.getMessageSender());
                     }
                 }
+                // saving list on callback
                 callback.onUsersIDList(usersIDList);
             }
         });
     }
 
-    interface usersIDListCallback{
+    /**
+     *  interface to pass list on callback
+     */
+    private interface usersIDListCallback{
         void onUsersIDList(ArrayList<String> userIDList);
     }
 
