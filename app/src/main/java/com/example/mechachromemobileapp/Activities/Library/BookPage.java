@@ -323,7 +323,7 @@ public class BookPage extends AppCompatActivity {
                      */
                     reservationCollection
                             .whereEqualTo("book_title",titleFeed)
-                            .whereEqualTo("user_reserver_id", userID)
+                            .whereEqualTo("user_reserved_id", userID)
                             .whereEqualTo("is_active", true)
                             .get()
                             .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
