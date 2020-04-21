@@ -18,10 +18,10 @@
         android:layout_marginTop="3dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="564dp"
-        android:background="#D20B5752"
+        android:background="@drawable/button"
         android:fontFamily="@font/roboto_slab"
         android:text="Change floor"
-        android:textColor="#ffffff"
+        android:textColor="@color/colorAccent"
         android:textSize="18sp"
         android:textStyle="bold" />
 

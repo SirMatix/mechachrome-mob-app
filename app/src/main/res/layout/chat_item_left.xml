@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:text="Hello"
         android:padding="5dp"
-        android:textColor="#fff"
+        android:textColor="@color/colorAccent"
         android:background="@drawable/background_left"
         app:layout_constraintStart_toEndOf="@id/profile_picture"
         app:layout_constraintTop_toTopOf="parent" />

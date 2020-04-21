@@ -89,5 +89,7 @@
 
     <!-- dialog names -->
     <string name="confirm_password_dialog">ConfirmPasswordDialog</string>
+    <string name="book_price">Book Price</string>
+    <string name="todo">TODO</string>
 
 </resources>

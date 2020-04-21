@@ -71,7 +71,7 @@ public class ReserveBook extends AppCompatActivity {
 
         // getting intent from Library activity and getting extra string
         Intent intent = getIntent();
-        titleAuthorFeed = intent.getStringExtra("title_author");
+        titleAuthorFeed = intent.getStringExtra("book_id");
 
         // Initialization widgets from layout
         dateReserveFrom = findViewById(R.id.reserve_from);
