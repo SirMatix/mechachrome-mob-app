@@ -27,7 +27,6 @@ public class UserBookReservations extends AppCompatActivity {
     private FirebaseFirestore fStore = FirebaseFirestore.getInstance();
     private CollectionReference reservationRef = fStore.collection("library_books_reservations");
     private ReservationAdapter reservationAdapter;
-    private String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,30 +36,35 @@ public class UserBookReservations extends AppCompatActivity {
     }
 
 
-    /**
-     *
-     */
     private void buildRecyclerView() {
+        // getting data from previous activity
         Intent intent = getIntent();
-        userID = intent.getStringExtra("userID");
+        String userID = intent.getStringExtra("userID");
 
+        // querrying the collection reference to get reservation for specific user
         Query query = reservationRef.whereEqualTo("user_reserved_id", userID).orderBy("reserved_to", Query.Direction.ASCENDING);
 
+        // building firebase options
         FirestoreRecyclerOptions<Reservation> options = new FirestoreRecyclerOptions.Builder<Reservation>()
                 .setQuery(query, Reservation.class)
                 .build();
 
+        // instantiating reservation adapter
         reservationAdapter = new ReservationAdapter(options);
 
+        // creating recycler view
         RecyclerView recyclerView = findViewById(R.id.reservations_recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(reservationAdapter);
 
+        // implementing onItemClockListnere interface to
+        // add ability to click on reservation and that will lead to a book page
         reservationAdapter.setOnItemClickListener(new ReservationAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
                 Reservation reservation = documentSnapshot.toObject(Reservation.class);
+                assert reservation != null;
                 String book_title = reservation.getBook_title();
                 String book_id = reservation.getBook_id();
                 Intent intent = new Intent(getApplicationContext(), BookPage.class);

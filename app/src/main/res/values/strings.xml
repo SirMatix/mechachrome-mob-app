@@ -89,5 +89,6 @@
 
     <!-- dialog names -->
     <string name="confirm_password_dialog">ConfirmPasswordDialog</string>
+    <string name="forgot_your_password_click_here">Forgot your password?</string>
 
 </resources>

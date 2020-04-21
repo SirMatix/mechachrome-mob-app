@@ -72,7 +72,7 @@ public class Register extends AppCompatActivity {
 
         // Initialization of Button widgets
         mRegisterBtn = findViewById(R.id.registerBtn);
-        mLoginBtn = findViewById(R.id.loginBtn);
+        mLoginBtn = findViewById(R.id.login_button);
 
         // Instantiating of Firebase widgets
         fAuth = FirebaseAuth.getInstance();

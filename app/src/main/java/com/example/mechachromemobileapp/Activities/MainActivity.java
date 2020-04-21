@@ -32,12 +32,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class MainActivity extends AppCompatActivity {
 
     private final String TAG = "MainActivity";
-    Button timetables, library, moodle, floor_plan, moreBtn, bookSaleBtn;
-    String userID;
-    FirebaseAuth fAuth = FirebaseAuth.getInstance();
-    FirebaseFirestore fStore = FirebaseFirestore.getInstance();
-    String url;
-    CollectionReference userRef = fStore.collection("users");
+    private Button timetables, library, moodle, floor_plan, moreBtn, bookSaleBtn;
+    private String userID;
+    private FirebaseAuth fAuth = FirebaseAuth.getInstance();
+    private FirebaseFirestore fStore = FirebaseFirestore.getInstance();
+    private CollectionReference userRef = fStore.collection("users");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         initViews();
         setButtons();
     }
+
 
     public void initViews(){
         timetables = findViewById(R.id.timetables);
@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openMoodle() {
-        url = "https://partnerships.moodle.roehampton.ac.uk/login/index.php";
+        String url = "https://partnerships.moodle.roehampton.ac.uk/login/index.php";
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         startActivity(browserIntent);
     }
