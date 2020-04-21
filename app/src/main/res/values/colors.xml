@@ -10,12 +10,17 @@
 
     <!-- new Layout colors -->
     <color name="background_blue">#B4AEDAF7</color>
+    <color name="background_transparent_green">#8D49D181</color>
     <color name="black_text_color">#0C0F0C</color>
+    <color name="dark_blue">#D20B5752</color>
     <color name="light_black">#C80C0F0C</color>
     <color name="scheme_1">#69583A</color>
     <color name="scheme_2">#A2A767</color>
     <color name="scheme_3">#469C45</color>
     <color name="topic_color">#B4E0CDAC</color>
     <color name="transparent_white">#4BFFFFFF</color>
+    <color name="font_light_grey">#45525C57</color>
+    <color name="yellow">#FDD835</color>
+    <color name="hint_color">#80943131</color>
 
 </resources>
