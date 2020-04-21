@@ -14,14 +14,34 @@ import com.example.mechachromemobileapp.Models.Review;
 import com.example.mechachromemobileapp.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.DocumentSnapshot;
 
+/**
+ * ReviewAdapter Class
+ *
+ * handles displaying review information based on FirebaseUI
+ */
 public class ReviewAdapter extends FirestoreRecyclerAdapter<Review, ReviewAdapter.ReviewHolder> {
 
+    private OnItemClickListener listener;
 
+    /**
+     * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
+     * FirestoreRecyclerOptions} for configuration options.
+     *
+     * @param options
+     */
     public ReviewAdapter(@NonNull FirestoreRecyclerOptions<Review> options) {
         super(options);
     }
 
+    /**
+     * method responsible for displaying data on layout
+     *
+     * @param holder   ---> ReviewHolder class that holds layout variables for each element in RecyclerView
+     * @param position ---> position of element in RecyclerView
+     * @param model    ---> Review class
+     */
     @Override
     protected void onBindViewHolder(@NonNull ReviewHolder holder, int position, @NonNull Review model) {
         holder.reviewAuthor.setText(model.getAuthor());
@@ -31,6 +51,13 @@ public class ReviewAdapter extends FirestoreRecyclerAdapter<Review, ReviewAdapte
         holder.reviewScore.setRating(model.getRating());
     }
 
+    /**
+     * this method inflates custom layout for each element in recycler view
+     *
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @NonNull
     @Override
     public ReviewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -38,72 +65,40 @@ public class ReviewAdapter extends FirestoreRecyclerAdapter<Review, ReviewAdapte
         return new ReviewHolder(view);
     }
 
+    /**
+     * This class holds variables from custom layout
+     */
     class ReviewHolder extends RecyclerView.ViewHolder {
-        public TextView reviewAuthor, reviewDatePublished, reviewContent;
-        public RatingBar reviewScore;
+        // class variables
+        private TextView reviewAuthor, reviewDatePublished, reviewContent;
+        private RatingBar reviewScore;
 
         public ReviewHolder(@NonNull View itemView) {
             super(itemView);
+            // identifying layout elements and saving them to class variables
             reviewAuthor = itemView.findViewById(R.id.post_author);
             reviewDatePublished = itemView.findViewById(R.id.post_date_published);
             reviewContent = itemView.findViewById(R.id.content);
             reviewScore = itemView.findViewById(R.id.review_score);
-        }
-    }
-}
 
-
-    /*
-    private ArrayList<Review> reviewsList;
-
-    public static class ReviewViewHolder extends RecyclerView.ViewHolder {
-        public TextView reviewAuthor, reviewDatePublished, reviewContent;
-        public RatingBar reviewScore;
-        //public DividerItemDecoration divider;
-
-
-        public ReviewViewHolder(@NonNull View itemView) {
-            super(itemView);
-            reviewAuthor = itemView.findViewById(R.id.author);
-            reviewDatePublished = itemView.findViewById(R.id.date_published);
-            reviewContent = itemView.findViewById(R.id.content);
-            reviewScore = itemView.findViewById(R.id.review_score);
+            // setting onClickListener to make possible clicking on each element in RecyclerView
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if(position != RecyclerView.NO_POSITION && listener != null) {
+                        listener.onItemClick(getSnapshots().getSnapshot(position), position);
+                    }
+                }
+            });
         }
     }
 
-    public ReviewAdapter(ArrayList<Review> reviews) {
-        ArrayList<Review> reviewsList = reviews;
+    public interface OnItemClickListener {
+        void onItemClick(DocumentSnapshot documentSnapshot, int position);
     }
 
-    @NonNull
-    @Override
-    public ReviewViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_review_item, parent, false);
-        ReviewViewHolder reviewViewHolder = new ReviewViewHolder(view);
-        return reviewViewHolder;
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull ReviewViewHolder holder, int position) {
-        Review currentReview = reviewsList.get(position);
-
-        holder.reviewAuthor.setText(currentReview.getAuthor());
-        CharSequence date_published = DateFormat.format("dd-MM-yyyy hh:mm:ss",currentReview.getDate_published());
-        holder.reviewDatePublished.setText(date_published.toString());
-        holder.reviewContent.setText(currentReview.getContent());
-        holder.reviewScore.setRating(currentReview.getRating());
-
-    }
-
-    @Override
-    public int getItemCount() {
-        return reviewsList.size();
-    }
-
-    @Override
-    protected void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position, @NonNull Object model) {
-
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
     }
 }
-
-     */

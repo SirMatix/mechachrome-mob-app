@@ -151,6 +151,9 @@ public class BookSale extends AppCompatActivity {
         bookSaleRecyclerView.setAdapter(adapter);
 
         /*
+
+        verify if usersID is equal to seller ID and then delete book
+
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override

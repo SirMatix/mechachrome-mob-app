@@ -18,17 +18,21 @@ import com.example.mechachromemobileapp.R;
 
 import java.util.Objects;
 
+/**
+ *  Dialog for confirming password while changing user email
+ */
 public class EmailConfirmPasswordDialog extends DialogFragment {
 
+    // global variables
     private TextView cancelAction, confirmAction;
     private EditText newPassword;
     private static final String TAG = "ConfirmPasswordDialog";
 
     public interface OnEmailConfirmPasswordListener{
-        public void onEmailConfirmPassword(String password);
+        void onEmailConfirmPassword(String password);
     }
 
-    OnEmailConfirmPasswordListener mOnConfirmPasswordListener;
+    private OnEmailConfirmPasswordListener mOnConfirmPasswordListener;
 
     @Nullable
     @Override
@@ -40,19 +44,29 @@ public class EmailConfirmPasswordDialog extends DialogFragment {
         return view;
     }
 
+    /**
+     *  Method for initialization widgets, fields and Firebase instances
+     */
     private void initViews(View view) {
         confirmAction = view.findViewById(R.id.dialog_confirm);
         cancelAction = view.findViewById(R.id.dialog_cancel);
         newPassword = view.findViewById(R.id.dialog_password);
     }
 
+    /**
+     *  Method that sets listeners to TextView elements in Dialog
+     */
     private void setOnClicks() {
+        // confirm action on click
         confirmAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: closing the dialog");
+                // gets password from dialog layout field
                 String password = newPassword.getText().toString().trim();
+                // password can't be empty
                 if(!password.equals("")){
+                    // passes data to interface
                     mOnConfirmPasswordListener.onEmailConfirmPassword(password);
                     Objects.requireNonNull(getDialog()).dismiss();
                 } else {
@@ -60,7 +74,7 @@ public class EmailConfirmPasswordDialog extends DialogFragment {
                 }
             }
         });
-
+        // cancel action on click
         cancelAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

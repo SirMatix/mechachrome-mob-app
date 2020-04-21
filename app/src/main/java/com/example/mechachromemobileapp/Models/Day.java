@@ -1,13 +1,20 @@
 package com.example.mechachromemobileapp.Models;
 
+/**
+ *  Day Class
+ *
+ *  holds information about day in timetable,
+ *  timeframe strings represent each time block,
+ *  and order is user to differentiate between
+ *  days of the week
+ */
 public class Day {
 
-    String name, group, mode;
-    String timeframe1, timeframe2, timeframe3, timeframe4, timeframe5, timeframe6;
-    int order;
+    private String name, group, mode;
+    private String timeframe1, timeframe2, timeframe3, timeframe4, timeframe5, timeframe6;
+    private int order;
 
     public Day() {
-
     }
 
     public String getName() {

@@ -19,6 +19,11 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.DocumentSnapshot;
 
+/**
+ * BooksAdapter()
+ *
+ * handles displaying library books information based on FirebaseUI
+ */
 public class BooksAdapter extends FirestoreRecyclerAdapter<Books, BooksAdapter.BookHolder> {
 
     private OnItemClickListener listener;
@@ -27,25 +32,46 @@ public class BooksAdapter extends FirestoreRecyclerAdapter<Books, BooksAdapter.B
         super(options);
     }
 
+    /**
+     * method responsible for displaying data on layout
+     *
+     * @param holder   ---> BookHolder class that holds layout variables for each element in RecyclerView
+     * @param position ---> position of element in RecyclerView
+     * @param model    ---> Books class
+     */
     @Override
     protected void onBindViewHolder(@NonNull BookHolder holder, int position, @NonNull Books model) {
 
+        // setting book image
         Glide.with(holder.itemView.getContext())
                 .load(model.getImgUrl()) //set the img book url
-                .transforms(new CenterCrop() , new RoundedCorners(16))
+                .transform(new CenterCrop() , new RoundedCorners(16))
                 .into(holder.bookImage); //destination path
 
+        // setting book title
         holder.title.setText(model.getTitle());
+        // setting book author
         String byauthor = "By " + model.getAuthor();
         holder.author.setText(byauthor);
+        // setting book pages + reviews text
         String pagesrev = model.getPages() + " Pages | " + model.getNumReviews() + " reviews";
         holder.pages.setText(pagesrev);
+        // setting rating
         holder.ratingBar.setRating(model.getRating());
     }
 
+    /**
+     *
+     * this method inflates custom layout for each element in recycler view
+     *
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @NonNull
     @Override
     public BookHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        // here we define which layout we want to use for each of our recyclerView elements
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_book, parent, false);
         return new BookHolder(view);
     }
@@ -54,6 +80,9 @@ public class BooksAdapter extends FirestoreRecyclerAdapter<Books, BooksAdapter.B
         getSnapshots().getSnapshot(position).getReference().delete();
     }
 
+    /**
+     * This class holds variables from custom layout
+     */
     class BookHolder extends RecyclerView.ViewHolder {
         ImageView bookImage;
         TextView title, author, pages, score;
@@ -70,6 +99,7 @@ public class BooksAdapter extends FirestoreRecyclerAdapter<Books, BooksAdapter.B
             score = itemView.findViewById(R.id.item_book_score);
             ratingBar = itemView.findViewById(R.id.item_book_ratingBar);
 
+            // setting onItemClickListener on itemView, to listen to click on specific element
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -81,6 +111,7 @@ public class BooksAdapter extends FirestoreRecyclerAdapter<Books, BooksAdapter.B
             });
         }
     }
+
 
     public interface OnItemClickListener {
         void onItemClick(DocumentSnapshot documentSnapshot, int position);

@@ -1,6 +1,5 @@
 package com.example.mechachromemobileapp.Dialogs;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,17 +18,21 @@ import com.example.mechachromemobileapp.R;
 
 import java.util.Objects;
 
+/**
+ *  Dialog for confirming password while changing user password
+ */
 public class PasswordConfirmPasswordDialog extends DialogFragment {
 
+    // global variables
     private TextView cancelAction, confirmAction;
     private EditText newPassword;
     private static final String TAG = "ConfirmPasswordDialog";
 
     public interface OnConfirmPasswordListener{
-        public void onConfirmPassword(String password);
+        void onConfirmPassword(String password);
     }
 
-    OnConfirmPasswordListener mOnConfirmPasswordListener;
+    private OnConfirmPasswordListener mOnConfirmPasswordListener;
 
     @Nullable
     @Override
@@ -41,19 +44,29 @@ public class PasswordConfirmPasswordDialog extends DialogFragment {
         return view;
     }
 
+    /**
+     *  Method for initialization widgets, fields and Firebase instances
+     */
     private void initViews(View view) {
         confirmAction = view.findViewById(R.id.dialog_confirm);
         cancelAction = view.findViewById(R.id.dialog_cancel);
         newPassword = view.findViewById(R.id.dialog_password);
     }
 
+    /**
+     *  Method that sets listeners to TextView elements in Dialog
+     */
     private void setOnClicks() {
+        // confirm action on click
         confirmAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: closing the dialog");
+                // gets password from dialog layout field
                 String password = newPassword.getText().toString().trim();
+                // password can't be empty
                 if(!password.equals("")){
+                    // passes data to interface
                     mOnConfirmPasswordListener.onConfirmPassword(password);
                     Objects.requireNonNull(getDialog()).dismiss();
                 } else {
@@ -61,7 +74,7 @@ public class PasswordConfirmPasswordDialog extends DialogFragment {
                 }
             }
         });
-
+        // cancel action on click
         cancelAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
