@@ -332,7 +332,7 @@ public class BookPage extends AppCompatActivity {
                                     for(QueryDocumentSnapshot document: task.getResult()) {
                                         Log.d(TAG, "User has book reserved");
                                         // Changing Buttons visibility
-                                        reserveButton.setVisibility(View.INVISIBLE);
+                                        reserveButton.setVisibility(View.GONE);
                                         cancelButton.setVisibility(View.VISIBLE);
                                     }
                                 }

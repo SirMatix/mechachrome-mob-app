@@ -17,6 +17,7 @@
         android:gravity="center"
         android:text="name"
         android:textAlignment="center"
+        android:textColor="@color/colorPrimaryBlack"
         android:textStyle="bold" />
 
     <TextView
@@ -31,7 +32,8 @@
         android:background="@drawable/border"
         android:gravity="center"
         android:text="timeframe1"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimaryBlack" />
 
     <TextView
         android:id="@+id/timeframe2"
@@ -45,7 +47,8 @@
         android:background="@drawable/border"
         android:gravity="center"
         android:text="timeframe2"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimaryBlack" />
 
     <TextView
         android:id="@+id/timeframe3"
@@ -59,7 +62,8 @@
         android:background="@drawable/border"
         android:gravity="center"
         android:text="timeframe3"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimaryBlack" />
 
     <TextView
         android:id="@+id/timeframe4"
@@ -73,7 +77,8 @@
         android:background="@drawable/border"
         android:gravity="center"
         android:text="timeframe4"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimaryBlack" />
 
     <TextView
         android:id="@+id/timeframe5"
@@ -87,7 +92,8 @@
         android:background="@drawable/border"
         android:gravity="center"
         android:text="timeframe5"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimaryBlack" />
 
     <TextView
         android:id="@+id/timeframe6"
@@ -101,7 +107,8 @@
         android:background="@drawable/border"
         android:gravity="center"
         android:text="timeframe6"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimaryBlack" />
 
     <TextView
         android:id="@+id/margin"
@@ -111,5 +118,6 @@
         android:layout_marginStart="2.5dp"
         android:layout_marginTop="2.5dp"
         android:layout_marginEnd="2.5dp"
-        android:layout_marginBottom="3.5dp" />
+        android:layout_marginBottom="3.5dp"
+        android:textColor="@color/colorPrimaryBlack" />
 </LinearLayout>
