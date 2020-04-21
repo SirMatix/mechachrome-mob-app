@@ -2,12 +2,19 @@ package com.example.mechachromemobileapp.Models;
 
 import java.util.List;
 
+/**
+ *  ChatRoom class
+ *
+ *  holds information about chatRooms that are created between
+ *  users when they communicate, List filter is used to help
+ *  locate members specific of chat room
+ *
+ */
 public class ChatRoom {
     private String messageSender, messageReceiver;
     private List<String> filter;
 
     public ChatRoom() {
-
     }
 
     public String getMessageSender() {

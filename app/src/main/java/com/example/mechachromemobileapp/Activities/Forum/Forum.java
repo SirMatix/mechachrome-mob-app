@@ -43,7 +43,7 @@ public class Forum extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forum);
         initViews();
-        buildRecyclerView();
+        buildRecyclerView(forumAdapter);
         setButtons();
     }
 
@@ -54,6 +54,7 @@ public class Forum extends Activity {
         addTopic = findViewById(R.id.add_topic_button);
         fStore = FirebaseFirestore.getInstance();
         empty = findViewById(R.id.empty);
+        forumAdapter = getAdapter();
     }
 
     /**
@@ -97,29 +98,52 @@ public class Forum extends Activity {
         });
 
     }
+
+    /**
+     * Method to get BookSaleAdapter with different options
+     *
+     * Option 1: when user enters this activity from MainActivity --> displays all forum topics
+     * Option 2: when user enters this activity from UserAccount activity --> displays forum topics created by this user
+     *
+     * @return ForumAdapter with specific option build on different query
+     */
+    private ForumAdapter getAdapter() {
+        // gets intent from previous activity
+        Intent intent = getIntent();
+        String userID = intent.getStringExtra("userID");
+        // forum topics reference
+        CollectionReference topicsCollection = fStore.collection("forum_topics");
+        // condition to check if userID has been passed
+        if(userID == null) {
+            // query to get books for sale sorted by add date
+            Query query = topicsCollection.orderBy("date_published", Query.Direction.ASCENDING);
+            FirestoreRecyclerOptions<ForumTopic> options = new FirestoreRecyclerOptions.Builder<ForumTopic>()
+                    .setQuery(query, ForumTopic.class)
+                    .build();
+            return new ForumAdapter(options);
+        } else {
+            // query to get books for sale added by user sorted by add date
+            Query query = topicsCollection.whereEqualTo("author_id", userID).orderBy("date_published", Query.Direction.ASCENDING);
+            FirestoreRecyclerOptions<ForumTopic> options = new FirestoreRecyclerOptions.Builder<ForumTopic>()
+                    .setQuery(query, ForumTopic.class)
+                    .build();
+            return new ForumAdapter(options);
+        }
+    }
+
+
+
     /**
      * Method for building BookSale RecyclerView
      */
-    public void buildRecyclerView() {
-        // Getting forum_topics Collection from Firestore
-        CollectionReference topicsCollection = fStore.collection("forum_topics");
-        // Query forum_topics ordered by date_published
-        Query query = topicsCollection.orderBy("date_published", Query.Direction.DESCENDING);
-
-        // Building options for forumAdapter
-        FirestoreRecyclerOptions<ForumTopic> options = new FirestoreRecyclerOptions.Builder<ForumTopic>()
-                .setQuery(query, ForumTopic.class)
-                .build();
-
-        forumAdapter = new ForumAdapter(options);
-        // Getting the RecyclerView widget from layout
+    public void buildRecyclerView(ForumAdapter adapter) {
         RecyclerView recyclerView = findViewById(R.id.forum_recycler_view);
         // Setting RecyclerView to FixedSize this is done for performance
         recyclerView.setHasFixedSize(true);
         // Setting RecyclerView layout manager
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         // Setting RecyclerView adapter to adapter variable from parameter
-        recyclerView.setAdapter(forumAdapter);
+        recyclerView.setAdapter(adapter);
     }
 
     @Override

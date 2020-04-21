@@ -1,13 +1,16 @@
 package com.example.mechachromemobileapp.Models;
 
+/**
+ * Child class of Books class, holds additional variables for
+ * books for sale
+ */
 public class BookSaleModel extends Books {
 
-    String seller_id, condition;
-    float price;
-    boolean sold;
+    private String seller_id, condition;
+    private float price;
+    private boolean sold;
 
     public BookSaleModel() {
-
     }
 
     public String getSeller_id() {

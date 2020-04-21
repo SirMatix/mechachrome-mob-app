@@ -2,10 +2,16 @@ package com.example.mechachromemobileapp.Models;
 
 import java.util.Date;
 
+/**
+ *  ForumTopic Class
+ *
+ *  gathers essential information about forum topic
+ */
 public class ForumTopic {
-    String topic_name, author, author_id;
-    int post_num;
-    Date date_published;
+
+    private String topic_name, author, author_id;
+    private int post_num;
+    private Date date_published;
 
     public ForumTopic() {
     }

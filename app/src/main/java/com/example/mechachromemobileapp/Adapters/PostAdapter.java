@@ -29,6 +29,14 @@ public class PostAdapter extends FirestoreRecyclerAdapter<ForumPost, PostAdapter
         super(options);
     }
 
+
+    /**
+     * method responsible for displaying data on layout
+     *
+     * @param holder   ---> PostHolder class that holds layout variables for each element in RecyclerView
+     * @param position ---> position of element in RecyclerView
+     * @param model    ---> ForumPost class
+     */
     @Override
     protected void onBindViewHolder(@NonNull final PostHolder holder, int position, @NonNull ForumPost model) {
         String author = "Post author: " + model.getAuthor();
@@ -40,6 +48,13 @@ public class PostAdapter extends FirestoreRecyclerAdapter<ForumPost, PostAdapter
         holder.postDate.setText(text_date);
     }
 
+    /**
+     * this method inflates custom layout for each element in recycler view
+     *
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @NonNull
     @Override
     public PostHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -48,11 +63,16 @@ public class PostAdapter extends FirestoreRecyclerAdapter<ForumPost, PostAdapter
         return new PostHolder(v);
     }
 
+    /**
+     * This class holds variables from custom layout
+     */
     class PostHolder extends RecyclerView.ViewHolder {
+        // class variables
         TextView postAuthor, postDate, postContent;
 
         public PostHolder(@NonNull View itemView) {
             super(itemView);
+            // identifying layout elements and saving them to class variables
             postAuthor = itemView.findViewById(R.id.post_author);
             postContent = itemView.findViewById(R.id.post_content);
             postDate = itemView.findViewById(R.id.post_date_published);

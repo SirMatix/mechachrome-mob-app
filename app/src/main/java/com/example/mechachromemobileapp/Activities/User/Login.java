@@ -34,7 +34,7 @@ public class Login extends AppCompatActivity {
     public static final String TAG = "Login:";
     private EditText mStudentID,mPassword;
     private Button mLoginBtn;
-    private TextView mCreateBtn;
+    private TextView mCreateBtn,mForgotPassword;
     private FirebaseAuth fAuth;
     private FirebaseFirestore fStore;
     private ProgressBar progressBar;
@@ -45,6 +45,13 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initViews();
+
+        // checks if user is already logged in
+        if(fAuth.getCurrentUser() != null) {
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            finish();
+        }
+
         setButtons();
     }
 
@@ -55,7 +62,8 @@ public class Login extends AppCompatActivity {
         // Initialization widgets from layout
         mStudentID = findViewById(R.id.studentID);
         mPassword = findViewById(R.id.password);
-        mLoginBtn = findViewById(R.id.loginBtn);
+        mLoginBtn = findViewById(R.id.login_button);
+        mForgotPassword = findViewById(R.id.forgotPassword);
 
         // Instantiating of Firebase widgets
         fStore = FirebaseFirestore.getInstance();
@@ -82,6 +90,13 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(),Register.class));
+            }
+        });
+
+        mForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 
@@ -157,6 +172,10 @@ public class Login extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void forgotPassword(){
+
     }
 }
 

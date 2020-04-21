@@ -1,13 +1,16 @@
 package com.example.mechachromemobileapp.Activities.User;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.example.mechachromemobileapp.Activities.BookSale.BookSale;
 import com.example.mechachromemobileapp.Activities.Forum.Forum;
 import com.example.mechachromemobileapp.Models.User;
@@ -30,9 +33,13 @@ import java.util.Objects;
  */
 public class UserAccount extends AppCompatActivity {
 
+
     // Global variables
-    private TextView userFirstName, userLastName, userEmail, userGroup, userMode, userStudentID;
-    private Button userReservations, userPosts, userBookSale, userReviews;
+    private static final String TAG = "UserAccount: ";
+    private TextView userFirstName, userLastName, userEmail, userGroup, userMode, userStudentID, defaultImage;
+    private Uri imgUri;
+    private ImageView userImage;
+    private Button userReservations, userTopics, userBookSale, userReviews;
     private FirebaseAuth fAuth;
     private FirebaseUser fUser;
     private FirebaseFirestore fStore;
@@ -63,10 +70,12 @@ public class UserAccount extends AppCompatActivity {
         userGroup = findViewById(R.id.user_group);
         userMode = findViewById(R.id.user_mode);
         userStudentID = findViewById(R.id.user_student_id);
+        userImage = findViewById(R.id.user_image);
+        defaultImage = findViewById(R.id.change_to_default);
 
         // Initialize buttons
         userReservations = findViewById(R.id.reservations_button);
-        userPosts = findViewById(R.id.posts_button);
+        userTopics = findViewById(R.id.topics_button);
         userBookSale = findViewById(R.id.books_for_sale_button);
         userReviews = findViewById(R.id.book_reviews);
     }
@@ -107,6 +116,13 @@ public class UserAccount extends AppCompatActivity {
                 userGroup.setText(group);
                 String mode = "Your study mode: " + user.getMode();
                 userMode.setText(mode);
+                if (user.getImgUrl().equals("default")) {
+                    userImage.setImageResource(R.drawable.ic_account);
+                    defaultImage.setVisibility(View.GONE);
+                } else {
+                    Glide.with(getApplicationContext()).load(user.getImgUrl()).into(userImage);
+                    defaultImage.setVisibility(View.VISIBLE);
+                }
             }
         });
     }
@@ -126,7 +142,7 @@ public class UserAccount extends AppCompatActivity {
             }
         });
         // Button to show all the posts written by a user
-        userPosts.setOnClickListener(new View.OnClickListener() {
+        userTopics.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Forum.class);
@@ -152,5 +168,30 @@ public class UserAccount extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        if (defaultImage.getVisibility() == View.VISIBLE) {
+            defaultImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    setDefaultImage();
+                }
+            });
+        }
+
+
     }
+
+    /**
+     * Method to set image to default
+     */
+    private void setDefaultImage() {
+        String userID = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+        final DocumentReference user_data = fStore.collection("users").document(userID);
+        user_data.update("imgUrl", "default");
+        userImage.setImageResource(R.drawable.ic_account);
+        defaultImage.setVisibility(View.GONE);
+    }
+
+
+
 }

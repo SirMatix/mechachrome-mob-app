@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,69 +13,70 @@ import com.example.mechachromemobileapp.R;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * FloorPlan activity
+ *
+ * Displays floorImages of a floor plan
+ */
 public class FloorPlan extends AppCompatActivity {
 
-    private Button button2;
-    private ImageView imageView;
-    private String roomNumber;
-    private int current_image;
-    int [] images = {R.drawable.floor1, R.drawable.floor2};
-
-
-
+    // Global variables
+    private Button changeFloorButton;
+    private ImageView floorImage;
+    private int currentImage;
+    private int [] floorImages = {R.drawable.floor1, R.drawable.floor2};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_floor_plan);
-
         initViews();
-        buttonclick();
-
+        setButtons();
     }
 
-
+    /**
+     *  Method for initialization widgets, fields and Firebase instances
+     */
     public void initViews() {
-        imageView = findViewById(R.id.imageView);
-        button2 = findViewById(R.id.button2);
+        // Layout elements
+        floorImage = findViewById(R.id.floor_image);
+        changeFloorButton = findViewById(R.id.change_floor_button);
 
-        String [] roomsFloorOne = {"Student services" , "Cantine" ,"Student Finance", "101" , "102","103", "104", "105"};
-        String [] roomsFloorTwo = {"Student Wellbeing" , "201" ,"202" ,"203" ,"204" ,"205" ,"206" ,"207"};
+        // Arrays listing all the rooms on each floor
+        String [] roomsFloorOne = {"Student services" , "Canteen" ,"Student Finance", "101" , "102","103", "104", "105"};
+        String [] roomsFloorTwo = {"Student Well-being" , "201" ,"202" ,"203" ,"204" ,"205" ,"206" ,"207"};
 
+        // changing arrays to list type objects
         List<String> floorOneRooms = Arrays.asList(roomsFloorOne);
         List<String> floorTwoRooms = Arrays.asList(roomsFloorTwo);
 
+        // getting data from previous activity(timetable)
         Intent intent = getIntent();
-        roomNumber = intent.getStringExtra("roomNumber");
+        String roomNumber = intent.getStringExtra("roomNumber");
 
+        // condition to display appropriate floor
         if(floorOneRooms.contains(roomNumber)){
-            imageView.setImageResource(images[0]);
+            floorImage.setImageResource(floorImages[0]);
         } else if (floorTwoRooms.contains(roomNumber)) {
-            imageView.setImageResource(images[1]);
+            floorImage.setImageResource(floorImages[1]);
         }
-
     }
 
-
-
-    public void buttonclick() {
-        button2.setOnClickListener(new View.OnClickListener() {
+    /**
+     *  This method sets the onClickListener to buttons
+     */
+    public void setButtons() {
+        changeFloorButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        current_image++;
-                        current_image=current_image% images.length;
-                        imageView.setImageResource(images[current_image]);
-
+                        // rising currentImage by 1
+                        currentImage++;
+                        currentImage=currentImage% floorImages.length;
+                        // setting current floorImage to element from the list
+                        floorImage.setImageResource(floorImages[currentImage]);
                     }
                 }
-
         );
-    }
-
-    private void changeText(){
-        final String [] floors = {"Floor I", "Floor II"};
-        final TextView changingText = findViewById(R.id.textView);
-
     }
 
 }
