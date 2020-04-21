@@ -41,7 +41,7 @@ public class ReserveBook extends AppCompatActivity {
 
     private static final String TAG = "ReserveBook";
     private String userID;
-    private String titleAuthorFeed;
+    private String bookIDFeed;
     private TextView bookTitle, bookAuthor, bookPages, availableBooks, dateReserveFrom, dateReserveTo;
     private Button reserveBook, discardReserve;
     private ImageView bookImage;
@@ -71,7 +71,7 @@ public class ReserveBook extends AppCompatActivity {
 
         // getting intent from Library activity and getting extra string
         Intent intent = getIntent();
-        titleAuthorFeed = intent.getStringExtra("title_author");
+        bookIDFeed = intent.getStringExtra("book_id");
 
         // Initialization widgets from layout
         dateReserveFrom = findViewById(R.id.reserve_from);
@@ -90,7 +90,7 @@ public class ReserveBook extends AppCompatActivity {
      *  Method to getBookData from Firestore
      */
     public void getBookData() {
-        bookReference = fStore.collection("library_books").document(titleAuthorFeed);
+        bookReference = fStore.collection("library_books").document(bookIDFeed);
         bookReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -137,7 +137,7 @@ public class ReserveBook extends AppCompatActivity {
                 reserveBook();
                 /*
                 Intent intent = new Intent(ReserveBook.this, BookPage.class);
-                intent.putExtra("title_author", titleAuthorFeed);
+                intent.putExtra("title_author", bookIDFeed);
                 intent.putExtra("title", titleFeed);
                 startActivity(intent);
                  */
@@ -149,7 +149,7 @@ public class ReserveBook extends AppCompatActivity {
             public void onClick(View v) {
                 /*
                 Intent intent = new Intent(ReserveBook.this, BookPage.class);
-                intent.putExtra("title_author", titleAuthorFeed);
+                intent.putExtra("title_author", bookIDFeed);
                 intent.putExtra("title", titleFeed);
                 startActivity(intent);
                  */
@@ -163,7 +163,7 @@ public class ReserveBook extends AppCompatActivity {
      */
     public void reserveBook() {
         // initializing references
-        bookReference = fStore.collection("library_books").document(titleAuthorFeed);
+        bookReference = fStore.collection("library_books").document(bookIDFeed);
         reservationReference = fStore.collection("library_books_reservations").document();
         DocumentReference userReference = fStore.collection("users").document(userID);
 
@@ -184,10 +184,11 @@ public class ReserveBook extends AppCompatActivity {
                         assert book != null;
                         reservation.setBook_author(book.getAuthor());
                         reservation.setBook_title(book.getTitle());
+                        reservation.setBook_id(documentSnapshot.getId());
                         // Setting user data to reservation
                         assert user != null;
                         reservation.setUser_reserved_for(user.getFname() + " " + user.getLname());
-                        reservation.setUser_reserver_id(userID);
+                        reservation.setUser_reserved_id(userID);
                         // Setting reservation start date
                         Calendar calendar1 = Calendar.getInstance();
                         Date today = calendar1.getTime();

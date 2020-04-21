@@ -121,6 +121,7 @@ public class AddReview extends AppCompatActivity {
         final float rating = reviewScore.getRating();
         final String content = editReviewContent.getText().toString().trim();
         final ArrayList<String> author = new ArrayList<>();
+        final String title = titleFeed;
         date_published = Calendar.getInstance().getTime();
 
         // Fields validation, you can't have empty content or give no rating
@@ -174,7 +175,7 @@ public class AddReview extends AppCompatActivity {
                                 Review review = new Review();
                                 review.setAuthor(author.get(0));
                                 review.setAuthor_id(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid());
-                                review.setBook_title(titleFeed);
+                                review.setBook_title(title);
                                 review.setBook_id(bookID);
                                 review.setContent(content);
                                 review.setDate_published(date_published);

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    app:cardCornerRadius="4dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="4dp">
+
+        <ImageView
+            android:id="@+id/reservation_book_image"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="2dp"
+            android:background="@drawable/ic_bookmark"
+            android:padding="2dp"
+            app:layout_constraintBottom_toTopOf="@+id/reserved_from_text"
+            app:layout_constraintEnd_toStartOf="@+id/reservation_book_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/reservation_book_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:text="@string/book_title"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/reservation_book_author"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/reservation_book_image"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/reservation_book_author"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:text="@string/book_author"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/reserved_from_date"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/reservation_book_image"
+            app:layout_constraintTop_toBottomOf="@+id/reservation_book_title" />
+
+        <TextView
+            android:id="@+id/reserved_from_text"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="2dp"
+            android:text="Reserved from:"
+            app:layout_constraintBottom_toTopOf="@+id/reserved_to_text"
+            app:layout_constraintEnd_toStartOf="@+id/reserved_from_date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/reservation_book_image" />
+
+        <TextView
+            android:id="@+id/reserved_from_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:gravity="center|center_horizontal|center_vertical"
+            android:text="10.02.2020 15:00"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toTopOf="@+id/reserved_to_date"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/reserved_from_text"
+            app:layout_constraintTop_toBottomOf="@+id/reservation_book_author" />
+
+        <TextView
+            android:id="@+id/reserved_to_text"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="5dp"
+            android:text="Reserved to:"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/reserved_to_date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/reserved_from_text" />
+
+        <TextView
+            android:id="@+id/reserved_to_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:gravity="center|center_horizontal|center_vertical"
+            android:text="24.02.2020 15:00"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/reserved_to_text"
+            app:layout_constraintTop_toBottomOf="@+id/reserved_from_date" />
+
+        <TextView
+            android:id="@+id/reservation_ended"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="#91FF0000"
+            android:text="Reservation ended"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.cardview.widget.CardView>

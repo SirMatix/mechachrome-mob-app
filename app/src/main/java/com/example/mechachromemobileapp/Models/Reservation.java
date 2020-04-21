@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Reservation {
 
-    String user_reserved_for, user_reserver_id, book_title, book_author;
+    String user_reserved_for, user_reserved_id, book_title, book_author, book_id;
     Date reserved_from, reserved_to;
     Boolean is_active, is_cancelled, is_done;
 
@@ -20,12 +20,20 @@ public class Reservation {
         this.user_reserved_for = user_reserved_for;
     }
 
-    public String getUser_reserver_id() {
-        return user_reserver_id;
+    public String getBook_id() {
+        return book_id;
     }
 
-    public void setUser_reserver_id(String user_reserver_id) {
-        this.user_reserver_id = user_reserver_id;
+    public void setBook_id(String book_id) {
+        this.book_id = book_id;
+    }
+
+    public String getUser_reserved_id() {
+        return user_reserved_id;
+    }
+
+    public void setUser_reserved_id(String user_reserved_id) {
+        this.user_reserved_id = user_reserved_id;
     }
 
     public String getBook_title() {
