@@ -116,7 +116,6 @@ public class AddReview extends AppCompatActivity {
     public void addReview() {
         userID = Objects.requireNonNull(fAuth.getCurrentUser()).getUid();
 
-
         // Getting data inputted in layouts widgets
         final float rating = reviewScore.getRating();
         final String content = editReviewContent.getText().toString().trim();
