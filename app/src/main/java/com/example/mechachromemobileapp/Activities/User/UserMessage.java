@@ -74,7 +74,22 @@ public class UserMessage extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                FirebaseAuth fAuth = FirebaseAuth.getInstance();
+                String userID = fAuth.getCurrentUser().getUid();
+                CollectionReference userRef = fStore.collection("users");
+                userRef.document(userID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        User user = documentSnapshot.toObject(User.class);
+                        String group = user.getGroup();
+                        String mode = user.getMode();
+                        Intent intent = new Intent(getApplicationContext(), UserInbox.class);
+                        intent.putExtra("group", group);
+                        intent.putExtra("mode", mode);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
             }
         });
 
@@ -226,4 +241,28 @@ public class UserMessage extends AppCompatActivity {
         }
         return numberString;
     }
+
+
+    /*
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        FirebaseAuth fAuth = FirebaseAuth.getInstance();
+        String userID = fAuth.getCurrentUser().getUid();
+        CollectionReference userRef = fStore.collection("users");
+        userRef.document(userID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                User user = documentSnapshot.toObject(User.class);
+                String group = user.getGroup();
+                String mode = user.getMode();
+                Intent intent = new Intent(getApplicationContext(), UserInbox.class);
+                intent.putExtra("group", group);
+                intent.putExtra("mode", mode);
+                startActivity(intent);
+            }
+        });
+    }
+
+     */
 }
