@@ -21,6 +21,11 @@
             android:layout_marginTop="9dp"
             android:layout_marginEnd="3dp"
             android:gravity="center"
+            android:text="Timetable"
+            android:drawableStart="@drawable/ic_time"
+            android:textColor="@color/black_text_color"
+            android:textSize="16sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/recycler_view"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -35,8 +40,8 @@
             android:gravity="center"
             android:text="@string/timeframe1"
             android:textAlignment="center"
-            android:textColor="@color/colorPrimaryBlack"
-            android:textStyle="bold|italic"
+            android:textStyle="bold"
+            android:textColor="@color/black_text_color"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
@@ -50,8 +55,8 @@
             android:gravity="center"
             android:text="@string/timeframe2"
             android:textAlignment="center"
-            android:textColor="@color/colorPrimaryBlack"
-            android:textStyle="bold|italic"
+            android:textStyle="bold"
+            android:textColor="@color/black_text_color"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/timeframe1" />
 
@@ -65,8 +70,8 @@
             android:gravity="center"
             android:text="@string/timeframe3"
             android:textAlignment="center"
-            android:textColor="@color/colorPrimaryBlack"
-            android:textStyle="bold|italic"
+            android:textStyle="bold"
+            android:textColor="@color/black_text_color"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/timeframe2" />
 
@@ -80,8 +85,8 @@
             android:gravity="center"
             android:text="@string/timeframe4"
             android:textAlignment="center"
-            android:textColor="@color/colorPrimaryBlack"
-            android:textStyle="bold|italic"
+            android:textStyle="bold"
+            android:textColor="@color/black_text_color"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/timeframe3" />
 
@@ -95,8 +100,8 @@
             android:gravity="center"
             android:text="@string/timeframe5"
             android:textAlignment="center"
-            android:textColor="@color/colorPrimaryBlack"
-            android:textStyle="bold|italic"
+            android:textStyle="bold"
+            android:textColor="@color/black_text_color"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/timeframe4" />
 
@@ -110,8 +115,8 @@
             android:gravity="center"
             android:text="@string/timeframe6"
             android:textAlignment="center"
-            android:textColor="@color/colorPrimaryBlack"
-            android:textStyle="bold|italic"
+            android:textStyle="bold"
+            android:textColor="@color/black_text_color"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/timeframe5" />
 

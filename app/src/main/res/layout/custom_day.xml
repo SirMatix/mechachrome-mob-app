@@ -13,12 +13,12 @@
         android:layout_marginTop="2.5dp"
         android:layout_marginEnd="2.5dp"
         android:layout_marginBottom="2.5dp"
-        android:background="@drawable/border"
+        android:background="@drawable/border3"
         android:gravity="center"
         android:text="name"
         android:textAlignment="center"
-        android:textColor="@color/colorPrimaryBlack"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textColor="@color/black_text_color"/>
 
     <TextView
         android:id="@+id/timeframe1"
@@ -29,11 +29,12 @@
         android:layout_marginTop="2.5dp"
         android:layout_marginEnd="2.5dp"
         android:layout_marginBottom="2.5dp"
-        android:background="@drawable/border_white"
+        android:background="@drawable/border2"
         android:gravity="center"
         android:text="timeframe1"
-        android:textAlignment="center"
-        android:textColor="@color/colorPrimaryBlack" />
+        android:textColor="@color/black_text_color"
+        android:textAlignment="center" />
+
 
     <TextView
         android:id="@+id/timeframe2"
@@ -44,11 +45,12 @@
         android:layout_marginTop="2.5dp"
         android:layout_marginEnd="2.5dp"
         android:layout_marginBottom="2.5dp"
-        android:background="@drawable/border_white"
+        android:background="@drawable/border2"
         android:gravity="center"
         android:text="timeframe2"
-        android:textAlignment="center"
-        android:textColor="@color/colorPrimaryBlack" />
+        android:textColor="@color/black_text_color"
+        android:textAlignment="center" />
+
 
     <TextView
         android:id="@+id/timeframe3"
@@ -59,11 +61,11 @@
         android:layout_marginTop="2.5dp"
         android:layout_marginEnd="2.5dp"
         android:layout_marginBottom="2.5dp"
-        android:background="@drawable/border_white"
+        android:background="@drawable/border2"
         android:gravity="center"
         android:text="timeframe3"
-        android:textAlignment="center"
-        android:textColor="@color/colorPrimaryBlack" />
+        android:textColor="@color/black_text_color"
+        android:textAlignment="center" />
 
     <TextView
         android:id="@+id/timeframe4"
@@ -74,11 +76,11 @@
         android:layout_marginTop="2.5dp"
         android:layout_marginEnd="2.5dp"
         android:layout_marginBottom="2.5dp"
-        android:background="@drawable/border_white"
+        android:background="@drawable/border2"
         android:gravity="center"
         android:text="timeframe4"
-        android:textAlignment="center"
-        android:textColor="@color/colorPrimaryBlack" />
+        android:textColor="@color/black_text_color"
+        android:textAlignment="center" />
 
     <TextView
         android:id="@+id/timeframe5"
@@ -89,11 +91,11 @@
         android:layout_marginTop="2.5dp"
         android:layout_marginEnd="2.5dp"
         android:layout_marginBottom="2.5dp"
-        android:background="@drawable/border_white"
+        android:background="@drawable/border2"
         android:gravity="center"
         android:text="timeframe5"
-        android:textAlignment="center"
-        android:textColor="@color/colorPrimaryBlack" />
+        android:textColor="@color/black_text_color"
+        android:textAlignment="center" />
 
     <TextView
         android:id="@+id/timeframe6"
@@ -104,11 +106,11 @@
         android:layout_marginTop="2.5dp"
         android:layout_marginEnd="2.5dp"
         android:layout_marginBottom="2.5dp"
-        android:background="@drawable/border_white"
+        android:background="@drawable/border2"
         android:gravity="center"
         android:text="timeframe6"
-        android:textAlignment="center"
-        android:textColor="@color/colorPrimaryBlack" />
+        android:textColor="@color/black_text_color"
+        android:textAlignment="center" />
 
     <TextView
         android:id="@+id/margin"
