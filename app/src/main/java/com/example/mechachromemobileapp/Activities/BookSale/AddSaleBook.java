@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,6 +52,7 @@ public class AddSaleBook extends AppCompatActivity {
     private int REQUEST_CODE_FOR_IMAGE = 1000;
     private Bitmap capturedPhoto;
     private EditText bookTitle, bookDescription, bookAuthor, bookPages, bookPrice;
+    private ProgressBar progressBar;
     private ImageView bookImage;
     private Button bAddBtn, bAddImage, bTakePhoto;
     private Spinner bCategorySpinner, bConditionSpinner;
@@ -81,6 +83,8 @@ public class AddSaleBook extends AppCompatActivity {
         bookPages = findViewById(R.id.bookPages);
         bookImage = findViewById(R.id.bookImage);
         bookPrice = findViewById(R.id.bookPrice);
+        progressBar = findViewById(R.id.progressBarBookSale);
+
 
         // Initialization of Spinner widgets from layout
         bCategorySpinner = findViewById(R.id.categorySpinner);
@@ -306,6 +310,7 @@ public class AddSaleBook extends AppCompatActivity {
 
         ////////// IMAGE LOADING SECTION //////////
 
+        progressBar.setVisibility(View.VISIBLE);
         // loading file image
         if (imgUri != null) {
             // the uploading image function
@@ -328,6 +333,7 @@ public class AddSaleBook extends AppCompatActivity {
                                         public void onSuccess(Void aVoid) {
                                             Log.d(TAG,"onSuccess: sellBook object added to Firestore books_for_sale Collection");
                                             Toast.makeText(getApplicationContext(),"Congratulations! You have successfully added book for sale", Toast.LENGTH_SHORT).show();
+                                            progressBar.setVisibility(View.GONE);
                                             startActivity(new Intent(getApplicationContext(), com.example.mechachromemobileapp.Activities.BookSale.BookSale.class));
                                             finish();
                                         }
@@ -368,6 +374,7 @@ public class AddSaleBook extends AppCompatActivity {
                                 public void onSuccess(Void aVoid) {
                                     Log.d(TAG,"onSuccess: sellBook object added to Firestore books_for_sale Collection");
                                     Toast.makeText(getApplicationContext(),"Congratulations! You have successfully added book for sale", Toast.LENGTH_SHORT).show();
+                                    progressBar.setVisibility(View.GONE);
                                     startActivity(new Intent(getApplicationContext(), com.example.mechachromemobileapp.Activities.BookSale.BookSale.class));
                                     finish();
                                 }
