@@ -19,7 +19,8 @@
         android:gravity="left|center_vertical"
         android:text="First and last name"
         android:layout_marginLeft="5dp"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:textColor="@color/black_text_color"/>
 
 
 </LinearLayout>

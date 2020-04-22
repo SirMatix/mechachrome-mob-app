@@ -14,7 +14,8 @@
         android:layout_marginTop="8dp"
         android:text="@string/topic"
         android:textAlignment="center"
-        android:textColor="@color/dark_blue"
+        android:background="@color/yellow_transparent"
+        android:textColor="@color/black_text_color"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,6 +29,7 @@
         android:layout_height="50dp"
         android:layout_marginEnd="5dp"
         android:background="@color/font_light_grey"
+        android:textColor="@color/black_text_color"
         android:ems="10"
         android:textAlignment="center"
         android:textSize="28sp"
@@ -44,7 +46,8 @@
         android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
         android:text="@string/content"
-        android:textColor="@color/dark_blue"
+        android:textColor="@color/black_text_color"
+        android:background="@color/yellow_transparent"
         android:textAlignment="center"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -63,12 +66,14 @@
         android:ems="10"
         android:gravity="start|top"
         android:hint="@string/write_post_content_here"
+        android:textColor="@color/black_text_color"
         android:inputType="textMultiLine"
         android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Content" />
+        app:layout_constraintTop_toBottomOf="@+id/Content"
+        android:autofillHints="" />
 
     <Button
         android:id="@+id/addReplyBtn"
@@ -79,6 +84,7 @@
         android:background="@drawable/button"
         android:text="@string/reply"
         android:textColor="@color/colorAccent"
+        android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/discardPostBtn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editContent" />
@@ -92,6 +98,7 @@
         android:background="@drawable/button"
         android:text="@string/discard"
         android:textColor="@color/colorAccent"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/addReplyBtn"
         app:layout_constraintTop_toBottomOf="@+id/editContent" />

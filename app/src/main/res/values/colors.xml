@@ -21,6 +21,7 @@
     <color name="transparent_white">#4BFFFFFF</color>
     <color name="font_light_grey">#45525C57</color>
     <color name="yellow">#FDD835</color>
+    <color name="yellow_transparent">#80FDD835</color>
     <color name="hint_color">#80943131</color>
 
 </resources>
