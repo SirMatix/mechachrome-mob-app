@@ -33,7 +33,6 @@ public class UsersFragment extends Fragment {
     private CollectionReference chatRef = fStore.collection("chat_rooms");
     private String groupFeed, modeFeed;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

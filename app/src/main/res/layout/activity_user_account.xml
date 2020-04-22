@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:padding="5dp"
     tools:context=".Activities.User.UserAccount">
 
@@ -14,24 +14,56 @@
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:contentDescription="@string/user_image"
-        app:layout_constraintBottom_toTopOf="@+id/change_image_text"
+        app:layout_constraintBottom_toTopOf="@+id/change_to_default"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_account" />
 
     <TextView
-        android:id="@+id/change_image_text"
+        android:id="@+id/change_to_default"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Click here to add a photo"
-        android:drawableStart="@drawable/ic_add_a_photo_black_24dp"
+        android:text="@string/change_picture_to_default"
         android:textAlignment="center"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/user_first_name"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/change_image_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/user_image" />
+
+    <TextView
+        android:id="@+id/change_image_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_add_a_photo_black_24dp"
+        android:text="@string/click_here_to_change_profile_picture"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/change_to_default" />
+
+    <TextView
+        android:id="@+id/first_text"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/custom_font"
+        android:fontFamily="@font/roboto_slab"
+        android:gravity="center"
+        android:text="@string/first_name"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/last_text"
+        app:layout_constraintEnd_toStartOf="@+id/user_first_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/change_image_button" />
 
     <TextView
         android:id="@+id/user_first_name"
@@ -41,12 +73,31 @@
         android:layout_marginTop="15dp"
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="5dp"
-        android:textSize="16sp"
         android:background="@drawable/custom_font"
+        android:fontFamily="@font/roboto_slab"
+        android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/user_last_name"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/first_text"
+        app:layout_constraintTop_toBottomOf="@+id/change_image_button" />
+
+    <TextView
+        android:id="@+id/last_text"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/custom_font"
+        android:fontFamily="@font/roboto_slab"
+        android:gravity="center"
+        android:text="@string/last_name1"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/email_text"
+        app:layout_constraintEnd_toStartOf="@+id/user_last_name"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/change_image_text" />
+        app:layout_constraintTop_toBottomOf="@+id/first_text" />
 
     <TextView
         android:id="@+id/user_last_name"
@@ -55,12 +106,31 @@
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="5dp"
-        android:textSize="16sp"
         android:background="@drawable/custom_font"
+        android:fontFamily="@font/roboto_slab"
+        android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/user_email"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/last_text"
         app:layout_constraintTop_toBottomOf="@+id/user_first_name" />
+
+    <TextView
+        android:id="@+id/email_text"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/custom_font"
+        android:fontFamily="@font/roboto_slab"
+        android:gravity="center"
+        android:text="@string/e_mail"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/id_text"
+        app:layout_constraintEnd_toStartOf="@+id/user_email"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/last_text" />
 
     <TextView
         android:id="@+id/user_email"
@@ -69,12 +139,31 @@
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="5dp"
-        android:textSize="16sp"
         android:background="@drawable/custom_font"
+        android:fontFamily="@font/roboto_slab"
+        android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/user_student_id"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/email_text"
         app:layout_constraintTop_toBottomOf="@+id/user_last_name" />
+
+    <TextView
+        android:id="@+id/id_text"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/custom_font"
+        android:fontFamily="@font/roboto_slab"
+        android:gravity="center"
+        android:text="@string/student_id"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/group_text"
+        app:layout_constraintEnd_toStartOf="@+id/user_student_id"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/email_text" />
 
     <TextView
         android:id="@+id/user_student_id"
@@ -83,12 +172,31 @@
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="5dp"
-        android:textSize="16sp"
         android:background="@drawable/custom_font"
+        android:fontFamily="@font/roboto_slab"
+        android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/user_group"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/id_text"
         app:layout_constraintTop_toBottomOf="@+id/user_email" />
+
+    <TextView
+        android:id="@+id/group_text"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/custom_font"
+        android:fontFamily="@font/roboto_slab"
+        android:gravity="center"
+        android:text="@string/course"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/mode_text"
+        app:layout_constraintEnd_toStartOf="@+id/user_group"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/id_text" />
 
     <TextView
         android:id="@+id/user_group"
@@ -97,12 +205,31 @@
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="5dp"
-        android:textSize="16sp"
         android:background="@drawable/custom_font"
+        android:fontFamily="@font/roboto_slab"
+        android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/user_mode"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/group_text"
         app:layout_constraintTop_toBottomOf="@+id/user_student_id" />
+
+    <TextView
+        android:id="@+id/mode_text"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/custom_font"
+        android:fontFamily="@font/roboto_slab"
+        android:gravity="center"
+        android:text="@string/mode"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/reservations_button"
+        app:layout_constraintEnd_toStartOf="@+id/user_mode"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/group_text" />
 
     <TextView
         android:id="@+id/user_mode"
@@ -110,11 +237,13 @@
         android:layout_height="30dp"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
-        android:textSize="16sp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/custom_font"
-        app:layout_constraintBottom_toTopOf="@+id/reservations_button"
+        android:fontFamily="@font/roboto_slab"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/topics_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/mode_text"
         app:layout_constraintTop_toBottomOf="@+id/user_group" />
 
     <Button
@@ -132,7 +261,7 @@
         app:layout_constraintBottom_toTopOf="@+id/books_for_sale_button"
         app:layout_constraintEnd_toStartOf="@+id/topics_button"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_mode" />
+        app:layout_constraintTop_toBottomOf="@+id/mode_text" />
 
     <Button
         android:id="@+id/topics_button"
@@ -142,8 +271,8 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="5dp"
-        android:text="@string/my_forum_posts"
         android:background="@drawable/button"
+        android:text="@string/my_forum_posts"
         android:textColor="@color/colorAccent"
         app:layout_constraintBottom_toTopOf="@+id/book_reviews"
         app:layout_constraintEnd_toEndOf="parent"
@@ -159,8 +288,8 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="20dp"
-        android:text="@string/my_books_for_sale"
         android:background="@drawable/button"
+        android:text="@string/my_books_for_sale"
         android:textColor="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/book_reviews"
@@ -175,28 +304,13 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="20dp"
-        android:text="@string/my_reviews"
         android:background="@drawable/button"
+        android:text="@string/my_reviews"
         android:textColor="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.475"
         app:layout_constraintStart_toEndOf="@+id/books_for_sale_button"
         app:layout_constraintTop_toBottomOf="@+id/topics_button" />
-
-    <TextView
-        android:id="@+id/change_to_default"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="change to default"
-        android:textAlignment="center"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/user_image"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/user_image"
-        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -150,24 +152,25 @@ public class BookSale extends AppCompatActivity {
         // Setting RecyclerView adapter to adapter variable from parameter
         bookSaleRecyclerView.setAdapter(adapter);
 
-        /*
+        // gets intent from previous activity
+        Intent intent = getIntent();
+        String userID = intent.getStringExtra("userID");
 
-        verify if usersID is equal to seller ID and then delete book
+        // if users enters activity from his profile he is able to delete his books for sale from the database
+        if (userID != null) {
+            new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
+                    ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+                @Override
+                public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                    return false;
+                }
 
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
-                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-            @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                return false;
-            }
-
-            @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                adapter.deleteItem(viewHolder.getAdapterPosition());
-            }
-        }).attachToRecyclerView(bookSaleRecyclerView);
-
-         */
+                @Override
+                public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                    adapter.deleteItem(viewHolder.getAdapterPosition());
+                }
+            }).attachToRecyclerView(bookSaleRecyclerView);
+        }
     }
 
     @Override
