@@ -174,6 +174,7 @@ public class AddReview extends AppCompatActivity {
                                 Review review = new Review();
                                 review.setAuthor(author.get(0));
                                 review.setAuthor_id(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid());
+                                Log.d(TAG, "title: " + title + " " + titleFeed);
                                 review.setBook_title(title);
                                 review.setBook_id(bookID);
                                 review.setContent(content);
