@@ -329,13 +329,13 @@ public class BookPage extends AppCompatActivity {
                             .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                               //     for(QueryDocumentSnapshot document: task.getResult()) {
+                                    for(QueryDocumentSnapshot document: task.getResult()) {
                                         Log.d(TAG, "User has book reserved");
                                         // Changing Buttons visibility
-                                        cancelButton.setVisibility(View.VISIBLE);
                                         reserveButton.setVisibility(View.INVISIBLE);
+                                        cancelButton.setVisibility(View.VISIBLE);
                                     }
-                               // }
+                               }
 
                             });
                 } else {
