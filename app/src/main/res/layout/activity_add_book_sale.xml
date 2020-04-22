@@ -120,7 +120,7 @@
             android:inputType="textMultiLine"
             android:textAlignment="center"
             android:textColor="@color/black_text_color"
-            android:textColorHint="@color/hint_color""
+            android:textColorHint="@color/hint_color"
             android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@+id/bookPages"
             app:layout_constraintEnd_toEndOf="parent"
