@@ -76,7 +76,7 @@ public class AddSaleBook extends AppCompatActivity {
     public void initViews() {
         // Initialization EditText widgets from layout
         bookTitle = findViewById(R.id.bookTitle);
-        bookDescription = findViewById(R.id.numberOfBooks);
+        bookDescription = findViewById(R.id.bookDescription);
         bookAuthor = findViewById(R.id.bookAuthor);
         bookPages = findViewById(R.id.bookPages);
         bookImage = findViewById(R.id.bookImage);

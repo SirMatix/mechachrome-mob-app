@@ -29,6 +29,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
+        android:background="@drawable/background3"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="@+id/imageView1"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,6 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:text="Book Sale Test Title"
         android:textColor="@color/black_text_color"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/item_book_img"
@@ -52,6 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        android:text="Book Sale Test Author"
         android:textColor="@color/black_text_color"
         app:layout_constraintStart_toEndOf="@+id/item_book_img"
         app:layout_constraintTop_toBottomOf="@+id/item_book_title" />
@@ -63,6 +66,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        android:text="Condition: Used - good"
         android:textColor="@color/black_text_color"
         app:layout_constraintStart_toEndOf="@+id/item_book_img"
         app:layout_constraintTop_toBottomOf="@+id/item_book_author" />
@@ -74,6 +78,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        android:text="234 Pages"
         android:textColor="@color/black_text_color"
         app:layout_constraintStart_toEndOf="@+id/item_book_img"
         app:layout_constraintTop_toBottomOf="@+id/item_book_condition" />
@@ -101,6 +106,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
+        android:text="This was my favourite course book, I ma crying that I have to sell it"
         android:textColor="@color/black_text_color"
         app:layout_constraintBottom_toTopOf="@+id/book_price"
         app:layout_constraintEnd_toEndOf="parent"

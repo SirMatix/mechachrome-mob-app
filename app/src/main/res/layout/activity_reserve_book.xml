@@ -14,6 +14,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="5dp"
         android:background="@drawable/container_bg"
+        android:contentDescription="@string/book_page_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -29,6 +30,8 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="8dp"
+        android:background="@drawable/background3"
+        android:contentDescription="@string/book_image"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="@+id/imageView1"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,6 +44,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:text="@string/testtitle"
+        android:textColor="@color/black_text_color"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/item_book_img"
         app:layout_constraintTop_toTopOf="@+id/imageView1" />
@@ -50,8 +55,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:textColor="@color/black_text_color"
         android:layout_marginTop="8dp"
+        android:text="@string/test_author"
+        android:textColor="@color/black_text_color"
         app:layout_constraintStart_toEndOf="@+id/item_book_img"
         app:layout_constraintTop_toBottomOf="@+id/item_book_title" />
 
@@ -74,6 +80,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:text="@string/score"
         android:textColor="@color/black_text_color"
         app:layout_constraintBottom_toBottomOf="@+id/item_book_ratingBar"
         app:layout_constraintStart_toEndOf="@+id/item_book_ratingBar"
@@ -85,6 +92,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        android:text="@string/_200_pages_100_reviews"
         android:textColor="@color/black_text_color"
         app:layout_constraintStart_toEndOf="@+id/item_book_img"
         app:layout_constraintTop_toBottomOf="@+id/item_book_ratingBar" />
@@ -110,39 +118,26 @@
         android:layout_marginStart="2dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
-        android:textColor="@color/black_text_color"
+        android:text="@string/_25"
         android:textAlignment="viewStart"
+        android:textColor="@color/black_text_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/availableTextView"
         app:layout_constraintTop_toBottomOf="@+id/imageView1" />
 
     <TextView
-        android:id="@+id/textView12"
+        android:id="@+id/from_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="5dp"
-        android:text="From date"
-        android:textColor="@color/black_text_color"
+        android:text="@string/from_date"
         android:textAlignment="center"
-        app:layout_constraintEnd_toStartOf="@+id/textView13"
+        android:textColor="@color/black_text_color"
+        app:layout_constraintEnd_toStartOf="@+id/to_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/availableTextView" />
-
-    <TextView
-        android:id="@+id/textView13"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="5dp"
-        android:text="To date"
-        android:textColor="@color/black_text_color"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView12"
-        app:layout_constraintTop_toBottomOf="@+id/numAvailable" />
 
     <TextView
         android:id="@+id/reserve_from"
@@ -152,14 +147,30 @@
         android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:text="@string/_12_02_2020"
         android:textAlignment="center"
+        android:textColor="@color/black_text_color"
         android:textSize="25sp"
         android:textStyle="bold"
-        android:textColor="@color/black_text_color"
         app:layout_constraintBottom_toTopOf="@+id/reserve_book_btn"
         app:layout_constraintEnd_toStartOf="@+id/reserve_to"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView12" />
+        app:layout_constraintTop_toBottomOf="@+id/from_text" />
+
+    <TextView
+        android:id="@+id/to_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp"
+        android:text="@string/to_date"
+        android:textAlignment="center"
+        android:textColor="@color/black_text_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/from_text"
+        app:layout_constraintTop_toBottomOf="@+id/numAvailable" />
 
     <TextView
         android:id="@+id/reserve_to"
@@ -168,13 +179,15 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
+        android:gravity="center"
+        android:text="@string/_26_02_2020"
         android:textAlignment="center"
+        android:textColor="@color/black_text_color"
         android:textSize="25sp"
         android:textStyle="bold"
-        android:textColor="@color/black_text_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/reserve_from"
-        app:layout_constraintTop_toBottomOf="@+id/textView13" />
+        app:layout_constraintTop_toBottomOf="@+id/to_text" />
 
     <Button
         android:id="@+id/reserve_book_btn"
@@ -198,7 +211,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:background="@drawable/button"
-        android:text="Discard"
+        android:text="@string/discard"
         android:textColor="@color/colorAccent"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
