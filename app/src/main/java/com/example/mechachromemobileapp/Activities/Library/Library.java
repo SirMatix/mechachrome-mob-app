@@ -117,7 +117,7 @@ public class Library extends AppCompatActivity {
                 // display library books from a specific category
                 } else {
                     String searchCategory = searchBookBar.getText().toString().trim();
-                    Query query = booksReference.whereEqualTo("category", searchCategory).orderBy("addDate", Query.Direction.ASCENDING);;
+                    Query query = booksReference.whereEqualTo("category", searchCategory).orderBy("addDate", Query.Direction.ASCENDING);
                     FirestoreRecyclerOptions<Books> options = new FirestoreRecyclerOptions.Builder<Books>()
                             .setQuery(query, Books.class)
                             .build();

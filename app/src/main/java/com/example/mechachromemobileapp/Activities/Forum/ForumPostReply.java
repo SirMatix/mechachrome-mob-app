@@ -41,7 +41,7 @@ public class ForumPostReply extends AppCompatActivity {
     private FirebaseFirestore fStore;
     private FirebaseAuth fAuth;
     private FirebaseUser fUser;
-    private Date date_published = Calendar.getInstance().getTime();;
+    private Date date_published = Calendar.getInstance().getTime();
     private String topicName, topicID;
 
     @Override

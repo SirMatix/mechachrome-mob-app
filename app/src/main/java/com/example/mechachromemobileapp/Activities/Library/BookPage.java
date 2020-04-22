@@ -167,11 +167,11 @@ public class BookPage extends AppCompatActivity {
                 // Setting pagesrev variable to bookPages
                 bookPages.setText(pagesrev);
                 // Getting available book variable
-                String available = "Available books: " + String.valueOf(book.getAvailableBooksNum());
+                String available = "Available books: " + book.getAvailableBooksNum();
                 // Setting available book variable
                 availableBooks.setText(available);
                 // Getting reserved book number
-                String reserved = "Reserved books: " + String.valueOf(book.getNumReserved());
+                String reserved = "Reserved books: " + book.getNumReserved();
                 // Setting reserved book number
                 reservedBooks.setText(reserved);
                 // Getting and Setting the rating
