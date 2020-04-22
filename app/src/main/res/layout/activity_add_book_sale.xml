@@ -60,8 +60,8 @@
 
         <EditText
             android:id="@+id/bookTitle"
-            android:layout_width="360dp"
-            android:layout_height="35dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
@@ -74,6 +74,7 @@
             android:textAlignment="center"
             android:textColor="#000000"
             android:textColorHint="#80943131"
+            android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@+id/bookAuthor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -81,12 +82,13 @@
 
         <EditText
             android:id="@+id/bookAuthor"
-            android:layout_width="360dp"
-            android:layout_height="35dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="5dp"
+            android:autofillHints=""
             android:background="@drawable/custom_font"
             android:ems="10"
             android:fontFamily="@font/roboto_slab"
@@ -95,21 +97,22 @@
             android:textAlignment="center"
             android:textColor="#000000"
             android:textColorHint="#80943131"
+            android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@+id/numberOfBooks"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.487"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bookTitle"
-            android:autofillHints="" />
+            app:layout_constraintTop_toBottomOf="@+id/bookTitle" />
 
         <EditText
             android:id="@+id/numberOfBooks"
-            android:layout_width="360dp"
-            android:layout_height="35dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="5dp"
+            android:autofillHints=""
             android:background="@drawable/custom_font"
             android:ems="10"
             android:fontFamily="@font/roboto_slab"
@@ -118,18 +121,21 @@
             android:textAlignment="center"
             android:textColor="#000000"
             android:textColorHint="#80943131"
+            android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@+id/bookPages"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bookAuthor"
-            android:autofillHints="" />
+            app:layout_constraintTop_toBottomOf="@+id/bookAuthor" />
 
         <EditText
             android:id="@+id/bookPages"
-            android:layout_width="360dp"
-            android:layout_height="35dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
             android:layout_marginBottom="5dp"
+            android:autofillHints=""
             android:background="@drawable/custom_font"
             android:ems="10"
             android:fontFamily="@font/roboto_slab"
@@ -138,20 +144,21 @@
             android:textAlignment="center"
             android:textColor="#000000"
             android:textColorHint="#80943131"
+            android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@+id/bookPrice"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/numberOfBooks"
-            android:autofillHints="" />
+            app:layout_constraintTop_toBottomOf="@+id/numberOfBooks" />
 
         <EditText
             android:id="@+id/bookPrice"
-            android:layout_width="360dp"
-            android:layout_height="35dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="5dp"
+            android:autofillHints=""
             android:background="@drawable/custom_font"
             android:ems="10"
             android:fontFamily="@font/roboto_slab"
@@ -160,16 +167,16 @@
             android:textAlignment="center"
             android:textColor="#000000"
             android:textColorHint="#80943131"
+            android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@+id/conditionSpinner"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bookPages"
-            android:autofillHints="" />
+            app:layout_constraintTop_toBottomOf="@+id/bookPages" />
 
         <Spinner
             android:id="@+id/conditionSpinner"
-            android:layout_width="360dp"
-            android:layout_height="35dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="2dp"
@@ -181,32 +188,50 @@
 
         <Spinner
             android:id="@+id/categorySpinner"
-            android:layout_width="360dp"
-            android:layout_height="35dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="2dp"
             android:spinnerMode="dropdown"
-            app:layout_constraintBottom_toTopOf="@+id/addBookImageBtn"
+            app:layout_constraintBottom_toTopOf="@+id/chooseBookFileButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/conditionSpinner" />
 
         <Button
-            android:id="@+id/addBookImageBtn"
-            android:layout_width="360dp"
+            android:id="@+id/chooseBookFileButton"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
             android:layout_marginTop="2dp"
+            android:layout_marginEnd="5dp"
             android:layout_marginBottom="5dp"
             android:background="@drawable/button"
             android:drawableStart="@drawable/ic_add_a_photo_black_24dp"
             android:fontFamily="@font/roboto_slab"
-            android:text="@string/add_book_image"
+            android:text="choose file"
+            android:textColor="@color/colorAccent"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/bookImage"
+            app:layout_constraintEnd_toStartOf="@+id/takeBookPhotoButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/categorySpinner" />
+
+        <Button
+            android:id="@+id/takeBookPhotoButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/button"
+            android:fontFamily="@font/roboto_slab"
+            android:text="take photo"
             android:textColor="@color/colorAccent"
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/bookImage"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/chooseBookFileButton"
             app:layout_constraintTop_toBottomOf="@+id/categorySpinner" />
 
         <ImageView
@@ -217,17 +242,19 @@
             app:layout_constraintBottom_toTopOf="@+id/addBookBtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/addBookImageBtn"
+            app:layout_constraintTop_toBottomOf="@+id/chooseBookFileButton"
             android:contentDescription="@string/todo" />
 
         <Button
             android:id="@+id/addBookBtn"
-            android:layout_width="360dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
             android:background="@drawable/button"
-            android:textColor="#ffffff"
             android:fontFamily="@font/roboto_slab"
             android:text="@string/add_book"
+            android:textColor="#ffffff"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
