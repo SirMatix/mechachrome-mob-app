@@ -1,0 +1,11 @@
+com.example.mechachromemobileapp
+com.example.mechachromemobileapp.Activities
+com.example.mechachromemobileapp.Activities.BookSale
+com.example.mechachromemobileapp.Activities.Forum
+com.example.mechachromemobileapp.Activities.Library
+com.example.mechachromemobileapp.Activities.Timetables
+com.example.mechachromemobileapp.Activities.User
+com.example.mechachromemobileapp.Adapters
+com.example.mechachromemobileapp.Dialogs
+com.example.mechachromemobileapp.Fragments
+com.example.mechachromemobileapp.Models
