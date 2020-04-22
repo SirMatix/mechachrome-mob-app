@@ -35,6 +35,7 @@
         android:textColor="@color/black_text_color"
         android:textAlignment="center" />
 
+
     <TextView
         android:id="@+id/timeframe2"
         android:layout_width="100dp"
@@ -49,6 +50,7 @@
         android:text="timeframe2"
         android:textColor="@color/black_text_color"
         android:textAlignment="center" />
+
 
     <TextView
         android:id="@+id/timeframe3"
@@ -118,5 +120,6 @@
         android:layout_marginStart="2.5dp"
         android:layout_marginTop="2.5dp"
         android:layout_marginEnd="2.5dp"
-        android:layout_marginBottom="3.5dp" />
+        android:layout_marginBottom="3.5dp"
+        android:textColor="@color/colorPrimaryBlack" />
 </LinearLayout>

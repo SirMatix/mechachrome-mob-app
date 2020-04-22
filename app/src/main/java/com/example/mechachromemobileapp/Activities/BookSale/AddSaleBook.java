@@ -2,9 +2,11 @@ package com.example.mechachromemobileapp.Activities.BookSale;
 
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -33,6 +35,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Calendar;
 import java.util.Objects;
 
@@ -42,11 +45,14 @@ import java.util.Objects;
 public class AddSaleBook extends AppCompatActivity {
 
     // Global variables
-    public static final String TAG = "AddSaleBook";
-    public Uri imgUri;
+    private static final String TAG = "AddSaleBook";
+    private Uri imgUri;
+    private int REQUEST_CODE_FOR_FILE = 1;
+    private int REQUEST_CODE_FOR_IMAGE = 1000;
+    private Bitmap capturedPhoto;
     private EditText bookTitle, bookDescription, bookAuthor, bookPages, bookPrice;
     private ImageView bookImage;
-    private Button bAddBtn, bAddImage;
+    private Button bAddBtn, bAddImage, bTakePhoto;
     private Spinner bCategorySpinner, bConditionSpinner;
     private FirebaseFirestore fStore;
     private StorageReference mStorageRef;
@@ -60,6 +66,7 @@ public class AddSaleBook extends AppCompatActivity {
         initViews();
         initCategorySpinner();
         initConditionSpinner();
+        setButtons();
     }
 
 
@@ -81,12 +88,13 @@ public class AddSaleBook extends AppCompatActivity {
 
         // Initialization of Button widgets from layout
         bAddBtn = findViewById(R.id.addBookBtn);
-        bAddImage = findViewById(R.id.addBookImageBtn);
+        bAddImage = findViewById(R.id.chooseBookFileButton);
+        bTakePhoto = findViewById(R.id.takeBookPhotoButton);
 
         // Instantiating of Firebase widgets
         fStore = FirebaseFirestore.getInstance();
-        mStorageRef = FirebaseStorage.getInstance().getReference("books_for_sale");
         fAuth = FirebaseAuth.getInstance();
+        mStorageRef = FirebaseStorage.getInstance().getReference("books_for_sale/"+fAuth.getUid()+" user books");
     }
 
     /**
@@ -101,13 +109,9 @@ public class AddSaleBook extends AppCompatActivity {
         final ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(this, R.layout.custom_spinner_item, CATEGORY_LIST) {
             @Override
             public boolean isEnabled(int position) {
-                if (position == 0) {
-                    // Disable the first item from Spinner
-                    // First item will be use for hint
-                    return false;
-                } else {
-                    return true;
-                }
+                // Disable the first item from Spinner
+                // First item will be use for hint
+                return position != 0;
             }
 
             @Override
@@ -134,19 +138,15 @@ public class AddSaleBook extends AppCompatActivity {
      */
     public void initConditionSpinner() {
         // List of available book conditions
-        String[] CONDITION_LIST = {"Select book condition", "New", "Used - great", "Used - good", "Used - medium", "Used - bad"};
+        String[] CONDITION_LIST = {"Select book condition", "New", "Used - good", "Used - medium", "Used - bad"};
 
         // ArrayAdapter for showing conditions from constant condition list it utilizes custom_spinner_item layout
         final ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(this, R.layout.custom_spinner_item, CONDITION_LIST) {
             @Override
             public boolean isEnabled(int position) {
-                if (position == 0) {
-                    // Disable the first item from Spinner
-                    // First item will be use for hint
-                    return false;
-                } else {
-                    return true;
-                }
+                // Disable the first item from Spinner
+                // First item will be use for hint
+                return position != 0;
             }
 
             @Override
@@ -159,7 +159,7 @@ public class AddSaleBook extends AppCompatActivity {
                     tv.setTextColor(Color.argb(128,148,49,49));
                 } else {
                     // Set other elements color
-                    tv.setTextColor(Color.argb(205, 148, 49, 49));
+                    tv.setTextColor(Color.argb(255, 0, 0, 0));
                 }
                 return view;
             }
@@ -180,6 +180,14 @@ public class AddSaleBook extends AppCompatActivity {
             }
         });
 
+        // Button for taking picture of a book
+        bTakePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                takePhoto();
+            }
+        });
+
         // Button for adding book for sale to the Firebase
         bAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -190,10 +198,8 @@ public class AddSaleBook extends AppCompatActivity {
                     image is required if image is present
                     add book for sale and start a new activity
                  */
-                if(imgUri != null) {
+                if(imgUri != null || capturedPhoto != null) {
                     addBookSale();
-                    startActivity(new Intent(getApplicationContext(), com.example.mechachromemobileapp.Activities.BookSale.BookSale.class));
-                    finish();
                 }
                 else {
                     Toast.makeText(getApplicationContext(),"Please add book image", Toast.LENGTH_SHORT).show();
@@ -203,9 +209,19 @@ public class AddSaleBook extends AppCompatActivity {
     }
 
     /**
-     *  Validates text written in EditText fields.
+     *  Method for adding a book for sale
+     *  utilizes fieldValidation method to check the fields,
+     *  before setting the variables to
+     *
      */
-    public void fieldValidation() {
+    public void addBookSale(){
+        // local method variables
+        final BookSaleModel sellBook = new BookSaleModel();
+        final String title = bookTitle.getText().toString();
+        final String author = bookAuthor.getText().toString();
+
+        ////////// FIELD VALIDATION SECTION //////////
+
         // checking if bookTitle field is empty
         if(TextUtils.isEmpty(bookTitle.getText().toString())){
             // sets error message on bookTitle field
@@ -224,16 +240,16 @@ public class AddSaleBook extends AppCompatActivity {
             bookDescription.setError("Description is required");
             return;
         }
-        // checking if bCategorySpinner field is empty
-        if(TextUtils.isEmpty(bCategorySpinner.getSelectedItem().toString())){
-            // Toasts message to choose book category before adding book
-            Toast.makeText(getApplicationContext(),"Please chose book category", Toast.LENGTH_SHORT).show();
+        // checking if bConditionSpinner field is empty
+        if(TextUtils.equals(bConditionSpinner.getSelectedItem().toString(), "Select book condition")){
+            // Toasts message to choose book condition before adding book
+            Toast.makeText(getApplicationContext(),"Please choose book condition", Toast.LENGTH_SHORT).show();
             return;
         }
-        // checking if bConditionSpinner field is empty
-        if(TextUtils.isEmpty(bConditionSpinner.getSelectedItem().toString())){
-            // Toasts message to choose book condition before adding book
-            Toast.makeText(getApplicationContext(),"Please chose book category", Toast.LENGTH_SHORT).show();
+        // checking if bCategorySpinner field is empty
+        if(TextUtils.equals(bCategorySpinner.getSelectedItem().toString(), "Pick book category")){
+            // Toasts message to choose book category before adding book
+            Toast.makeText(getApplicationContext(),"Please choose book category", Toast.LENGTH_SHORT).show();
             return;
         }
         // checking if bookPages field is empty
@@ -242,23 +258,14 @@ public class AddSaleBook extends AppCompatActivity {
             bookPages.setError("Number of pages is required");
             return;
         }
-    }
+        // checking if bookPrice field is empty
+        if(TextUtils.isEmpty(bookPrice.getText().toString())) {
+            // sets error message on bookPages field
+            bookPrice.setError("Book price is required");
+            return;
+        }
 
-    /**
-     *  Method for adding a book for sale
-     *  utylizes fieldValidation method to check the fields,
-     *  before setting the variables to
-     *
-     */
-    public void addBookSale(){
-        // local method variables
-        final BookSaleModel sellBook = new BookSaleModel();
-        final String title = bookTitle.getText().toString();
-        final String author = bookAuthor.getText().toString();
-
-
-        // validating fields with previous method
-        fieldValidation();
+        ////////// SETTING VALUES SECTION //////////
 
         /* setting BookSaleModel object sellBook title variable to content from bookTitle EditText widget saved in String title */
         sellBook.setTitle(title);
@@ -287,6 +294,7 @@ public class AddSaleBook extends AppCompatActivity {
         sellBook.setNumReserved(0);
         sellBook.setTotalBooksNum(1);
         sellBook.setAvailableBooksNum(1);
+        sellBook.setISBN("ISBN NUMBER");
         /* setting BookSaleModel object sellBook seller_id variable to ID of the current user who is adding the book */
         sellBook.setSeller_id(Objects.requireNonNull(fAuth.getCurrentUser()).getUid());
         /* setting BookSaleModel object sellBook sold variable to false, after user buys book this variable changes to true */
@@ -296,49 +304,107 @@ public class AddSaleBook extends AppCompatActivity {
         // setting document Reference for book object in collection books_for_sale
         final DocumentReference sale_book_data = fStore.collection("books_for_sale").document();
 
-        // the uploading image function
-        final StorageReference reference = mStorageRef.child(title+'.'+getExtension(imgUri));
-        reference.putFile(imgUri)
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
+        ////////// IMAGE LOADING SECTION //////////
+
+        // loading file image
+        if (imgUri != null) {
+            // the uploading image function
+            final StorageReference reference = mStorageRef.child(title+"_photo."+getExtension(imgUri));
+            reference.putFile(imgUri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
                                 /*
                                     setting BookSaleModel object sellBook imgUrl variable
                                     to content of uri variable that is passed from onSuccess method
                                  */
-                                sellBook.setImgUrl(uri.toString());
-                                /*  setting the SellBookModel object sellBook to DocumentReference sell_book_data */
-                                sale_book_data.set(sellBook).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Log.d(TAG,"onSuccess: sellBook object added to Firestore books_for_sale Collection");
-                                        Toast.makeText(getApplicationContext(),"Congratulations! You have successfully added book for sale", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                                Toast.makeText(getApplicationContext(),"Image uploaded successfully", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        Log.e(TAG, "onFailure: Failed to upload picture, error: " + exception.getMessage());
-                    }
-                });
+                                    sellBook.setImgUrl(uri.toString());
+                                    /*  setting the SellBookModel object sellBook to DocumentReference sell_book_data */
+                                    sale_book_data.set(sellBook).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Log.d(TAG,"onSuccess: sellBook object added to Firestore books_for_sale Collection");
+                                            Toast.makeText(getApplicationContext(),"Congratulations! You have successfully added book for sale", Toast.LENGTH_SHORT).show();
+                                            startActivity(new Intent(getApplicationContext(), com.example.mechachromemobileapp.Activities.BookSale.BookSale.class));
+                                            finish();
+                                        }
+                                    });
+                                    Toast.makeText(getApplicationContext(),"Image uploaded successfully", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            Log.e(TAG, "onFailure: Failed to upload picture, error: " + exception.getMessage());
+                        }
+                    });
+        }
+        // loading taken picture
+        if (capturedPhoto != null) {
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            capturedPhoto.compress(Bitmap.CompressFormat.JPEG, 100,byteArrayOutputStream);
+
+            final StorageReference reference = mStorageRef.child(title+"_photo.jpeg");
+            reference.putBytes(byteArrayOutputStream.toByteArray())
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            /*
+                                    setting BookSaleModel object sellBook imgUrl variable
+                                    to content of uri variable that is passed from onSuccess method
+                                 */
+                            sellBook.setImgUrl(uri.toString());
+                            /*  setting the SellBookModel object sellBook to DocumentReference sell_book_data */
+                            sale_book_data.set(sellBook).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d(TAG,"onSuccess: sellBook object added to Firestore books_for_sale Collection");
+                                    Toast.makeText(getApplicationContext(),"Congratulations! You have successfully added book for sale", Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(getApplicationContext(), com.example.mechachromemobileapp.Activities.BookSale.BookSale.class));
+                                    finish();
+                                }
+                            });
+                            Toast.makeText(getApplicationContext(),"Image uploaded successfully", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            })
+                    .addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.e(TAG, "onFailure: " + e.getCause());
+
+                }
+            });
+        }
     }
 
     /**
-     *  Method to chose a file from device storage
+     *  Method to choose a file from device storage
      */
     private void chooseFile() {
         Intent intent = new Intent();
         intent.setType("image/");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent,1);
+        startActivityForResult(intent,REQUEST_CODE_FOR_FILE);
+    }
+
+    /**
+     * Method to take photo using camera
+     */
+    public void takePhoto() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(intent, REQUEST_CODE_FOR_IMAGE);
+        }
     }
 
     /**
@@ -357,10 +423,30 @@ public class AddSaleBook extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==1 && resultCode==RESULT_OK && data!=null && data.getData()!=null){
+        if (requestCode==REQUEST_CODE_FOR_FILE && resultCode==RESULT_OK && data!=null && data.getData()!=null){
             imgUri = data.getData();
             bookImage.setImageURI(imgUri);
             bookImage.setVisibility(View.VISIBLE);
+            // this stops user from adding two photos for one book, sets captured photo to null
+            capturedPhoto = null;
+        }
+        if (requestCode == REQUEST_CODE_FOR_IMAGE) {
+            switch(resultCode) {
+                case RESULT_OK:
+                    Log.i(TAG, "onActivityResult: RESULT OK");
+                    capturedPhoto = (Bitmap) Objects.requireNonNull(Objects.requireNonNull(data).getExtras()).get("data");
+                    bookImage.setImageBitmap(capturedPhoto);
+                    bookImage.setVisibility(View.VISIBLE);
+                    // this stops user from adding two photos for one book, sets imgUri to null
+                    imgUri = null;
+                    break;
+                case RESULT_CANCELED:
+                    Log.i(TAG, "onActivityResult: RESULT CANCELLED");
+                    break;
+                default:
+            }
         }
     }
+
+
 }

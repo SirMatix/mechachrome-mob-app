@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="wrap_content"
     app:cardCornerRadius="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -32,6 +32,8 @@
             android:textSize="20sp"
             android:textColor="@color/black_text_color"
             android:background="@color/background_transparent_green"
+            android:ellipsize="end"
+            android:singleLine="true"
             app:layout_constraintBottom_toTopOf="@+id/reservation_book_author"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/reservation_book_image"
@@ -47,6 +49,8 @@
             android:text="@string/book_author"
             android:textSize="16sp"
             android:textColor="@color/black_text_color"
+            android:ellipsize="end"
+            android:singleLine="true"
             app:layout_constraintBottom_toTopOf="@+id/reserved_from_date"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/reservation_book_image"

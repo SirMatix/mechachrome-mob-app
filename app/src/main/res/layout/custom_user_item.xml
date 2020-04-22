@@ -14,8 +14,9 @@
 
     <TextView
         android:id="@+id/user_full_name"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="50dp"
+        android:layout_marginStart="5dp"
         android:gravity="left|center_vertical"
         android:text="First and last name"
         android:layout_marginLeft="5dp"

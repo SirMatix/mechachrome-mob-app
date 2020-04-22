@@ -72,6 +72,8 @@ public class ChatsFragment extends Fragment {
                 Intent intent = new Intent(getContext(), UserMessage.class);
                 intent.putExtra("userID", userID);
                 startActivity(intent);
+                // closing current activity
+                getActivity().finish();
             }
         });
     }
