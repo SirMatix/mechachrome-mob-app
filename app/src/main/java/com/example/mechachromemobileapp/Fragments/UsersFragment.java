@@ -15,7 +15,6 @@ import com.example.mechachromemobileapp.Adapters.UserAdapter;
 import com.example.mechachromemobileapp.Models.User;
 import com.example.mechachromemobileapp.R;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -26,11 +25,10 @@ import com.google.firebase.firestore.Query;
  */
 public class UsersFragment extends Fragment {
 
+    // Global variables
     private UserAdapter userAdapter;
     private FirebaseFirestore fStore = FirebaseFirestore.getInstance();
-    private FirebaseAuth fAuth = FirebaseAuth.getInstance();
     private CollectionReference userRef = fStore.collection("users");
-    private CollectionReference chatRef = fStore.collection("chat_rooms");
     private String groupFeed, modeFeed;
 
     @Override
@@ -94,15 +92,4 @@ public class UsersFragment extends Fragment {
         super.onStop();
         userAdapter.stopListening();
     }
-
-    public int stringToNumber(String old_word){
-        char[] word = old_word.toCharArray();
-        int numberString = 0;
-        for(char letter: word) {
-            int a = letter;
-            numberString += a;
-        }
-        return numberString;
-    }
-
 }
