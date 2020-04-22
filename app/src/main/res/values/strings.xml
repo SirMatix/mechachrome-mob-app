@@ -1,18 +1,13 @@
 <resources>
     <string name="add_book">Add book</string>
-    <string name="remove_book">Remove book</string>
-    <string name="add_new_book">Add new book</string>
     <string name="book_description">Book description</string>
     <string name="book_title">Book title</string>
     <string name="book_author">Book author</string>
     <string name="number_of_pages">Number of pages</string>
-    <string name="add_book_image">Add book image</string>
     <string name="reviews">Reviews</string>
     <string name="write_review">Write review</string>
     <string name="available_books">Available books:</string>
-    <string name="reserved_books">Reserved books:</string>
     <string name="reserve_book">Reserve book</string>
-    <string name="number_of_books">Number of books</string>
     <string name="review_content">Review content</string>
     <string name="write_your_review_in_here">Write your review in here</string>
     <string name="discard_review">Discard review</string>
@@ -63,7 +58,6 @@
     <string name="more">Forum</string>
     <string name="floor_plan">Floor plan</string>
     <string name="logout">Logout</string>
-    <string name="registration_success">User registered!</string>
     <string name="empty">The forum is empty</string>
     <string name="account_settings">Account Settings</string>
     <string name="enter_new_name">Enter new name…</string>
@@ -102,7 +96,6 @@
     <string name="_12_02_2020_00_13">12/02/2020 00:13</string>
     <string name="mode">Mode:</string>
     <string name="change_picture_to_default">change picture to default</string>
-    <string name="click_here_to_change_profile_picture">Click here to change profile picture</string>
     <string name="last_name1">Last Name:</string>
     <string name="e_mail">E-mail:</string>
     <string name="course">Course:</string>

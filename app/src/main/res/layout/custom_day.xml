@@ -113,7 +113,6 @@
         android:textAlignment="center" />
 
     <TextView
-        android:id="@+id/margin"
         android:layout_width="100dp"
         android:layout_height="5dp"
         android:layout_margin="2.5dp"
