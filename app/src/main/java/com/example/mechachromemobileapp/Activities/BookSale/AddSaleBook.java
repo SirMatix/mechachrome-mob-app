@@ -246,7 +246,7 @@ public class AddSaleBook extends AppCompatActivity {
 
     /**
      *  Method for adding a book for sale
-     *  utylizes fieldValidation method to check the fields,
+     *  utilizes fieldValidation method to check the fields,
      *  before setting the variables to
      *
      */
