@@ -77,6 +77,8 @@ public class UsersFragment extends Fragment {
                 Intent intent = new Intent(getContext(), UserMessage.class);
                 intent.putExtra("userID", userID);
                 startActivity(intent);
+                // closing inbox activity
+                getActivity().finish();
             }
         });
     }
