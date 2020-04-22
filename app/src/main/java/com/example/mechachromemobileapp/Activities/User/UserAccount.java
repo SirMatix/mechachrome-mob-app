@@ -234,7 +234,7 @@ public class UserAccount extends AppCompatActivity {
         if (requestCode == REQUEST_CODE_FOR_FILE && resultCode == RESULT_OK && data != null && data.getData() != null) {
             imgUri = data.getData();
             userImage.setImageURI(imgUri);
-            StorageReference mStorageRef = FirebaseStorage.getInstance().getReference("user_images/"+fAuth.getUid());
+            StorageReference mStorageRef = FirebaseStorage.getInstance().getReference("user_images/user_"+fAuth.getUid());
             final StorageReference reference = mStorageRef.child(fAuth.getUid()+"_profileImage."+getExtension(imgUri));
             reference.putFile(imgUri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
