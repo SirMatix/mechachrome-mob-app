@@ -81,7 +81,7 @@ public class ResetPassword extends AppCompatActivity {
 
         // email validation condition
         if (TextUtils.isEmpty(email)) {
-            Toast.makeText(getApplication(), "Enter your registered email id", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplication(), "Enter your registered email", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -94,12 +94,13 @@ public class ResetPassword extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // message to user of successful email sent
                             Toast.makeText(getApplicationContext(), "We have sent you instructions to reset your password!", Toast.LENGTH_SHORT).show();
+                            finish();
+                            progressBar.setVisibility(View.GONE);
                         } else {
                             // message if sending failed
                             Toast.makeText(getApplicationContext(), "Failed to send reset email!", Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.GONE);
                         }
-
-                        progressBar.setVisibility(View.GONE);
                     }
                 });
     }
