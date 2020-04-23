@@ -23,7 +23,7 @@ public class CustomItemAnimation extends DefaultItemAnimator {
     }
     //this method will be called when a new item will be added to the list
     // we will handle to add animation to the item here
-    // first le`s create a custom animation
+    // first let`s create a custom animation
     //no let`s apply the animation to the viewholder
     public boolean animateAdd(RecyclerView.ViewHolder holder){
         holder.itemView.setAnimation(AnimationUtils.loadAnimation(
