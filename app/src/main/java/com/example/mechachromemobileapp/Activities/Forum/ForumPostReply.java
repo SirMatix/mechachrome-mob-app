@@ -96,6 +96,7 @@ public class ForumPostReply extends AppCompatActivity {
                 // Finishing the activity and starting previous one
                 Intent intent = new Intent(ForumPostReply.this, ForumViewTopic.class);
                 intent.putExtra("topic_name", topicName);
+                intent.putExtra("topic_id", topicID);
                 startActivity(intent);
                 finish();
             }
