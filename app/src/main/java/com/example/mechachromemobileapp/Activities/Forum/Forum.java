@@ -91,6 +91,7 @@ public class Forum extends Activity {
                     intent.putExtra("topic_id", topicID);
                     // Starting new activity with the intent
                     startActivity(intent);
+                    finish();
                 } catch(NullPointerException e) {
                     Log.e(TAG, "onItemClick: NullPointerException " + e.getMessage());
                 }
