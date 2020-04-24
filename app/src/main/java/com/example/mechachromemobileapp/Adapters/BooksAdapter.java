@@ -72,7 +72,7 @@ public class BooksAdapter extends FirestoreRecyclerAdapter<Books, BooksAdapter.B
     @Override
     public BookHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // here we define which layout we want to use for each of our recyclerView elements
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_book, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_book_item, parent, false);
         return new BookHolder(view);
     }
 
@@ -178,7 +178,7 @@ public class BooksAdapter extends FirestoreRecyclerAdapter<Books, BooksAdapter.B
     @NonNull
     @Override
     public BooksViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_book, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_book_item, parent, false);
         return new BooksViewHolder(view, booksListner);
     }
 
