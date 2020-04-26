@@ -45,7 +45,7 @@
             android:fontFamily="@font/roboto_slab"
             android:gravity="center|center_horizontal|center_vertical"
             android:singleLine="true"
-            android:text="@string/sample_to"
+            android:text="sample topic"
             android:textAlignment="center"
             android:textColor="@color/black_text_color"
             android:textSize="25sp"

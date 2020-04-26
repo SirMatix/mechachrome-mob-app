@@ -49,7 +49,7 @@ public class Timetables extends AppCompatActivity {
      * Method that builds RecyclerView
      */
     private void buildRecyclerView() {
-        // Query to get specific group and mode days to display in timetables sordet by order field
+        // Query to get specific group and mode days to display in timetables sorted by order field
         Query query = dayRef.whereEqualTo("group", groupFeed).whereEqualTo("mode", modeFeed).orderBy("order", Query.Direction.ASCENDING);
         FirestoreRecyclerOptions<Day> options = new FirestoreRecyclerOptions.Builder<Day>()
                 .setQuery(query, Day.class)
